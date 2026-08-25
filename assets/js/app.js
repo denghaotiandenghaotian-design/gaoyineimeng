@@ -349,56 +349,115 @@
   }
 
   /* ---------- 模块4 模拟训练 ---------- */
+  /* ---------- 模块4 模拟训练（两种模式） ---------- */
   function renderQuiz() {
     const subj = state.subject;
-    const bank = D.questions[subj] || [];
-    view.innerHTML = pageHead("模拟训练 · " + subj, "按难度结构抽卷，在线答题评分 + 逐题解析") +
-      "<div class='card'><div class='row'>" +
-      "<div class='field'><label>抽题数量</label><select class='select' id='qz-n'>" +
-      [5, 8, 10, 12, 15].map(n => "<option>" + n + "</option>").join("") + "</select></div>" +
-      "<div class='field'><label>难度结构</label><select class='select' id='qz-mix'>" +
-      ["基础为主(6:3:1)", "提升为主(3:5:2)", "冲刺为主(1:3:6)", "均衡(1:1:1)"].map(m => "<option>" + m + "</option>").join("") + "</select></div>" +
-      "<div class='field' style='flex:0 0 auto'><label>&nbsp;</label><button class='btn' id='qz-gen'>🎲 生成练习卷</button></div>" +
-      "</div>" +
-      "<div class='note info'>选择题点击选项即时判分；填空/计算/解答题点击「显示答案」核对。提交后给出客观题得分。</div>" +
-      "<div style='margin-top:10px'><button class='btn btn-ghost' id='qz-sample'>📄 查看完整样例试卷（含解析）</button></div>" +
-      "</div><div id='qz-out'></div>";
-    document.getElementById("qz-gen").onclick = () => genQuiz(subj, bank);
-    document.getElementById("qz-sample").onclick = () => showSample(subj);
-  }
-  function pickQuestions(bank, n, mix) {
-    const band = { "基础为主(6:3:1)": [0.6, 0.3, 0.1], "提升为主(3:5:2)": [0.3, 0.5, 0.2], "冲刺为主(1:3:6)": [0.1, 0.3, 0.6], "均衡(1:1:1)": [1 / 3, 1 / 3, 1 / 3] }[mix];
-    const band3 = bank.map(q => q.difficulty <= 2 ? 0 : q.difficulty === 3 ? 1 : 2);
-    const buckets = [[], [], []];
-    bank.forEach((q, i) => buckets[band3[i]].push(q));
-    const res = [];
-    [0, 1, 2].forEach(b => {
-      let k = Math.round(n * band[b]);
-      const pool = buckets[b].slice();
-      while (k-- > 0 && pool.length) res.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+    view.innerHTML = pageHead("模拟训练 · " + subj, "两种模式：① 按专题分类练习 ② 整套试卷（两种模式均附答案）") +
+      "<div class='mode-tabs' id='qz-tabs'>" +
+      "<button class='mtab2 on' data-mode='topic'>① 按专题分类练习</button>" +
+      "<button class='mtab2' data-mode='paper'>② 整套试卷</button>" +
+      "</div><div id='qz-body'></div>";
+    document.querySelectorAll("#qz-tabs .mtab2").forEach(b => b.onclick = () => {
+      document.querySelectorAll("#qz-tabs .mtab2").forEach(x => x.classList.remove("on"));
+      b.classList.add("on");
+      if (b.dataset.mode === "topic") renderTopicMode(subj);
+      else renderPaperList(subj);
     });
-    while (res.length < n && bank.length) {
-      const q = bank[Math.floor(Math.random() * bank.length)];
-      if (!res.includes(q)) res.push(q); else break;
-    }
-    return res.slice(0, n);
+    renderTopicMode(subj);
   }
-  function genQuiz(subj, bank) {
-    if (!bank.length) { document.getElementById("qz-out").innerHTML = "<div class='note warn'>该科题库建设中。</div>"; return; }
-    const n = parseInt(document.getElementById("qz-n").value);
-    const mix = document.getElementById("qz-mix").value;
-    const qs = pickQuestions(bank, n, mix);
-    let correct = 0, totalMC = 0;
-    const out = document.getElementById("qz-out");
-    out.innerHTML = "<div class='card' id='qz-card'>" +
-      "<div style='display:flex;justify-content:space-between;align-items:center;margin-bottom:10px'><b>练习卷（" + subj + " · " + n + "题）</b><span id='qz-score' class='badge b-info'>客观题 0/" + totalMC + "</span></div>" +
-      "<div class='progress'><i id='qz-prog'></i></div>" + qs.map((q, i) => qItem(q, i)).join("") +
-      "<div style='margin-top:14px'><button class='btn' id='qz-submit'>提交并查看成绩</button> <span id='qz-final' class='badge b-info' style='margin-left:8px'></span></div>" +
-      "</div>";
-    out.querySelectorAll(".qbank-item").forEach((item, i) => {
-      const q = qs[i];
-      if (q.options && q.options.length) {
-        totalMC++;
+
+  function uniqueChapters(subj) {
+    const seen = [], out = [];
+    (D.questions[subj] || []).forEach(q => { if (!seen.includes(q.chapter)) { seen.push(q.chapter); out.push(q.chapter); } });
+    return out;
+  }
+
+  /* 模式一：按专题（章节）分类练习，每题附答案/解析 */
+  function renderTopicMode(subj) {
+    const bank = D.questions[subj] || [];
+    const topics = uniqueChapters(subj);
+    const body = document.getElementById("qz-body");
+    body.innerHTML = "<div class='card'>" +
+      "<div class='row'><div class='field' style='flex:1.3'><label>选择专题（章节）</label>" +
+      "<select class='select' id='qz-topic'>" +
+      "<option value='__all__'>全部专题（共 " + bank.length + " 题）</option>" +
+      topics.map(t => "<option>" + esc(t) + "</option>").join("") + "</select></div>" +
+      "<div class='field' style='flex:0 0 auto'><label>&nbsp;</label><button class='btn btn-ghost' id='qz-reveal'>显示全部答案</button></div>" +
+      "</div>" +
+      "<div class='note info'>选择题点击选项即判分；填空/解答题点「显示答案」核对。下方「显示全部答案」可一次性展开本专题全部解析。</div>" +
+      "<div id='qz-list'></div></div>";
+    const list = document.getElementById("qz-list");
+    function paint(topic) {
+      const qs = topic === "__all__" ? bank : bank.filter(q => q.chapter === topic);
+      list.innerHTML = qs.length ? qs.map((q, i) => quizItemHTML(q, i, true)).join("") : "<div class='note warn'>该专题暂无题目。</div>";
+      bindQuizItems(list);
+    }
+    document.getElementById("qz-topic").onchange = e => paint(e.target.value);
+    document.getElementById("qz-reveal").onclick = () => revealAll(list);
+    paint("__all__");
+  }
+
+  /* 模式二：整套试卷列表 */
+  function renderPaperList(subj) {
+    const papers = D.mockPapers[subj] || [];
+    const body = document.getElementById("qz-body");
+    if (!papers.length) { body.innerHTML = "<div class='note warn'>该科整套试卷收集中。</div>"; return; }
+    body.innerHTML = "<div class='note info'>以下为完整成套模拟卷（含选择/填空/解答/实验/阅读/写作等全题型分区），每题附答案与解析。点击进入可逐题答题或一次性展开全部答案。</div>" +
+      "<div class='paper-list'>" + papers.map((p, i) =>
+        "<div class='paper-card' data-i='" + i + "'><div class='pc-title'>" + esc(p.title) + "</div>" +
+        "<div class='muted'>" + esc(p.meta) + "</div>" +
+        "<div class='pc-go'>开始答题 / 查看试卷 →</div></div>").join("") + "</div>";
+    body.querySelectorAll(".paper-card").forEach(c => c.onclick = () =>
+      renderFullPaper(papers[+c.dataset.i], "<button class='back-btn' data-back>← 返回整套试卷列表</button>", () => renderPaperList(subj)));
+  }
+
+  /* 共享：渲染一份完整试卷（模式二整套试卷 & 模块5真题 通用） */
+  function renderFullPaper(paper, backHTML, backFn) {
+    const total = paper.sections.reduce((a, s) => a + s.items.length, 0);
+    let secHTML = paper.sections.map(sec =>
+      "<div class='paper-section'><div class='ps-name'>" + esc(sec.name) + "</div>" +
+      sec.items.map((it, i) => quizItemHTML(it, i, false)).join("") + "</div>").join("");
+    view.innerHTML = (backHTML || "") +
+      "<div class='detail-head' style='background:linear-gradient(120deg,var(--blue-700),var(--blue-500))'>" +
+      "<h1 style='color:#fff'>" + esc(paper.title) + "</h1>" +
+      "<div class='dh-meta'>" +
+      "<span class='badge' style='background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3)'>" + esc(paper.meta) + "</span>" +
+      "<span class='badge' style='background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.3)'>共 " + total + " 题</span>" +
+      "</div></div>" +
+      "<div class='card' style='margin-top:14px'><button class='btn btn-ghost' id='fp-reveal'>显示全部答案</button></div>" +
+      "<div id='fp-body'>" + secHTML + "</div>";
+    view.querySelectorAll("[data-back]").forEach(b => b.onclick = backFn || (() => (state.module === "past" ? renderPast() : renderQuiz())));
+    const fp = document.getElementById("fp-body");
+    bindQuizItems(fp);
+    document.getElementById("fp-reveal").onclick = () => revealAll(fp);
+  }
+
+  /* 共享：单题 HTML（isBank=true 时显示章节/考点徽标，用于模式一专题练习） */
+  function quizItemHTML(q, i, isBank) {
+    const isChoice = !!(q.options && q.options.length);
+    const ansIdx = isChoice ? (typeof q.answer === "number" ? q.answer : String(q.answer).charCodeAt(0) - 65) : -1;
+    const type = q.type || (isChoice ? "选择" : "解答");
+    let meta = "<div class='q-meta'><span class='badge b-info'>" + esc(type) + "</span>" + stars(q.difficulty || 3);
+    if (isBank) meta += " <span class='muted'>" + esc(q.chapter || "") + (q.point ? " · 考点" + esc(q.point) : "") + "</span>";
+    meta += "</div>";
+    let body;
+    if (isChoice) {
+      body = q.options.map((o, k) =>
+        "<div class='q-opt' data-i='" + k + "'>" + String.fromCharCode(65 + k) + ". " + esc(o) + "</div>").join("") +
+        "<div class='q-analysis'><span class='ans'>答案：" + esc(String.fromCharCode(65 + ansIdx)) + "</span> ｜ " + esc(q.analysis) + "</div>";
+    } else {
+      body = "<button class='btn btn-sm q-show'>显示答案 / 解析</button>" +
+        "<div class='q-analysis'><span class='ans'>参考答案：</span>" + esc(q.answer) + " ｜ " + esc(q.analysis) + "</div>";
+    }
+    return "<div class='qbank-item' data-type='" + (isChoice ? "choice" : "text") + "' data-ans='" + ansIdx + "'>" +
+      "<div class='q-stem'><b>" + (i + 1) + ".</b> " + esc(q.stem) + "</div>" + meta + body + "</div>";
+  }
+
+  function bindQuizItems(root) {
+    root.querySelectorAll(".qbank-item").forEach(item => {
+      const ans = +item.dataset.ans;
+      const analysis = item.querySelector(".q-analysis");
+      if (item.dataset.type === "choice") {
         item.querySelectorAll(".q-opt").forEach(opt => {
           opt.onclick = () => {
             if (item.dataset.done) return;
@@ -406,102 +465,44 @@
             const ai = +opt.dataset.i;
             item.querySelectorAll(".q-opt").forEach(o => o.classList.remove("sel"));
             opt.classList.add("sel");
-            if (ai === q.answer) { opt.classList.add("correct"); correct++; }
-            else { opt.classList.add("wrong"); item.querySelectorAll(".q-opt")[q.answer].classList.add("correct"); }
-            item.querySelector(".q-analysis").classList.add("show");
-            updateScore();
+            if (ai === ans) opt.classList.add("correct");
+            else { opt.classList.add("wrong"); item.querySelectorAll(".q-opt")[ans].classList.add("correct"); }
+            analysis.classList.add("show");
           };
         });
       } else {
-        item.querySelector(".q-show").onclick = () => item.querySelector(".q-analysis").classList.add("show");
+        const btn = item.querySelector(".q-show");
+        if (btn) btn.onclick = () => analysis.classList.add("show");
       }
     });
-    function updateScore() {
-      document.getElementById("qz-score").textContent = "客观题 " + correct + "/" + totalMC;
-      const done = out.querySelectorAll(".qbank-item[data-done]").length;
-      document.getElementById("qz-prog").style.width = (done / qs.length * 100) + "%";
-    }
-    document.getElementById("qz-submit").onclick = () => {
-      const pct = totalMC ? Math.round(correct / totalMC * 100) : 0;
-      document.getElementById("qz-final").textContent = "客观题正确率 " + pct + "%" + (pct >= 80 ? " · 达标✅" : " · 继续加油");
-      out.querySelectorAll(".q-analysis").forEach(a => a.classList.add("show"));
-    };
-    updateScore();
-  }
-  function qItem(q, i) {
-    const meta = "<div class='q-meta'>" + freqBadge("高频") +
-      " <span class='badge b-info'>" + esc(q.type) + "</span> " + stars(q.difficulty) +
-      " <span class='muted'>" + esc(q.chapter) + " · 考点" + q.point + "</span></div>";
-    let body;
-    if (q.options && q.options.length) {
-      body = q.options.map((o, k) =>
-        "<div class='q-opt' data-i='" + k + "'>" + String.fromCharCode(65 + k) + ". " + esc(o) + "</div>").join("") +
-        "<div class='q-analysis'><span class='ans'>答案：" + String.fromCharCode(65 + q.answer) + "</span> ｜ " + esc(q.analysis) + "</div>";
-    } else {
-      body = "<button class='btn btn-sm q-show'>显示答案 / 解析</button>" +
-        "<div class='q-analysis'><span class='ans'>参考答案：</span>" + esc(q.answer) + " ｜ " + esc(q.analysis) + "</div>";
-    }
-    return "<div class='qbank-item'><div class='q-stem'><b>" + (i + 1) + ".</b> " + esc(q.stem) + "</div>" + meta + body + "</div>";
-  }
-  function showSample(subj) {
-    const sp = D.samplePapers[subj];
-    if (!sp) { openModal("<h3>样例试卷</h3><p>该科样例试卷建设中。</p>"); return; }
-    let html = "<div style='display:flex;justify-content:space-between;align-items:center'><h3>" + esc(sp.title) + "</h3><button class='back-btn' onclick='this.closest(\".modal-box\").parentElement.remove()'>关闭 ✕</button></div><div class='note'>" + esc(sp.meta) + "</div>";
-    sp.sections.forEach(sec => {
-      html += "<h4 style='margin:14px 0 8px;color:var(--blue-700)'>" + esc(sec.name) + "</h4>";
-      sec.items.forEach(it => {
-        let inner;
-        if (it.options && it.options.length) {
-          inner = it.options.map((o, k) =>
-            "<div class='q-opt correct'>" + String.fromCharCode(65 + k) + ". " + esc(o) + "</div>").join("") +
-            "<div class='ex-analysis'><span class='ans'>答案：" + esc(it.answer) + "</span> ｜ " + esc(it.analysis) + "</div>";
-        } else {
-          inner = "<div class='ex-analysis'><span class='ans'>参考答案：</span>" + esc(it.answer) + " ｜ " + esc(it.analysis) + "</div>";
-        }
-        html += "<div class='qbank-item'><div class='q-stem'>" + esc(it.stem) + "</div>" + inner + "</div>";
-      });
-    });
-    openModal(html);
-  }
-  function openModal(html) {
-    const ov = document.createElement("div");
-    ov.style.cssText = "position:fixed;inset:0;background:rgba(11,37,69,.45);z-index:200;display:flex;align-items:flex-start;justify-content:center;padding:30px 14px;overflow:auto";
-    ov.onclick = e => { if (e.target === ov) ov.remove(); };
-    const box = document.createElement("div");
-    box.className = "modal-box card";
-    box.style.cssText = "max-width:760px;width:100%;margin:auto";
-    box.innerHTML = html;
-    ov.appendChild(box);
-    document.body.appendChild(ov);
   }
 
-  /* ---------- 模块5 真题解析 ---------- */
+  function revealAll(root) {
+    root.querySelectorAll(".qbank-item").forEach(item => {
+      const ans = +item.dataset.ans;
+      const analysis = item.querySelector(".q-analysis");
+      analysis.classList.add("show");
+      if (item.dataset.type === "choice" && !item.dataset.done) {
+        const opts = item.querySelectorAll(".q-opt");
+        if (opts[ans]) opts[ans].classList.add("correct");
+      }
+    });
+  }
+
+  /* ---------- 模块5 真题解析（完整全套试卷） ---------- */
   function renderPast() {
     const subj = state.subject;
-    const list = D.pastPapers[subj] || [];
-    const byYear = {};
-    list.forEach(p => { (byYear[p.year] = byYear[p.year] || []).push(p); });
-    view.innerHTML = pageHead("5年真题解析 · " + subj, "近5年全国乙卷（内蒙古适用）高一范围真题，附命题思路精讲") +
-      "<div id='past-out'></div>";
-    const out = document.getElementById("past-out");
-    if (!list.length) { out.innerHTML = "<div class='note warn'>该科真题收集中。</div>"; return; }
-    out.innerHTML = Object.keys(byYear).sort((a, b) => b - a).map(year =>
-      "<div class='card'><h3>" + year + "年 " + esc(byYear[year][0].volume) + "（高一部分）</h3>" +
-      byYear[year].map(p => pastItem(p)).join("") + "</div>").join("");
-    out.querySelectorAll(".q-show").forEach(b => b.onclick = () => b.parentElement.querySelector(".q-analysis").classList.add("show"));
-  }
-  function pastItem(p) {
-    let inner;
-    if (p.options && p.options.length) {
-      inner = p.options.map((o, k) =>
-        "<div class='q-opt" + (k === p.answer ? " correct" : "") + "'>" + String.fromCharCode(65 + k) + ". " + esc(o) + "</div>").join("") +
-        "<div class='q-analysis show'><span class='ans'>答案：" + String.fromCharCode(65 + p.answer) + "</span> ｜ <b>【考点】</b>" + esc(p.point) +
-        " <b>【教材章节】</b>" + esc(p.chapter) + "<br><b>【命题思路与解析】</b>" + esc(p.analysis) + "</div>";
-    } else {
-      inner = "<button class='btn btn-sm q-show'>显示答案 / 解析</button><div class='q-analysis'><span class='ans'>参考答案：</span>" + esc(p.answer) +
-        "<br><b>【考点】</b>" + esc(p.point) + " <b>【章节】</b>" + esc(p.chapter) + "<br><b>【解析】</b>" + esc(p.analysis) + "</div>";
-    }
-    return "<div class='qbank-item'><div class='q-meta'><span class='badge b-info'>" + esc(p.type) + "</span> <span class='muted'>" + esc(p.volume) + "</span></div><div class='q-stem'>" + esc(p.stem) + "</div>" + inner + "</div>";
+    const papers = D.pastPapers[subj] || [];
+    view.innerHTML = pageHead("5年真题解析 · " + subj, "近年全国卷（内蒙古适用）高一范围完整真题套卷，附逐题答案与命题思路精讲") +
+      (papers.length
+        ? "<div class='note info'>以下为完整成套真题卷，每题均附答案与解析。点击进入可逐题答题或一次性展开全部答案。</div>" +
+          "<div class='paper-list'>" + papers.map((p, i) =>
+            "<div class='paper-card' data-i='" + i + "'><div class='pc-title'>" + esc(p.title) + "</div>" +
+            "<div class='muted'>" + esc(p.meta) + "</div>" +
+            "<div class='pc-go'>开始答题 / 查看试卷 →</div></div>").join("") + "</div>"
+        : "<div class='note warn'>该科真题收集中。</div>");
+    view.querySelectorAll(".paper-card").forEach(c => c.onclick = () =>
+      renderFullPaper(papers[+c.dataset.i], "<button class='back-btn' data-back>← 返回真题列表</button>", () => renderPast()));
   }
 
   /* ---------- 模块6 名师讲堂（结构化，可进入详情页） ---------- */
