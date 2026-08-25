@@ -1,291 +1,10098 @@
 /* augment-quiz-mock.js
- * 模块4 模拟题 · 模式二「整套试卷」数据
- * 每科提供 2 套完整成套模拟卷（含选择/填空/解答/实验/阅读/写作等完整题型分区），每题附答案+解析。
- * 加载于 data.js 之后、app.js 之前；定义 D.mockPapers[学科] = [卷1, 卷2, ...]
+ * 模块4 模拟训练 · 每科 10 套完整成套模拟卷（高一知识范围）
+ * 加载于 data.js 之后、app.js 之前；整体替换 D.mockPapers[学科] = [卷1..卷10]
+ *   卷结构：{ title, meta, sections:[{name, items:[{stem, options, answer, analysis}]}] }
  */
 (function () {
   if (typeof window === "undefined" || !window.DATA) return;
   var D = window.DATA;
-
   D.mockPapers = {
-    "数学": [
+ "数学": [
+  {
+   "title": "数学 模拟训练卷（第 1 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
       {
-        title: "人教版高一数学模拟试卷（第1套 · 基础达标）",
-        meta: "考试时间：120分钟  满分：150分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、选择题（每题5分，共8题，40分）", items: [
-            { stem: "已知集合 A={1,2,3}, B={2,3,4}，则 A∩B =", options: ["{1,2}","{2,3}","{3,4}","{1,4}"], answer: "B", analysis: "交集取公共元素 {2,3}。" },
-            { stem: "函数 f(x)=√(x-2) 的定义域是", options: ["[0,+∞)","(2,+∞)","[2,+∞)","(-∞,2]"], answer: "C", analysis: "x-2≥0 ⇒ x≥2。" },
-            { stem: "下列函数中为偶函数的是", options: ["y=x³","y=x²+1","y=1/x","y=x+1"], answer: "B", analysis: "f(-x)=(-x)²+1=x²+1=f(x)，定义域 R 对称。" },
-            { stem: "比较 0.5³ 与 0.5² 的大小", options: ["0.5³<0.5²","0.5³>0.5²","相等","无法比较"], answer: "A", analysis: "0<a<1 指数函数递减，3>2 故 0.5³<0.5²。" },
-            { stem: "log₂16 =", options: ["2","3","4","8"], answer: "C", analysis: "2⁴=16。" },
-            { stem: "300° 化为弧度是", options: ["5π/3","4π/3","3π/2","7π/6"], answer: "A", analysis: "300°×π/180°=5π/3。" },
-            { stem: "不等式 x²-5x+6<0 的解集为", options: ["(1,6)","(2,3)","(-∞,2)∪(3,+∞)","[2,3]"], answer: "B", analysis: "方程根 2、3，开口向上，小于0取两根之间。" },
-            { stem: "函数 f(x)=x² 在 (0,+∞) 上", options: ["单调递增","单调递减","为常数","先减后增"], answer: "A", analysis: "二次函数对称轴 x=0，右侧递增。" }
-          ]},
-          { name: "二、填空题（每题5分，共4题，20分）", items: [
-            { stem: "log₃27 = ____。", options: [], answer: "3", analysis: "3³=27。" },
-            { stem: "函数 y=2ˣ 与 y=(1/2)ˣ 的图象关于 ____ 对称。", options: [], answer: "y轴", analysis: "(1/2)ˣ=2⁻ˣ，与 2ˣ 关于 y 轴对称。" },
-            { stem: "sin(7π/6) = ____。", options: [], answer: "-1/2", analysis: "7π/6 在第三象限，正弦为负，sin(7π/6)=-sin(π/6)=-1/2。" },
-            { stem: "不等式 2x+1≥5 的解集为 ____。", options: [], answer: "x≥2（或 [2,+∞)）", analysis: "2x≥4 ⇒ x≥2。" }
-          ]},
-          { name: "三、解答题（共90分）", items: [
-            { stem: "(10分) 用函数单调性的定义证明 f(x)=3x+2 在 R 上单调递增。", options: [], answer: "任取 x₁<x₂，f(x₁)-f(x₂)=3(x₁-x₂)<0，故 f(x₁)<f(x₂)，得证。", analysis: "一次函数斜率正，作差即可证。" },
-            { stem: "(12分) 用长为 24m 的篱笆围一个矩形菜地，怎样围面积最大？最大面积是多少？", options: [], answer: "设长 x、宽 y，2(x+y)=24 ⇒ x+y=12；面积 S=xy≤((x+y)/2)²=36，当 x=y=6 取等。故围边长为 6m 的正方形，最大面积 36m²。", analysis: "'和定积最大'模型。" },
-            { stem: "(12分) 已知函数 f(x)=A·sin(ωx+φ) (A>0,ω>0) 的最大值为 2，最小正周期为 π，且 f(0)=1，求 A、ω、φ（取 |φ|<π/2）。", options: [], answer: "A=2；T=2π/ω=π ⇒ ω=2；f(0)=2sinφ=1 ⇒ sinφ=1/2，由 |φ|<π/2 得 φ=π/6。故 f(x)=2sin(2x+π/6)。", analysis: "由最值定 A，周期定 ω，初值定 φ。" },
-            { stem: "(12分) 解方程 2^(x+1)=8。", options: [], answer: "8=2³，故 x+1=3 ⇒ x=2。", analysis: "化为同底数指数方程。" }
-          ]}
-        ]
+       "stem": "已知集合 A={x|x²-x-2<0}，B={-1,0,1}，则 A∩B =",
+       "options": [
+        "{-1,0}",
+        "{0,1}",
+        "{-1,0,1}",
+        "∅"
+       ],
+       "answer": "B",
+       "analysis": "x²-x-2<0 ⇒ -1<x<2，A=(-1,2)，与 B 交集为 {0,1}。"
       },
       {
-        title: "人教版高一数学模拟试卷（第2套 · 能力提升）",
-        meta: "考试时间：120分钟  满分：150分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、选择题（每题5分，共8题，40分）", items: [
-            { stem: "已知集合 A={x|x²-1<0}，B={-1,0,1}，则 A∩B =", options: ["{-1,0}","{0}","{0,1}","∅"], answer: "B", analysis: "A=(-1,1)，与 B 交集为 {0}。" },
-            { stem: "函数 f(x)=1/(x+1) 的定义域为", options: ["R","x>-1","x≠-1","x<-1"], answer: "C", analysis: "分母 x+1≠0 ⇒ x≠-1。" },
-            { stem: "下列函数中为奇函数的是", options: ["y=x³","y=x²","y=|x|","y=1"], answer: "A", analysis: "f(-x)=(-x)³=-x³=-f(x)。" },
-            { stem: "若 a>0,b>0 且 a+b=6，则 ab 的最大值为", options: ["6","9","12","3"], answer: "B", analysis: "ab≤((a+b)/2)²=9。" },
-            { stem: "lg1000 =", options: ["2","3","1","1000"], answer: "B", analysis: "10³=1000。" },
-            { stem: "将 y=sin x 的图象向左平移 π/2 个单位，所得函数为", options: ["y=sin(x+π/2)","y=sin(x-π/2)","y=cos(x+π/2)","y=sin2x"], answer: "A", analysis: "左加右减：左移 π/2 得 y=sin(x+π/2)。" },
-            { stem: "不等式 x²≥4 的解集为", options: ["[-2,2]","(-2,2)","(-∞,-2]∪[2,+∞)","[-2,2)"], answer: "C", analysis: "方程根 ±2，开口向上，大于等于0取两根之外。" },
-            { stem: "函数 y=cos x 的最大值为", options: ["0","1","2","π"], answer: "B", analysis: "余弦值域 [-1,1]，最大值 1。" }
-          ]},
-          { name: "二、填空题（每题5分，共4题，20分）", items: [
-            { stem: "log₅25 = ____。", options: [], answer: "2", analysis: "5²=25。" },
-            { stem: "sin(π/2) = ____。", options: [], answer: "1", analysis: "特殊角正弦值。" },
-            { stem: "函数 f(x)=log₂(x-3) 的定义域为 ____。", options: [], answer: "(3,+∞)", analysis: "真数 x-3>0 ⇒ x>3。" },
-            { stem: "化简 (a²)³ = ____。", options: [], answer: "a⁶", analysis: "幂的乘方，指数相乘。" }
-          ]},
-          { name: "三、解答题（共90分）", items: [
-            { stem: "(10分) 用定义证明 f(x)=2x-1 在 R 上单调递增。", options: [], answer: "任取 x₁<x₂，f(x₁)-f(x₂)=2(x₁-x₂)<0，故 f(x₁)<f(x₂)，得证。", analysis: "一次函数斜率正。" },
-            { stem: "(12分) 汽车以 v₀=10m/s、a=3m/s² 匀加速行驶，求 5s 末的速度与 5s 内位移。", options: [], answer: "v=v₀+at=10+3×5=25m/s；x=v₀t+½at²=10×5+½×3×25=87.5m。", analysis: "匀变速公式直接代入。" },
-            { stem: "(12分) 已知 tanα=√3，α∈(0,π/2)，求 sinα、cosα。", options: [], answer: "由 tanα=sinα/cosα=√3 且 sin²α+cos²α=1，得 sinα=√3/2，cosα=1/2。", analysis: "α=π/3，可直接得值。" },
-            { stem: "(12分) 求函数 y=x²-4x+5 的最小值及取最小值时的 x。", options: [], answer: "配方 y=(x-2)²+1，当 x=2 时取最小值 1。", analysis: "二次函数顶点处取得最值。" }
-          ]}
-        ]
-      }
-    ],
-
-    "物理": [
-      {
-        title: "人教版高一物理模拟试卷（第1套 · 基础达标）",
-        meta: "考试时间：90分钟  满分：100分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、选择题（每题4分，共6题，24分）", items: [
-            { stem: "下列物理量中是矢量的是", options: ["时间","质量","位移","路程"], answer: "C", analysis: "位移有大小有方向，是矢量。" },
-            { stem: "自由落体运动 g 取 10m/s²，物体下落 3s 末的速度大小为", options: ["10m/s","30m/s","15m/s","90m/s"], answer: "B", analysis: "v=gt=10×3=30m/s。" },
-            { stem: "在 v-t 图象中，图线的斜率表示", options: ["位移","速度","加速度","路程"], answer: "C", analysis: "斜率=Δv/Δt=a。" },
-            { stem: "下列物理量是标量的是", options: ["力","质量","加速度","速度"], answer: "B", analysis: "质量只有大小无方向，是标量。" },
-            { stem: "牛顿第一定律表明", options: ["力是维持运动的原因","力不是维持运动的原因","速度越大惯性越大","质量越小惯性越大"], answer: "A", analysis: "惯性维持运动，力改变运动状态。" },
-            { stem: "关于作用力与反作用力，正确的是", options: ["等大反向作用在同一物体","等大反向作用在不同物体","大小不一定相等","方向相同"], answer: "B", analysis: "牛顿第三定律：等大、反向、共线、作用在不同物体。" }
-          ]},
-          { name: "二、实验题（每题10分，共20分）", items: [
-            { stem: "(10分) 电磁打点计时器使用 ____ 电源（填'交流'或'直流'）；若电源频率 50Hz，则打点周期 T=____ s。", options: [], answer: "交流；0.02", analysis: "T=1/f=1/50=0.02s。" },
-            { stem: "(10分) 用刻度尺测得某段纸带长 4.0cm，该段对应计时 0.1s，则其平均速度为 ____ m/s。", options: [], answer: "0.40", analysis: "v=Δx/Δt=0.040/0.1=0.40m/s。" }
-          ]},
-          { name: "三、计算题（共56分）", items: [
-            { stem: "(12分) 质量 m=2kg 的物体受水平推力 F=10N、滑动摩擦 f=2N，求加速度与 3s 内位移。", options: [], answer: "F合=10-2=8N，a=F合/m=4m/s²；x=½at²=½×4×9=18m。", analysis: "牛顿第二定律+匀变速位移。" },
-            { stem: "(14分) 汽车以 v₀=20m/s 匀速行驶，刹车加速度 a=-5m/s²，求刹车到停止的时间与位移。", options: [], answer: "t=v₀/|a|=4s；x=v₀t+½at²=20×4-½×5×16=40m。", analysis: "匀减速到停的逆向思维。" },
-            { stem: "(14分) 两力 F₁=3N、F₂=4N 互成 90°，求其合力大小；若两力方向相反，合力又为多少？", options: [], answer: "互成90°：F=√(3²+4²)=5N；反向：F=|4-3|=1N（方向与 4N 相同）。", analysis: "平行四边形定则；共线时代数加减。" }
-          ]}
-        ]
+       "stem": "函数 f(x)=√(x-1) 的定义域为",
+       "options": [
+        "[1,+∞)",
+        "(1,+∞)",
+        "(-∞,1]",
+        "R"
+       ],
+       "answer": "A",
+       "analysis": "根号内 x-1≥0 ⇒ x≥1。"
       },
       {
-        title: "人教版高一物理模拟试卷（第2套 · 能力提升）",
-        meta: "考试时间：90分钟  满分：100分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、选择题（每题4分，共6题，24分）", items: [
-            { stem: "在物理学中，'质点'是指", options: ["真实存在的粒子","忽略大小形状的理想化模型","微观颗粒","测量工具"], answer: "B", analysis: "质点是理想化模型。" },
-            { stem: "平均速度的定义是", options: ["位移与时间的比值","速度与路程的比值","某一时刻的速度","加速度大小"], answer: "A", analysis: "平均速度=位移/时间。" },
-            { stem: "关于位移与路程，正确的是", options: ["位移是标量","路程是矢量","位移方向由初位置指向末位置","位移大小一定等于路程"], answer: "C", analysis: "位移是矢量，方向初→末；仅单向直线运动二者大小相等。" },
-            { stem: "关于静摩擦力，正确的是", options: ["大小恒为 μN","方向一定与运动方向相反","随外力增大而增大，有最大值","总是做阻力"], answer: "C", analysis: "静摩擦随外力在 0~fmax 间变化。" },
-            { stem: "物体的惯性大小取决于", options: ["速度","加速度","质量","受力"], answer: "C", analysis: "惯性仅由质量决定。" },
-            { stem: "电梯加速上升时，人对底板的压力", options: ["大于重力（超重）","等于重力","小于重力（失重）","为零"], answer: "A", analysis: "向上加速超重，视重 G'=m(g+a)>mg。" }
-          ]},
-          { name: "二、实验题（每题10分，共20分）", items: [
-            { stem: "(10分) 弹簧劲度系数 k=200N/m，伸长量 x=0.05m，则弹力 F=____ N（方向指向恢复原长）。", options: [], answer: "10", analysis: "F=kx=200×0.05=10N。" },
-            { stem: "(10分) 在'探究加速度与力、质量的关系'实验中，采用 ____ 法（填研究方法），即用砂桶重力近似代替小车所受____。", options: [], answer: "控制变量；合力（或拉力）", analysis: "先控质量研 a-F，再控力研 a-m，即控制变量法。" }
-          ]},
-          { name: "三、计算题（共56分）", items: [
-            { stem: "(12分) 质量 m=4kg 的物体受水平力 F=20N、摩擦 f=4N，求加速度与 2s 内位移。", options: [], answer: "a=(20-4)/4=4m/s²；x=½×4×4=8m。", analysis: "牛顿第二定律+匀变速位移。" },
-            { stem: "(14分) 汽车以 v₀=15m/s 匀速，刹车加速度 a=-3m/s²，求刹车到停止的时间与位移。", options: [], answer: "t=15/3=5s；x=15×5-½×3×25=37.5m。", analysis: "匀减速到停。" },
-            { stem: "(14分) 电梯中质量 m=60kg 的人，当电梯以 a=2m/s² 向上加速时，人对电梯底板的压力为多大？（g=10m/s²）", options: [], answer: "N-mg=ma ⇒ N=m(g+a)=60×12=720N。", analysis: "牛顿第二定律在超重情形中的应用。" }
-          ]}
-        ]
-      }
-    ],
-
-    "化学": [
-      {
-        title: "人教版高一化学模拟试卷（第1套 · 基础达标）",
-        meta: "考试时间：90分钟  满分：100分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、选择题（每题3分，共10题，30分）", items: [
-            { stem: "下列物质属于电解质的是", options: ["Cu","NaCl溶液","熔融 KNO₃","酒精"], answer: "C", analysis: "熔融 KNO₃ 是化合物且在熔融态导电，属电解质。" },
-            { stem: "鉴别胶体与溶液常用的物理方法是", options: ["过滤","丁达尔效应","蒸发","闻气味"], answer: "B", analysis: "胶体有丁达尔效应，溶液没有。" },
-            { stem: "下列离子方程式书写正确的是", options: ["Cu+2Ag⁺=Cu²⁺+2Ag","Na+HCl=NaCl+H₂↑","Fe+Fe³⁺=2Fe²⁺","H⁺+OH⁻=H₂O(代表所有酸碱中和)"], answer: "A", analysis: "A 符合拆写与守恒；B/C 电荷不守恒；D 仅代表强酸强碱可溶盐。" },
-            { stem: "金属钠应保存在", options: ["水中","煤油中","空气中","酒精中"], answer: "B", analysis: "钠密度大于煤油，存于煤油隔绝空气与水。" },
-            { stem: "区分 Na₂CO₃ 与 NaHCO₃ 固体，可行的是", options: ["加热，产生气体的是 NaHCO₃","加水均溶无法区分","加 CaCl₂ 两者均沉淀","看颜色"], answer: "A", analysis: "2NaHCO₃△=Na₂CO₃+CO₂↑+H₂O，Na₂CO₃ 热稳定。" },
-            { stem: "下列关于 Cl₂ 的说法错误的是", options: ["黄绿色气体","与 H₂ 光照可爆炸","与水反应生成 HCl 和 HClO","液氯是混合物"], answer: "D", analysis: "液氯是 Cl₂ 的液态，属纯净物（单质）。" },
-            { stem: "检验 Fe³⁺ 常用的试剂是", options: ["KSCN 溶液","NaOH（无现象）","石蕊","酚酞"], answer: "A", analysis: "Fe³⁺+SCN⁻→[Fe(SCN)]²⁺ 血红色。" },
-            { stem: "下列属弱电解质的是", options: ["NaCl","HCl","CH₃COOH（醋酸）","NaOH"], answer: "C", analysis: "醋酸为弱酸，部分电离。" },
-            { stem: "主族元素在周期表中的位置取决于", options: ["相对原子质量","电子层数与最外层电子数","中子数","质量数"], answer: "B", analysis: "周期=电子层数，主族族序=最外层电子数。" },
-            { stem: "同周期主族元素从左到右，原子半径", options: ["增大","减小","不变","先增后减"], answer: "B", analysis: "核电荷增大、电子层数不变，半径递减。" }
-          ]},
-          { name: "二、填空题（每题4分，共4题，16分）", items: [
-            { stem: "¹⁶O 中质子数 Z=8，则中子数 N=____。", options: [], answer: "8", analysis: "N=A-Z=16-8=8。" },
-            { stem: "标准状况下 11.2L CO₂ 的物质的量 n=____ mol。", options: [], answer: "0.5", analysis: "n=V/Vm=11.2/22.4=0.5mol。" },
-            { stem: "将 0.1mol NaCl 配成 200mL 溶液，浓度 c=____ mol/L。", options: [], answer: "0.5", analysis: "c=n/V=0.1/0.2=0.5mol/L。" },
-            { stem: "写出钠与水反应的化学方程式：____。", options: [], answer: "2Na+2H₂O=2NaOH+H₂↑", analysis: "钠与水剧烈反应放出氢气。" }
-          ]},
-          { name: "三、推断与计算题（共54分）", items: [
-            { stem: "(12分) 配制 0.2mol/L 的 NaCl 溶液 250mL，需称取 NaCl 多少克？（M=58.5g/mol）", options: [], answer: "n=cV=0.2×0.25=0.05mol；m=nM=0.05×58.5=2.925g。", analysis: "c=n/V 与 m=nM 联合使用。" },
-            { stem: "(12分) 向 FeCl₃ 溶液中滴加 KSCN 溶液，现象是____；再向其中加入洁净铁粉，溶液颜色变化及原因是____。", options: [], answer: "溶液变为血红色；加入铁粉后血红色褪去，因 2Fe³⁺+Fe=3Fe²⁺，Fe³⁺ 被还原为 Fe²⁺。", analysis: "Fe³⁺ 特征显色与 Fe²⁺/Fe³⁺ 转化。" },
-            { stem: "(12分) 向 Na₂CO₃ 溶液中逐滴加入稀盐酸，描述现象并写出相关离子方程式。", options: [], answer: "开始无明显现象，继续滴加才产生气泡；CO₃²⁻+H⁺=HCO₃⁻（无气体），HCO₃⁻+H⁺=CO₂↑+H₂O（冒泡）。", analysis: "分步反应，先生成 HCO₃⁻。" }
-          ]}
-        ]
+       "stem": "sin(π/6) 的值为",
+       "options": [
+        "1/2",
+        "√3/2",
+        "√2/2",
+        "1"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 sin30°=1/2。"
       },
       {
-        title: "人教版高一化学模拟试卷（第2套 · 能力提升）",
-        meta: "考试时间：90分钟  满分：100分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、选择题（每题3分，共10题，30分）", items: [
-            { stem: "下列物质属于纯净物的是", options: ["空气","海水","蒸馏水","盐酸"], answer: "C", analysis: "蒸馏水是纯净 H₂O；其余为混合物。" },
-            { stem: "下列为酸性氧化物的是", options: ["CO","CO₂","Na₂O","NaCl"], answer: "A", analysis: "CO₂ 与碱反应生成盐和水。" },
-            { stem: "下列为碱性氧化物的是", options: ["CO₂","SO₃","CaO","Al₂O₃"], answer: "C", analysis: "CaO 与酸反应生成盐和水。" },
-            { stem: "下列各组离子在溶液中能大量共存的是", options: ["Ag⁺、Cl⁻","Ba²⁺、SO₄²⁻","K⁺、Na⁺、Cl⁻、NO₃⁻","H⁺、OH⁻"], answer: "C", analysis: "C 组互不反应；其余均生成沉淀或水。" },
-            { stem: "氧化还原反应的实质是", options: ["得氧失氧","电子转移","化合价不变","质量变化"], answer: "B", analysis: "本质是有电子转移。" },
-            { stem: "氧化剂在反应中", options: ["失电子被氧化","得电子被还原","化合价升高","作还原剂"], answer: "B", analysis: "氧化剂得电子，化合价降低，被还原。" },
-            { stem: "钠元素的焰色试验呈", options: ["紫色","黄色","绿色","砖红色"], answer: "B", analysis: "钠焰色为黄色。" },
-            { stem: "铝在空气中表面形成", options: ["疏松氧化膜","致密氧化膜(Al₂O₃)","铝锈","无变化"], answer: "A", analysis: "生成致密 Al₂O₃ 薄膜保护内部。" },
-            { stem: "质量数 A 等于", options: ["质子数-中子数","质子数+中子数","中子数-质子数","电子数"], answer: "B", analysis: "A=Z+N。" },
-            { stem: "同主族元素从上到下金属性", options: ["减弱","增强","不变","先强后弱"], answer: "B", analysis: "自上而下失电子能力增强，金属性增强。" }
-          ]},
-          { name: "二、填空题（每题4分，共4题，16分）", items: [
-            { stem: "2mol H₂ 的质量 = ____ g。", options: [], answer: "4", analysis: "M(H₂)=2g/mol，m=2×2=4g。" },
-            { stem: "标准状况下 1mol 任何气体的体积约为 ____ L。", options: [], answer: "22.4", analysis: "气体摩尔体积 Vm≈22.4L/mol。" },
-            { stem: "Na₂CO₃ 的俗称是 ____（任写一种）。", options: [], answer: "纯碱（或苏打）", analysis: "NaHCO₃ 才叫小苏打。" },
-            { stem: "氯气溶于水所得氯水的溶质主要有 ____ 和 ____。", options: [], answer: "HCl、HClO", analysis: "Cl₂+H₂O⇌HCl+HClO。" }
-          ]},
-          { name: "三、推断与计算题（共54分）", items: [
-            { stem: "(12分) 过氧化钠与水反应：2Na₂O₂+2H₂O=4NaOH+O₂↑。若 7.8g Na₂O₂（M=78g/mol）完全反应，标准状况下生成 O₂ 多少升？", options: [], answer: "n(Na₂O₂)=7.8/78=0.1mol；由方程 2mol Na₂O₂→1mol O₂，得 n(O₂)=0.05mol；V=0.05×22.4=1.12L。", analysis: "化学计量数比与气体体积换算。" },
-            { stem: "(12分) 写出铝与 NaOH 溶液反应的化学方程式，并指出铝在反应中表现的性质。", options: [], answer: "2Al+2NaOH+2H₂O=2NaAlO₂+3H₂↑；铝既能与酸又能与强碱反应，表现两性。", analysis: "铝的两性。" },
-            { stem: "(12分) 铁与稀硫酸反应：Fe+H₂SO₄=FeSO₄+H₂↑。若 5.6g Fe（M=56g/mol）完全反应，标准状况下生成 H₂ 多少升？", options: [], answer: "n(Fe)=5.6/56=0.1mol；由方程 1mol Fe→1mol H₂，n(H₂)=0.1mol；V=0.1×22.4=2.24L。", analysis: "计量数比 1:1 与气体体积。" }
-          ]}
-        ]
-      }
-    ],
-
-    "语文": [
-      {
-        title: "人教版高一语文模拟试卷（第1套 · 基础达标）",
-        meta: "考试时间：150分钟  满分：150分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、现代文阅读（35分）", items: [
-            { stem: "阅读《故都的秋》选段，概括作者笔下'清、静、悲凉'的秋味体现在哪些景物上。", options: [], answer: "体现在破屋、槐树落蕊、秋蝉残声、都市闲人话秋、枣树等意象中，以冷清疏淡的景物寄寓家国之忧与落寞心绪。", analysis: "考查情景交融手法与信息提取。" },
-            { stem: "赏析句子：'秋天，无论在什么地方的秋天，总是好的；可是啊，北国的秋，却特别地来得清，来得静，来得悲凉。'（从修辞与情感角度）", options: [], answer: "运用排比'来得清，来得静，来得悲凉'强化节奏，开门见山点明北国秋'清、静、悲凉'的基调，直抒对故都之秋的眷恋与淡淡哀愁。", analysis: "考查排比修辞与情感基调把握。" }
-          ]},
-          { name: "二、古诗文默写（每空2分，共10分）", items: [
-            { stem: "补写：'君子博学而日参省乎己，____。'（《劝学》）", options: [], answer: "则知明而行无过矣", analysis: "荀子名句，'知'通'智'。" },
-            { stem: "补写：'清风徐来，____。'（《赤壁赋》）", options: [], answer: "水波不兴", analysis: "苏轼《赤壁赋》开篇名句。" },
-            { stem: "补写：'静女其姝，____。'（《诗经·静女》）", options: [], answer: "俟我于城隅", analysis: "《诗经》爱情诗名句。" }
-          ]},
-          { name: "三、语言文字运用（15分）", items: [
-            { stem: "下列各句中加点成语使用恰当的一项是（ ） A. 同学们津津乐道地谈论着球赛 B. 他做事总是粗枝大叶，一丝不苟 C. 这篇作文语言行云流水，浑然天成 D. 遇到困难要虚张声势，勇往直前", options: ["A","B","C","D"], answer: "C", analysis: "A'津津乐道'与'地谈论'重复；B'粗枝大叶'与'一丝不苟'矛盾；D'虚张声势'贬义误用；C 正确。" },
-            { stem: "下列句子没有语病的一项是（ ） A. 通过学习，使我提高了认识 B. 能否刻苦钻研是取得成功的关键 C. 内蒙古的秋天是个美丽的季节 D. 他基本上完全同意我的看法", options: ["A","B","C","D"], answer: "C", analysis: "A缺主语；B两面对一面；D'基本''完全'矛盾；C正确。" }
-          ]},
-          { name: "四、作文（60分）", items: [
-            { stem: "请以'劳动的滋味'为题，结合《喜看稻菽千重浪》《以工匠精神雕琢时代品质》的阅读体验，写一篇不少于800字的记叙文或散文。", options: [], answer: "（评分标准：切合题意、中心明确、内容充实、情感真实、语言流畅为一类卷 54-60 分；其余按基础等级与发展等级酌情给分）", analysis: "贴合内蒙古农耕文化语境，考查记叙与立意。" }
-          ]}
-        ]
+       "stem": "若 2ᵃ=5ᵇ=10，则 1/a+1/b =",
+       "options": [
+        "1",
+        "2",
+        "1/2",
+        "0"
+       ],
+       "answer": "A",
+       "analysis": "2ᵃ=10⇒a=log₂10，1/a=lg2；同理 1/b=lg5；和=lg10=1。"
       },
       {
-        title: "人教版高一语文模拟试卷（第2套 · 能力提升）",
-        meta: "考试时间：150分钟  满分：150分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、现代文阅读（35分）", items: [
-            { stem: "阅读《乡土中国·差序格局》选段，解释'差序格局'的含义，并举一例说明。", options: [], answer: "差序格局指中国乡土社会以'己'为中心、像石子投入水中泛起涟漪一样由近及远、亲疏有别的人际关系网络；例如家族中对自己人亲近、对外人疏远即其体现。", analysis: "考查费孝通核心概念的理解与迁移。" },
-            { stem: "《劝学》中'积水成渊，蛟龙生焉；积善成德，而神明自得'运用了什么论证方法？有何效果？", options: [], answer: "运用比喻（类比）论证，以'积水成渊'类比'积善成德'，生动形象地论证了学习积累的重要性。", analysis: "考查论证方法辨析。" }
-          ]},
-          { name: "二、古诗文默写（每空2分，共10分）", items: [
-            { stem: "补写：'羁鸟恋旧林，____。'（《归园田居》）", options: [], answer: "池鱼思故渊", analysis: "陶渊明诗，以物自比。" },
-            { stem: "补写：'安能摧眉折腰事权贵，____。'（《梦游天姥吟留别》）", options: [], answer: "使我不得开心颜", analysis: "李白蔑视权贵的名句。" },
-            { stem: "补写：'同是天涯沦落人，____。'（《琵琶行》）", options: [], answer: "相逢何必曾相识", analysis: "白居易感慨知己的名句。" }
-          ]},
-          { name: "三、语言文字运用（15分）", items: [
-            { stem: "依次填入下面横线处的词语，最恰当的一组是（ ）①他____地完成了任务 ②这幅画色彩____ ③我们要____传统文化 A. 圆满/和谐/弘扬 B. 完满/调和/发扬 C. 圆满/调和/发扬 D. 完满/和谐/弘扬", options: ["A","B","C","D"], answer: "A", analysis: "'圆满'常搭配任务，'和谐'搭色彩，'弘扬'文化为固定搭配。" },
-            { stem: "将'袅袅兮秋风，洞庭波兮木叶下'扩写为一段 60 字左右的景物描写（不抄原句）。", options: [], answer: "（示例）秋风轻柔拂过洞庭湖面，层层涟漪荡开，岸畔树叶悄然飘落，天地间一派清远寥廓的秋意。", analysis: "考查景物描写与意境再现能力。" }
-          ]},
-          { name: "四、作文（60分）", items: [
-            { stem: "请以'青春与乡土'为话题，结合《乡土中国》与《百合花》的阅读感受，写一篇不少于800字的文章，文体不限（诗歌除外）。", options: [], answer: "（评分标准：立意明确、材料恰当、结构完整、语言得体为一类卷 54-60 分）", analysis: "融合整本书阅读与文学文本，考查思辨与表达。" }
-          ]}
-        ]
-      }
-    ],
-
-    "英语": [
-      {
-        title: "人教版高一英语模拟试卷（第1套 · 基础达标）",
-        meta: "考试时间：120分钟  满分：150分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、语法填空（每题2分，共5题，10分）", items: [
-            { stem: "I enjoy ____ (read) books in my free time.", options: [], answer: "reading", analysis: "enjoy doing sth 固定搭配。" },
-            { stem: "He is good ____ math.", options: [], answer: "at", analysis: "be good at 擅长。" },
-            { stem: "The ticket was ____ (book) online yesterday.", options: [], answer: "booked", analysis: "被动语态 was + 过去分词。" },
-            { stem: "We are looking forward ____ your reply.", options: [], answer: "to", analysis: "look forward to (介词) 期望。" },
-            { stem: "The number of students in our school ____ (be) 2000.", options: [], answer: "is", analysis: "the number of + 复数名词作主语，谓语用单数。" }
-          ]},
-          { name: "二、阅读理解（每题4分，共3题，12分）", items: [
-            { stem: "Read: 'Tom, a 16-year-old student, joined the school running club to keep fit. He runs 3 km every morning.' What is Tom's purpose? A. To make friends B. To keep fit C. To win a prize D. To travel", options: ["A","B","C","D"], answer: "B", analysis: "原文'keep fit'直接对应。" },
-            { stem: "According to the passage, how far does Tom run each morning? A. 1 km B. 3 km C. 5 km D. 10 km", options: ["A","B","C","D"], answer: "B", analysis: "原文'3 km every morning'。" },
-            { stem: "What can we infer about Tom? A. He dislikes sports B. He is self-disciplined C. He is a teacher D. He hates mornings", options: ["A","B","C","D"], answer: "B", analysis: "每天坚持晨跑体现自律。" }
-          ]},
-          { name: "三、完形填空（每题3分，共5题，15分）", items: [
-            { stem: "Last summer, I ____ (volunteer) at a local library. A. volunteer B. volunteered C. will volunteer D. am volunteering", options: ["A","B","C","D"], answer: "B", analysis: "last summer 过去时。" },
-            { stem: "It was a ____ (wonder) experience. A. wonder B. wonderful C. wonderfully D. wondered", options: ["A","B","C","D"], answer: "B", analysis: "修饰名词用形容词 wonderful。" },
-            { stem: "I helped ____ (child) find books they liked. A. child B. children C. childs D. childrens", options: ["A","B","C","D"], answer: "B", analysis: "child 复数 children。" },
-            { stem: "The librarian was very ____ (help). A. help B. helpful C. helping D. helped", options: ["A","B","C","D"], answer: "B", analysis: "be 动词后接形容词 helpful。" },
-            { stem: "I ____ (learn) a lot from the experience. A. learn B. learns C. learned D. learning", options: ["A","B","C","D"], answer: "C", analysis: "整体过去时，learned。" }
-          ]},
-          { name: "四、书面表达（25分）", items: [
-            { stem: "假定你是李华，写一封英文邮件邀请外教 Mr. Smith 参加学校运动会。要点：时间（下周五下午）、地点（学校操场）、活动（跑步、接力等）。词数 80 左右。", options: [], answer: "(评分：书信格式正确、要点齐全、语言得体为一档；注意开头结尾礼貌用语与时态一致)", analysis: "考查应用文书信与邀请信结构。" }
-          ]}
-        ]
+       "stem": "下列函数中为偶函数的是",
+       "options": [
+        "y=x³",
+        "y=x²+1",
+        "y=1/x",
+        "y=x+1"
+       ],
+       "answer": "B",
+       "analysis": "f(-x)=(-x)²+1=x²+1=f(x)，且定义域 R 对称。"
       },
       {
-        title: "人教版高一英语模拟试卷（第2套 · 能力提升）",
-        meta: "考试时间：120分钟  满分：150分  适用：内蒙古地区高一期末统考",
-        sections: [
-          { name: "一、语法填空（每题2分，共5题，10分）", items: [
-            { stem: "She prefers tea ____ coffee.", options: [], answer: "to", analysis: "prefer A to B 固定搭配。" },
-            { stem: "He practices ____ (play) basketball every day.", options: [], answer: "playing", analysis: "practice doing sth。" },
-            { stem: "By the time we arrived, the train ____ (leave).", options: [], answer: "had left", analysis: "'到达'过去，'离开'更早，用过去完成时。" },
-            { stem: "____ (learn) a foreign language needs practice.", options: [], answer: "Learning", analysis: "动名词作主语。" },
-            { stem: "The book ____ (write) by Lu Xun.", options: [], answer: "was written", analysis: "被动语态，过去时 was written。" }
-          ]},
-          { name: "二、阅读理解（每题4分，共3题，12分）", items: [
-            { stem: "Read: 'Greenland is the largest island in the world. It is cold and covered with ice, but it has rich natural resources.' Greenland is famous for being ____. A. the smallest island B. the largest island C. a hot place D. a desert", options: ["A","B","C","D"], answer: "B", analysis: "首句直接说明。" },
-            { stem: "What is Greenland's climate like? A. Hot B. Cold C. Warm D. Dry only", options: ["A","B","C","D"], answer: "B", analysis: "原文'cold and covered with ice'。" },
-            { stem: "The word 'resources' in the text probably means ____. A. 资源 B. 居民 C. 动物 D. 颜色", options: ["A","B","C","D"], answer: "A", analysis: "natural resources 自然资源，可推断。" }
-          ]},
-          { name: "三、完形填空（每题3分，共5题，15分）", items: [
-            { stem: "A flood ____ (destroy) the village in 2023. A. destroys B. destroyed C. has destroyed D. destroy", options: ["A","B","C","D"], answer: "B", analysis: "in 2023 过去时。" },
-            { stem: "Many ____ (rescue) workers arrived soon. A. rescue B. rescued C. rescuing D. rescues", options: ["A","B","C","D"], answer: "A", analysis: "rescue 作定语用原形。" },
-            { stem: "They kept ____ (calm) and helped others. A. calm B. calmly C. calming D. calms", options: ["A","B","C","D"], answer: "A", analysis: "keep + 形容词。" },
-            { stem: "The government ____ (send) food and water. A. send B. sends C. sent D. sending", options: ["A","B","C","D"], answer: "C", analysis: "整体过去时 sent。" },
-            { stem: "People were ____ (thank) for the help. A. thank B. thanks C. thankful D. thanked", options: ["A","B","C","D"], answer: "C", analysis: "be 动词后接形容词 thankful。" }
-          ]},
-          { name: "四、书面表达（25分）", items: [
-            { stem: "假定你是学生会成员，写一则英文通知，告知全校同学本周六上午在学校礼堂举行'英语角'活动，鼓励大家积极参与。词数 60 左右。", options: [], answer: "(评分：通知格式、要点齐全、语言简洁得体为一档)", analysis: "考查应用文通知格式与信息传达。" }
-          ]}
-        ]
+       "stem": "log₂8 + log₂(1/4) =",
+       "options": [
+        "1",
+        "2",
+        "0",
+        "-1"
+       ],
+       "answer": "A",
+       "analysis": "log₂8=3，log₂(1/4)=log₂(2⁻²)=-2，和为 1。"
+      },
+      {
+       "stem": "不等式 x²-3x+2<0 的解集为",
+       "options": [
+        "[1,2]",
+        "(1,2)",
+        "(-∞,1)∪(2,+∞)",
+        "{1,2}"
+       ],
+       "answer": "B",
+       "analysis": "方程根 1、2，开口向上，小于 0 取两根之间。"
+      },
+      {
+       "stem": "函数 y=sin x 的最小正周期为",
+       "options": [
+        "π/2",
+        "π",
+        "2π",
+        "4π"
+       ],
+       "answer": "C",
+       "analysis": "正弦函数基本周期 2π。"
+      },
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
       }
-    ]
-  };
-
-  if (typeof console !== "undefined") {
-    var s = D.meta.subjects.map(function (x) { return x + ":" + (D.mockPapers[x] || []).length + "套"; }).join("  ");
-    console.log("[augment-quiz-mock] 整套试卷数据完成 → " + s);
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "2³ × 2⁴ = ____。",
+       "options": [],
+       "answer": "128",
+       "analysis": "同底数相乘指数相加，2⁷=128。"
+      },
+      {
+       "stem": "集合 {1,2,3} 的子集个数为 ____。",
+       "options": [],
+       "answer": "8",
+       "analysis": "n 元集子集数 2ⁿ=2³=8。"
+      },
+      {
+       "stem": "f(x)=x+1，则 f(3)= ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "3+1=4。"
+      },
+      {
+       "stem": "函数 y=x² 在区间 [0,2] 上的值域为 ____。",
+       "options": [],
+       "answer": "[0,4]",
+       "analysis": "x∈[0,2] 时 x²∈[0,4]。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "已知函数 f(x)=2x+1，求 f(0) 与 f(1)。",
+       "options": [],
+       "answer": "f(0)=1，f(1)=3",
+       "analysis": "代入：f(0)=1，f(1)=3。"
+      },
+      {
+       "stem": "化简：(a²)³·a⁴。",
+       "options": [],
+       "answer": "a¹⁰",
+       "analysis": "(a²)³=a⁶，a⁶·a⁴=a¹⁰。"
+      },
+      {
+       "stem": "求函数 y=3ˣ 的定义域与值域。",
+       "options": [],
+       "answer": "定义域 R，值域 (0,+∞)",
+       "analysis": "指数定义域为 R；3ˣ>0，故值域 (0,+∞)。"
+      },
+      {
+       "stem": "解方程 2ˣ=8。",
+       "options": [],
+       "answer": "x=3",
+       "analysis": "8=2³，故 x=3。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 2 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "函数 f(x)=√(x-1) 的定义域为",
+       "options": [
+        "[1,+∞)",
+        "(1,+∞)",
+        "(-∞,1]",
+        "R"
+       ],
+       "answer": "A",
+       "analysis": "根号内 x-1≥0 ⇒ x≥1。"
+      },
+      {
+       "stem": "sin(π/6) 的值为",
+       "options": [
+        "1/2",
+        "√3/2",
+        "√2/2",
+        "1"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 sin30°=1/2。"
+      },
+      {
+       "stem": "若 2ᵃ=5ᵇ=10，则 1/a+1/b =",
+       "options": [
+        "1",
+        "2",
+        "1/2",
+        "0"
+       ],
+       "answer": "A",
+       "analysis": "2ᵃ=10⇒a=log₂10，1/a=lg2；同理 1/b=lg5；和=lg10=1。"
+      },
+      {
+       "stem": "下列函数中为偶函数的是",
+       "options": [
+        "y=x³",
+        "y=x²+1",
+        "y=1/x",
+        "y=x+1"
+       ],
+       "answer": "B",
+       "analysis": "f(-x)=(-x)²+1=x²+1=f(x)，且定义域 R 对称。"
+      },
+      {
+       "stem": "log₂8 + log₂(1/4) =",
+       "options": [
+        "1",
+        "2",
+        "0",
+        "-1"
+       ],
+       "answer": "A",
+       "analysis": "log₂8=3，log₂(1/4)=log₂(2⁻²)=-2，和为 1。"
+      },
+      {
+       "stem": "不等式 x²-3x+2<0 的解集为",
+       "options": [
+        "[1,2]",
+        "(1,2)",
+        "(-∞,1)∪(2,+∞)",
+        "{1,2}"
+       ],
+       "answer": "B",
+       "analysis": "方程根 1、2，开口向上，小于 0 取两根之间。"
+      },
+      {
+       "stem": "函数 y=sin x 的最小正周期为",
+       "options": [
+        "π/2",
+        "π",
+        "2π",
+        "4π"
+       ],
+       "answer": "C",
+       "analysis": "正弦函数基本周期 2π。"
+      },
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "集合 {1,2,3} 的子集个数为 ____。",
+       "options": [],
+       "answer": "8",
+       "analysis": "n 元集子集数 2ⁿ=2³=8。"
+      },
+      {
+       "stem": "f(x)=x+1，则 f(3)= ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "3+1=4。"
+      },
+      {
+       "stem": "函数 y=x² 在区间 [0,2] 上的值域为 ____。",
+       "options": [],
+       "answer": "[0,4]",
+       "analysis": "x∈[0,2] 时 x²∈[0,4]。"
+      },
+      {
+       "stem": "300° 化为弧度是 ____。",
+       "options": [],
+       "answer": "5π/3",
+       "analysis": "300°×π/180°=5π/3。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "化简：(a²)³·a⁴。",
+       "options": [],
+       "answer": "a¹⁰",
+       "analysis": "(a²)³=a⁶，a⁶·a⁴=a¹⁰。"
+      },
+      {
+       "stem": "求函数 y=3ˣ 的定义域与值域。",
+       "options": [],
+       "answer": "定义域 R，值域 (0,+∞)",
+       "analysis": "指数定义域为 R；3ˣ>0，故值域 (0,+∞)。"
+      },
+      {
+       "stem": "解方程 2ˣ=8。",
+       "options": [],
+       "answer": "x=3",
+       "analysis": "8=2³，故 x=3。"
+      },
+      {
+       "stem": "已知 sinα=3/5，α∈(0,π/2)，求 cosα。",
+       "options": [],
+       "answer": "cosα=4/5",
+       "analysis": "由 sin²α+cos²α=1，cosα=√(1-9/25)=4/5（α 在第一象限取正）。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 3 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "sin(π/6) 的值为",
+       "options": [
+        "1/2",
+        "√3/2",
+        "√2/2",
+        "1"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 sin30°=1/2。"
+      },
+      {
+       "stem": "若 2ᵃ=5ᵇ=10，则 1/a+1/b =",
+       "options": [
+        "1",
+        "2",
+        "1/2",
+        "0"
+       ],
+       "answer": "A",
+       "analysis": "2ᵃ=10⇒a=log₂10，1/a=lg2；同理 1/b=lg5；和=lg10=1。"
+      },
+      {
+       "stem": "下列函数中为偶函数的是",
+       "options": [
+        "y=x³",
+        "y=x²+1",
+        "y=1/x",
+        "y=x+1"
+       ],
+       "answer": "B",
+       "analysis": "f(-x)=(-x)²+1=x²+1=f(x)，且定义域 R 对称。"
+      },
+      {
+       "stem": "log₂8 + log₂(1/4) =",
+       "options": [
+        "1",
+        "2",
+        "0",
+        "-1"
+       ],
+       "answer": "A",
+       "analysis": "log₂8=3，log₂(1/4)=log₂(2⁻²)=-2，和为 1。"
+      },
+      {
+       "stem": "不等式 x²-3x+2<0 的解集为",
+       "options": [
+        "[1,2]",
+        "(1,2)",
+        "(-∞,1)∪(2,+∞)",
+        "{1,2}"
+       ],
+       "answer": "B",
+       "analysis": "方程根 1、2，开口向上，小于 0 取两根之间。"
+      },
+      {
+       "stem": "函数 y=sin x 的最小正周期为",
+       "options": [
+        "π/2",
+        "π",
+        "2π",
+        "4π"
+       ],
+       "answer": "C",
+       "analysis": "正弦函数基本周期 2π。"
+      },
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      },
+      {
+       "stem": "若 a<b<0，则 a² 与 b² 的大小关系是",
+       "options": [
+        "a²>b²",
+        "a²<b²",
+        "a²=b²",
+        "无法判断"
+       ],
+       "answer": "A",
+       "analysis": "a、b 均负，|a|>|b|，平方后 a²>b²。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "f(x)=x+1，则 f(3)= ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "3+1=4。"
+      },
+      {
+       "stem": "函数 y=x² 在区间 [0,2] 上的值域为 ____。",
+       "options": [],
+       "answer": "[0,4]",
+       "analysis": "x∈[0,2] 时 x²∈[0,4]。"
+      },
+      {
+       "stem": "300° 化为弧度是 ____。",
+       "options": [],
+       "answer": "5π/3",
+       "analysis": "300°×π/180°=5π/3。"
+      },
+      {
+       "stem": "若 a>0,b>0 且 a+b=4，则 ab 的最大值为 ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "ab≤((a+b)/2)²=4，当 a=b=2 取等。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "求函数 y=3ˣ 的定义域与值域。",
+       "options": [],
+       "answer": "定义域 R，值域 (0,+∞)",
+       "analysis": "指数定义域为 R；3ˣ>0，故值域 (0,+∞)。"
+      },
+      {
+       "stem": "解方程 2ˣ=8。",
+       "options": [],
+       "answer": "x=3",
+       "analysis": "8=2³，故 x=3。"
+      },
+      {
+       "stem": "已知 sinα=3/5，α∈(0,π/2)，求 cosα。",
+       "options": [],
+       "answer": "cosα=4/5",
+       "analysis": "由 sin²α+cos²α=1，cosα=√(1-9/25)=4/5（α 在第一象限取正）。"
+      },
+      {
+       "stem": "解不等式组：{x+1>0，2x-1≤3}。",
+       "options": [],
+       "answer": "(-1,2]",
+       "analysis": "x>-1 且 x≤2，合并得 -1<x≤2。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 4 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "若 2ᵃ=5ᵇ=10，则 1/a+1/b =",
+       "options": [
+        "1",
+        "2",
+        "1/2",
+        "0"
+       ],
+       "answer": "A",
+       "analysis": "2ᵃ=10⇒a=log₂10，1/a=lg2；同理 1/b=lg5；和=lg10=1。"
+      },
+      {
+       "stem": "下列函数中为偶函数的是",
+       "options": [
+        "y=x³",
+        "y=x²+1",
+        "y=1/x",
+        "y=x+1"
+       ],
+       "answer": "B",
+       "analysis": "f(-x)=(-x)²+1=x²+1=f(x)，且定义域 R 对称。"
+      },
+      {
+       "stem": "log₂8 + log₂(1/4) =",
+       "options": [
+        "1",
+        "2",
+        "0",
+        "-1"
+       ],
+       "answer": "A",
+       "analysis": "log₂8=3，log₂(1/4)=log₂(2⁻²)=-2，和为 1。"
+      },
+      {
+       "stem": "不等式 x²-3x+2<0 的解集为",
+       "options": [
+        "[1,2]",
+        "(1,2)",
+        "(-∞,1)∪(2,+∞)",
+        "{1,2}"
+       ],
+       "answer": "B",
+       "analysis": "方程根 1、2，开口向上，小于 0 取两根之间。"
+      },
+      {
+       "stem": "函数 y=sin x 的最小正周期为",
+       "options": [
+        "π/2",
+        "π",
+        "2π",
+        "4π"
+       ],
+       "answer": "C",
+       "analysis": "正弦函数基本周期 2π。"
+      },
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      },
+      {
+       "stem": "若 a<b<0，则 a² 与 b² 的大小关系是",
+       "options": [
+        "a²>b²",
+        "a²<b²",
+        "a²=b²",
+        "无法判断"
+       ],
+       "answer": "A",
+       "analysis": "a、b 均负，|a|>|b|，平方后 a²>b²。"
+      },
+      {
+       "stem": "函数 y=ln x 的定义域为",
+       "options": [
+        "(0,+∞)",
+        "[0,+∞)",
+        "R",
+        "(-∞,0)"
+       ],
+       "answer": "A",
+       "analysis": "真数必须大于 0。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "函数 y=x² 在区间 [0,2] 上的值域为 ____。",
+       "options": [],
+       "answer": "[0,4]",
+       "analysis": "x∈[0,2] 时 x²∈[0,4]。"
+      },
+      {
+       "stem": "300° 化为弧度是 ____。",
+       "options": [],
+       "answer": "5π/3",
+       "analysis": "300°×π/180°=5π/3。"
+      },
+      {
+       "stem": "若 a>0,b>0 且 a+b=4，则 ab 的最大值为 ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "ab≤((a+b)/2)²=4，当 a=b=2 取等。"
+      },
+      {
+       "stem": "log₃9 = ____。",
+       "options": [],
+       "answer": "2",
+       "analysis": "3²=9，故对数值为 2。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "解方程 2ˣ=8。",
+       "options": [],
+       "answer": "x=3",
+       "analysis": "8=2³，故 x=3。"
+      },
+      {
+       "stem": "已知 sinα=3/5，α∈(0,π/2)，求 cosα。",
+       "options": [],
+       "answer": "cosα=4/5",
+       "analysis": "由 sin²α+cos²α=1，cosα=√(1-9/25)=4/5（α 在第一象限取正）。"
+      },
+      {
+       "stem": "解不等式组：{x+1>0，2x-1≤3}。",
+       "options": [],
+       "answer": "(-1,2]",
+       "analysis": "x>-1 且 x≤2，合并得 -1<x≤2。"
+      },
+      {
+       "stem": "解一元二次不等式 x²-5x+6<0。",
+       "options": [],
+       "answer": "解集为 (2,3)",
+       "analysis": "因式分解 (x-2)(x-3)<0，开口向上，小于 0 取两根之间，得 2<x<3。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 5 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "下列函数中为偶函数的是",
+       "options": [
+        "y=x³",
+        "y=x²+1",
+        "y=1/x",
+        "y=x+1"
+       ],
+       "answer": "B",
+       "analysis": "f(-x)=(-x)²+1=x²+1=f(x)，且定义域 R 对称。"
+      },
+      {
+       "stem": "log₂8 + log₂(1/4) =",
+       "options": [
+        "1",
+        "2",
+        "0",
+        "-1"
+       ],
+       "answer": "A",
+       "analysis": "log₂8=3，log₂(1/4)=log₂(2⁻²)=-2，和为 1。"
+      },
+      {
+       "stem": "不等式 x²-3x+2<0 的解集为",
+       "options": [
+        "[1,2]",
+        "(1,2)",
+        "(-∞,1)∪(2,+∞)",
+        "{1,2}"
+       ],
+       "answer": "B",
+       "analysis": "方程根 1、2，开口向上，小于 0 取两根之间。"
+      },
+      {
+       "stem": "函数 y=sin x 的最小正周期为",
+       "options": [
+        "π/2",
+        "π",
+        "2π",
+        "4π"
+       ],
+       "answer": "C",
+       "analysis": "正弦函数基本周期 2π。"
+      },
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      },
+      {
+       "stem": "若 a<b<0，则 a² 与 b² 的大小关系是",
+       "options": [
+        "a²>b²",
+        "a²<b²",
+        "a²=b²",
+        "无法判断"
+       ],
+       "answer": "A",
+       "analysis": "a、b 均负，|a|>|b|，平方后 a²>b²。"
+      },
+      {
+       "stem": "函数 y=ln x 的定义域为",
+       "options": [
+        "(0,+∞)",
+        "[0,+∞)",
+        "R",
+        "(-∞,0)"
+       ],
+       "answer": "A",
+       "analysis": "真数必须大于 0。"
+      },
+      {
+       "stem": "函数 f(x)=x³ 是",
+       "options": [
+        "奇函数",
+        "偶函数",
+        "非奇非偶",
+        "既奇又偶"
+       ],
+       "answer": "A",
+       "analysis": "f(-x)=(-x)³=-x³=-f(x)。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "300° 化为弧度是 ____。",
+       "options": [],
+       "answer": "5π/3",
+       "analysis": "300°×π/180°=5π/3。"
+      },
+      {
+       "stem": "若 a>0,b>0 且 a+b=4，则 ab 的最大值为 ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "ab≤((a+b)/2)²=4，当 a=b=2 取等。"
+      },
+      {
+       "stem": "log₃9 = ____。",
+       "options": [],
+       "answer": "2",
+       "analysis": "3²=9，故对数值为 2。"
+      },
+      {
+       "stem": "sin(π/2) = ____。",
+       "options": [],
+       "answer": "1",
+       "analysis": "特殊角 sin90°=1。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "已知 sinα=3/5，α∈(0,π/2)，求 cosα。",
+       "options": [],
+       "answer": "cosα=4/5",
+       "analysis": "由 sin²α+cos²α=1，cosα=√(1-9/25)=4/5（α 在第一象限取正）。"
+      },
+      {
+       "stem": "解不等式组：{x+1>0，2x-1≤3}。",
+       "options": [],
+       "answer": "(-1,2]",
+       "analysis": "x>-1 且 x≤2，合并得 -1<x≤2。"
+      },
+      {
+       "stem": "解一元二次不等式 x²-5x+6<0。",
+       "options": [],
+       "answer": "解集为 (2,3)",
+       "analysis": "因式分解 (x-2)(x-3)<0，开口向上，小于 0 取两根之间，得 2<x<3。"
+      },
+      {
+       "stem": "求值：log₂(8×4)。",
+       "options": [],
+       "answer": "5",
+       "analysis": "8×4=32=2⁵，故 log₂32=5。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 6 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "log₂8 + log₂(1/4) =",
+       "options": [
+        "1",
+        "2",
+        "0",
+        "-1"
+       ],
+       "answer": "A",
+       "analysis": "log₂8=3，log₂(1/4)=log₂(2⁻²)=-2，和为 1。"
+      },
+      {
+       "stem": "不等式 x²-3x+2<0 的解集为",
+       "options": [
+        "[1,2]",
+        "(1,2)",
+        "(-∞,1)∪(2,+∞)",
+        "{1,2}"
+       ],
+       "answer": "B",
+       "analysis": "方程根 1、2，开口向上，小于 0 取两根之间。"
+      },
+      {
+       "stem": "函数 y=sin x 的最小正周期为",
+       "options": [
+        "π/2",
+        "π",
+        "2π",
+        "4π"
+       ],
+       "answer": "C",
+       "analysis": "正弦函数基本周期 2π。"
+      },
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      },
+      {
+       "stem": "若 a<b<0，则 a² 与 b² 的大小关系是",
+       "options": [
+        "a²>b²",
+        "a²<b²",
+        "a²=b²",
+        "无法判断"
+       ],
+       "answer": "A",
+       "analysis": "a、b 均负，|a|>|b|，平方后 a²>b²。"
+      },
+      {
+       "stem": "函数 y=ln x 的定义域为",
+       "options": [
+        "(0,+∞)",
+        "[0,+∞)",
+        "R",
+        "(-∞,0)"
+       ],
+       "answer": "A",
+       "analysis": "真数必须大于 0。"
+      },
+      {
+       "stem": "函数 f(x)=x³ 是",
+       "options": [
+        "奇函数",
+        "偶函数",
+        "非奇非偶",
+        "既奇又偶"
+       ],
+       "answer": "A",
+       "analysis": "f(-x)=(-x)³=-x³=-f(x)。"
+      },
+      {
+       "stem": "已知集合 A={x|x²-x-2<0}，B={-1,0,1}，则 A∩B =",
+       "options": [
+        "{-1,0}",
+        "{0,1}",
+        "{-1,0,1}",
+        "∅"
+       ],
+       "answer": "B",
+       "analysis": "x²-x-2<0 ⇒ -1<x<2，A=(-1,2)，与 B 交集为 {0,1}。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "若 a>0,b>0 且 a+b=4，则 ab 的最大值为 ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "ab≤((a+b)/2)²=4，当 a=b=2 取等。"
+      },
+      {
+       "stem": "log₃9 = ____。",
+       "options": [],
+       "answer": "2",
+       "analysis": "3²=9，故对数值为 2。"
+      },
+      {
+       "stem": "sin(π/2) = ____。",
+       "options": [],
+       "answer": "1",
+       "analysis": "特殊角 sin90°=1。"
+      },
+      {
+       "stem": "2³ × 2⁴ = ____。",
+       "options": [],
+       "answer": "128",
+       "analysis": "同底数相乘指数相加，2⁷=128。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "解不等式组：{x+1>0，2x-1≤3}。",
+       "options": [],
+       "answer": "(-1,2]",
+       "analysis": "x>-1 且 x≤2，合并得 -1<x≤2。"
+      },
+      {
+       "stem": "解一元二次不等式 x²-5x+6<0。",
+       "options": [],
+       "answer": "解集为 (2,3)",
+       "analysis": "因式分解 (x-2)(x-3)<0，开口向上，小于 0 取两根之间，得 2<x<3。"
+      },
+      {
+       "stem": "求值：log₂(8×4)。",
+       "options": [],
+       "answer": "5",
+       "analysis": "8×4=32=2⁵，故 log₂32=5。"
+      },
+      {
+       "stem": "已知函数 f(x)=2x+1，求 f(0) 与 f(1)。",
+       "options": [],
+       "answer": "f(0)=1，f(1)=3",
+       "analysis": "代入：f(0)=1，f(1)=3。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 7 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "不等式 x²-3x+2<0 的解集为",
+       "options": [
+        "[1,2]",
+        "(1,2)",
+        "(-∞,1)∪(2,+∞)",
+        "{1,2}"
+       ],
+       "answer": "B",
+       "analysis": "方程根 1、2，开口向上，小于 0 取两根之间。"
+      },
+      {
+       "stem": "函数 y=sin x 的最小正周期为",
+       "options": [
+        "π/2",
+        "π",
+        "2π",
+        "4π"
+       ],
+       "answer": "C",
+       "analysis": "正弦函数基本周期 2π。"
+      },
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      },
+      {
+       "stem": "若 a<b<0，则 a² 与 b² 的大小关系是",
+       "options": [
+        "a²>b²",
+        "a²<b²",
+        "a²=b²",
+        "无法判断"
+       ],
+       "answer": "A",
+       "analysis": "a、b 均负，|a|>|b|，平方后 a²>b²。"
+      },
+      {
+       "stem": "函数 y=ln x 的定义域为",
+       "options": [
+        "(0,+∞)",
+        "[0,+∞)",
+        "R",
+        "(-∞,0)"
+       ],
+       "answer": "A",
+       "analysis": "真数必须大于 0。"
+      },
+      {
+       "stem": "函数 f(x)=x³ 是",
+       "options": [
+        "奇函数",
+        "偶函数",
+        "非奇非偶",
+        "既奇又偶"
+       ],
+       "answer": "A",
+       "analysis": "f(-x)=(-x)³=-x³=-f(x)。"
+      },
+      {
+       "stem": "已知集合 A={x|x²-x-2<0}，B={-1,0,1}，则 A∩B =",
+       "options": [
+        "{-1,0}",
+        "{0,1}",
+        "{-1,0,1}",
+        "∅"
+       ],
+       "answer": "B",
+       "analysis": "x²-x-2<0 ⇒ -1<x<2，A=(-1,2)，与 B 交集为 {0,1}。"
+      },
+      {
+       "stem": "函数 f(x)=√(x-1) 的定义域为",
+       "options": [
+        "[1,+∞)",
+        "(1,+∞)",
+        "(-∞,1]",
+        "R"
+       ],
+       "answer": "A",
+       "analysis": "根号内 x-1≥0 ⇒ x≥1。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "log₃9 = ____。",
+       "options": [],
+       "answer": "2",
+       "analysis": "3²=9，故对数值为 2。"
+      },
+      {
+       "stem": "sin(π/2) = ____。",
+       "options": [],
+       "answer": "1",
+       "analysis": "特殊角 sin90°=1。"
+      },
+      {
+       "stem": "2³ × 2⁴ = ____。",
+       "options": [],
+       "answer": "128",
+       "analysis": "同底数相乘指数相加，2⁷=128。"
+      },
+      {
+       "stem": "集合 {1,2,3} 的子集个数为 ____。",
+       "options": [],
+       "answer": "8",
+       "analysis": "n 元集子集数 2ⁿ=2³=8。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "解一元二次不等式 x²-5x+6<0。",
+       "options": [],
+       "answer": "解集为 (2,3)",
+       "analysis": "因式分解 (x-2)(x-3)<0，开口向上，小于 0 取两根之间，得 2<x<3。"
+      },
+      {
+       "stem": "求值：log₂(8×4)。",
+       "options": [],
+       "answer": "5",
+       "analysis": "8×4=32=2⁵，故 log₂32=5。"
+      },
+      {
+       "stem": "已知函数 f(x)=2x+1，求 f(0) 与 f(1)。",
+       "options": [],
+       "answer": "f(0)=1，f(1)=3",
+       "analysis": "代入：f(0)=1，f(1)=3。"
+      },
+      {
+       "stem": "化简：(a²)³·a⁴。",
+       "options": [],
+       "answer": "a¹⁰",
+       "analysis": "(a²)³=a⁶，a⁶·a⁴=a¹⁰。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 8 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "函数 y=sin x 的最小正周期为",
+       "options": [
+        "π/2",
+        "π",
+        "2π",
+        "4π"
+       ],
+       "answer": "C",
+       "analysis": "正弦函数基本周期 2π。"
+      },
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      },
+      {
+       "stem": "若 a<b<0，则 a² 与 b² 的大小关系是",
+       "options": [
+        "a²>b²",
+        "a²<b²",
+        "a²=b²",
+        "无法判断"
+       ],
+       "answer": "A",
+       "analysis": "a、b 均负，|a|>|b|，平方后 a²>b²。"
+      },
+      {
+       "stem": "函数 y=ln x 的定义域为",
+       "options": [
+        "(0,+∞)",
+        "[0,+∞)",
+        "R",
+        "(-∞,0)"
+       ],
+       "answer": "A",
+       "analysis": "真数必须大于 0。"
+      },
+      {
+       "stem": "函数 f(x)=x³ 是",
+       "options": [
+        "奇函数",
+        "偶函数",
+        "非奇非偶",
+        "既奇又偶"
+       ],
+       "answer": "A",
+       "analysis": "f(-x)=(-x)³=-x³=-f(x)。"
+      },
+      {
+       "stem": "已知集合 A={x|x²-x-2<0}，B={-1,0,1}，则 A∩B =",
+       "options": [
+        "{-1,0}",
+        "{0,1}",
+        "{-1,0,1}",
+        "∅"
+       ],
+       "answer": "B",
+       "analysis": "x²-x-2<0 ⇒ -1<x<2，A=(-1,2)，与 B 交集为 {0,1}。"
+      },
+      {
+       "stem": "函数 f(x)=√(x-1) 的定义域为",
+       "options": [
+        "[1,+∞)",
+        "(1,+∞)",
+        "(-∞,1]",
+        "R"
+       ],
+       "answer": "A",
+       "analysis": "根号内 x-1≥0 ⇒ x≥1。"
+      },
+      {
+       "stem": "sin(π/6) 的值为",
+       "options": [
+        "1/2",
+        "√3/2",
+        "√2/2",
+        "1"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 sin30°=1/2。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "sin(π/2) = ____。",
+       "options": [],
+       "answer": "1",
+       "analysis": "特殊角 sin90°=1。"
+      },
+      {
+       "stem": "2³ × 2⁴ = ____。",
+       "options": [],
+       "answer": "128",
+       "analysis": "同底数相乘指数相加，2⁷=128。"
+      },
+      {
+       "stem": "集合 {1,2,3} 的子集个数为 ____。",
+       "options": [],
+       "answer": "8",
+       "analysis": "n 元集子集数 2ⁿ=2³=8。"
+      },
+      {
+       "stem": "f(x)=x+1，则 f(3)= ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "3+1=4。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "求值：log₂(8×4)。",
+       "options": [],
+       "answer": "5",
+       "analysis": "8×4=32=2⁵，故 log₂32=5。"
+      },
+      {
+       "stem": "已知函数 f(x)=2x+1，求 f(0) 与 f(1)。",
+       "options": [],
+       "answer": "f(0)=1，f(1)=3",
+       "analysis": "代入：f(0)=1，f(1)=3。"
+      },
+      {
+       "stem": "化简：(a²)³·a⁴。",
+       "options": [],
+       "answer": "a¹⁰",
+       "analysis": "(a²)³=a⁶，a⁶·a⁴=a¹⁰。"
+      },
+      {
+       "stem": "求函数 y=3ˣ 的定义域与值域。",
+       "options": [],
+       "answer": "定义域 R，值域 (0,+∞)",
+       "analysis": "指数定义域为 R；3ˣ>0，故值域 (0,+∞)。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 9 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "若 f(x)=x²，则 f(-2) =",
+       "options": [
+        "4",
+        "-4",
+        "2",
+        "-2"
+       ],
+       "answer": "A",
+       "analysis": "(-2)²=4。"
+      },
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      },
+      {
+       "stem": "若 a<b<0，则 a² 与 b² 的大小关系是",
+       "options": [
+        "a²>b²",
+        "a²<b²",
+        "a²=b²",
+        "无法判断"
+       ],
+       "answer": "A",
+       "analysis": "a、b 均负，|a|>|b|，平方后 a²>b²。"
+      },
+      {
+       "stem": "函数 y=ln x 的定义域为",
+       "options": [
+        "(0,+∞)",
+        "[0,+∞)",
+        "R",
+        "(-∞,0)"
+       ],
+       "answer": "A",
+       "analysis": "真数必须大于 0。"
+      },
+      {
+       "stem": "函数 f(x)=x³ 是",
+       "options": [
+        "奇函数",
+        "偶函数",
+        "非奇非偶",
+        "既奇又偶"
+       ],
+       "answer": "A",
+       "analysis": "f(-x)=(-x)³=-x³=-f(x)。"
+      },
+      {
+       "stem": "已知集合 A={x|x²-x-2<0}，B={-1,0,1}，则 A∩B =",
+       "options": [
+        "{-1,0}",
+        "{0,1}",
+        "{-1,0,1}",
+        "∅"
+       ],
+       "answer": "B",
+       "analysis": "x²-x-2<0 ⇒ -1<x<2，A=(-1,2)，与 B 交集为 {0,1}。"
+      },
+      {
+       "stem": "函数 f(x)=√(x-1) 的定义域为",
+       "options": [
+        "[1,+∞)",
+        "(1,+∞)",
+        "(-∞,1]",
+        "R"
+       ],
+       "answer": "A",
+       "analysis": "根号内 x-1≥0 ⇒ x≥1。"
+      },
+      {
+       "stem": "sin(π/6) 的值为",
+       "options": [
+        "1/2",
+        "√3/2",
+        "√2/2",
+        "1"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 sin30°=1/2。"
+      },
+      {
+       "stem": "若 2ᵃ=5ᵇ=10，则 1/a+1/b =",
+       "options": [
+        "1",
+        "2",
+        "1/2",
+        "0"
+       ],
+       "answer": "A",
+       "analysis": "2ᵃ=10⇒a=log₂10，1/a=lg2；同理 1/b=lg5；和=lg10=1。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "2³ × 2⁴ = ____。",
+       "options": [],
+       "answer": "128",
+       "analysis": "同底数相乘指数相加，2⁷=128。"
+      },
+      {
+       "stem": "集合 {1,2,3} 的子集个数为 ____。",
+       "options": [],
+       "answer": "8",
+       "analysis": "n 元集子集数 2ⁿ=2³=8。"
+      },
+      {
+       "stem": "f(x)=x+1，则 f(3)= ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "3+1=4。"
+      },
+      {
+       "stem": "函数 y=x² 在区间 [0,2] 上的值域为 ____。",
+       "options": [],
+       "answer": "[0,4]",
+       "analysis": "x∈[0,2] 时 x²∈[0,4]。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "已知函数 f(x)=2x+1，求 f(0) 与 f(1)。",
+       "options": [],
+       "answer": "f(0)=1，f(1)=3",
+       "analysis": "代入：f(0)=1，f(1)=3。"
+      },
+      {
+       "stem": "化简：(a²)³·a⁴。",
+       "options": [],
+       "answer": "a¹⁰",
+       "analysis": "(a²)³=a⁶，a⁶·a⁴=a¹⁰。"
+      },
+      {
+       "stem": "求函数 y=3ˣ 的定义域与值域。",
+       "options": [],
+       "answer": "定义域 R，值域 (0,+∞)",
+       "analysis": "指数定义域为 R；3ˣ>0，故值域 (0,+∞)。"
+      },
+      {
+       "stem": "解方程 2ˣ=8。",
+       "options": [],
+       "answer": "x=3",
+       "analysis": "8=2³，故 x=3。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "数学 模拟训练卷（第 10 套）",
+   "meta": "数学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "0.5⁻² 的值为",
+       "options": [
+        "4",
+        "0.25",
+        "2",
+        "0.5"
+       ],
+       "answer": "A",
+       "analysis": "(1/2)⁻²=2²=4。"
+      },
+      {
+       "stem": "函数 y=2ˣ 是",
+       "options": [
+        "增函数",
+        "减函数",
+        "偶函数",
+        "奇函数"
+       ],
+       "answer": "A",
+       "analysis": "底数 2>1，指数函数单调递增。"
+      },
+      {
+       "stem": "cos(π) 的值为",
+       "options": [
+        "-1",
+        "0",
+        "1",
+        "√3/2"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 cos180°=-1。"
+      },
+      {
+       "stem": "不等式 2x-1>3 的解集为",
+       "options": [
+        "x>2",
+        "x<2",
+        "x>1",
+        "x<1"
+       ],
+       "answer": "A",
+       "analysis": "2x>4 ⇒ x>2。"
+      },
+      {
+       "stem": "若 a<b<0，则 a² 与 b² 的大小关系是",
+       "options": [
+        "a²>b²",
+        "a²<b²",
+        "a²=b²",
+        "无法判断"
+       ],
+       "answer": "A",
+       "analysis": "a、b 均负，|a|>|b|，平方后 a²>b²。"
+      },
+      {
+       "stem": "函数 y=ln x 的定义域为",
+       "options": [
+        "(0,+∞)",
+        "[0,+∞)",
+        "R",
+        "(-∞,0)"
+       ],
+       "answer": "A",
+       "analysis": "真数必须大于 0。"
+      },
+      {
+       "stem": "函数 f(x)=x³ 是",
+       "options": [
+        "奇函数",
+        "偶函数",
+        "非奇非偶",
+        "既奇又偶"
+       ],
+       "answer": "A",
+       "analysis": "f(-x)=(-x)³=-x³=-f(x)。"
+      },
+      {
+       "stem": "已知集合 A={x|x²-x-2<0}，B={-1,0,1}，则 A∩B =",
+       "options": [
+        "{-1,0}",
+        "{0,1}",
+        "{-1,0,1}",
+        "∅"
+       ],
+       "answer": "B",
+       "analysis": "x²-x-2<0 ⇒ -1<x<2，A=(-1,2)，与 B 交集为 {0,1}。"
+      },
+      {
+       "stem": "函数 f(x)=√(x-1) 的定义域为",
+       "options": [
+        "[1,+∞)",
+        "(1,+∞)",
+        "(-∞,1]",
+        "R"
+       ],
+       "answer": "A",
+       "analysis": "根号内 x-1≥0 ⇒ x≥1。"
+      },
+      {
+       "stem": "sin(π/6) 的值为",
+       "options": [
+        "1/2",
+        "√3/2",
+        "√2/2",
+        "1"
+       ],
+       "answer": "A",
+       "analysis": "特殊角 sin30°=1/2。"
+      },
+      {
+       "stem": "若 2ᵃ=5ᵇ=10，则 1/a+1/b =",
+       "options": [
+        "1",
+        "2",
+        "1/2",
+        "0"
+       ],
+       "answer": "A",
+       "analysis": "2ᵃ=10⇒a=log₂10，1/a=lg2；同理 1/b=lg5；和=lg10=1。"
+      },
+      {
+       "stem": "下列函数中为偶函数的是",
+       "options": [
+        "y=x³",
+        "y=x²+1",
+        "y=1/x",
+        "y=x+1"
+       ],
+       "answer": "B",
+       "analysis": "f(-x)=(-x)²+1=x²+1=f(x)，且定义域 R 对称。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 5 分，共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "集合 {1,2,3} 的子集个数为 ____。",
+       "options": [],
+       "answer": "8",
+       "analysis": "n 元集子集数 2ⁿ=2³=8。"
+      },
+      {
+       "stem": "f(x)=x+1，则 f(3)= ____。",
+       "options": [],
+       "answer": "4",
+       "analysis": "3+1=4。"
+      },
+      {
+       "stem": "函数 y=x² 在区间 [0,2] 上的值域为 ____。",
+       "options": [],
+       "answer": "[0,4]",
+       "analysis": "x∈[0,2] 时 x²∈[0,4]。"
+      },
+      {
+       "stem": "300° 化为弧度是 ____。",
+       "options": [],
+       "answer": "5π/3",
+       "analysis": "300°×π/180°=5π/3。"
+      }
+     ]
+    },
+    {
+     "name": "三、解答题（共 4 题，50 分，写出必要步骤）",
+     "items": [
+      {
+       "stem": "化简：(a²)³·a⁴。",
+       "options": [],
+       "answer": "a¹⁰",
+       "analysis": "(a²)³=a⁶，a⁶·a⁴=a¹⁰。"
+      },
+      {
+       "stem": "求函数 y=3ˣ 的定义域与值域。",
+       "options": [],
+       "answer": "定义域 R，值域 (0,+∞)",
+       "analysis": "指数定义域为 R；3ˣ>0，故值域 (0,+∞)。"
+      },
+      {
+       "stem": "解方程 2ˣ=8。",
+       "options": [],
+       "answer": "x=3",
+       "analysis": "8=2³，故 x=3。"
+      },
+      {
+       "stem": "已知 sinα=3/5，α∈(0,π/2)，求 cosα。",
+       "options": [],
+       "answer": "cosα=4/5",
+       "analysis": "由 sin²α+cos²α=1，cosα=√(1-9/25)=4/5（α 在第一象限取正）。"
+      }
+     ]
+    }
+   ]
   }
+ ],
+ "物理": [
+  {
+   "title": "物理 模拟训练卷（第 1 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "下列物理量中属于标量的是",
+       "options": [
+        "位移",
+        "速度",
+        "加速度",
+        "时间"
+       ],
+       "answer": "D",
+       "analysis": "时间只有大小无方向，是标量。"
+      },
+      {
+       "stem": "物体做匀速直线运动，速度 2 m/s，3 s 内位移为",
+       "options": [
+        "3 m",
+        "6 m",
+        "2 m",
+        "5 m"
+       ],
+       "answer": "B",
+       "analysis": "s=vt=2×3=6 m。"
+      },
+      {
+       "stem": "加速度描述的是",
+       "options": [
+        "速度的大小",
+        "速度变化的快慢",
+        "位移的大小",
+        "路程的长短"
+       ],
+       "answer": "B",
+       "analysis": "加速度 a=Δv/Δt，反映速度变化快慢。"
+      },
+      {
+       "stem": "自由落体加速度 g 约为",
+       "options": [
+        "9.8 m/s²",
+        "3.0 m/s²",
+        "6.0 m/s²",
+        "1.0 m/s²"
+       ],
+       "answer": "A",
+       "analysis": "地球表面附近 g≈9.8 m/s²。"
+      },
+      {
+       "stem": "在 v-t 图像中，图线的斜率表示",
+       "options": [
+        "位移",
+        "加速度",
+        "速度",
+        "时间"
+       ],
+       "answer": "B",
+       "analysis": "v-t 图斜率 = Δv/Δt = 加速度。"
+      },
+      {
+       "stem": "物体惯性大小取决于",
+       "options": [
+        "速度",
+        "质量",
+        "加速度",
+        "受力"
+       ],
+       "answer": "B",
+       "analysis": "质量是惯性大小的唯一量度。"
+      },
+      {
+       "stem": "牛顿第一定律又被称为",
+       "options": [
+        "作用力定律",
+        "惯性定律",
+        "引力定律",
+        "平衡定律"
+       ],
+       "answer": "B",
+       "analysis": "牛顿第一定律阐明惯性，又称惯性定律。"
+      },
+      {
+       "stem": "两个力 F₁=3 N、F₂=4 N，其合力大小可能为",
+       "options": [
+        "5 N",
+        "8 N",
+        "1 N",
+        "0 N"
+       ],
+       "answer": "A",
+       "analysis": "合力范围 |F₁-F₂|~F₁+F₂ 即 1~7 N，5 N 在内。"
+      },
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "打点计时器使用的电源若为交流 50 Hz，则打点周期为 ____ s。",
+       "options": [],
+       "answer": "0.02",
+       "analysis": "T=1/f=1/50=0.02 s。"
+      },
+      {
+       "stem": "国际单位制中，长度、质量、时间的基本单位分别是 ____、____、____。",
+       "options": [],
+       "answer": "米、千克、秒",
+       "analysis": "SI 基本单位：长度—米(m)，质量—千克(kg)，时间—秒(s)。"
+      },
+      {
+       "stem": "重力加速度的方向总是 ____。",
+       "options": [],
+       "answer": "竖直向下",
+       "analysis": "重力方向竖直向下指向地心。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "验证力的平行四边形定则实验中使用 ____ 测量力的大小。",
+       "options": [],
+       "answer": "弹簧测力计",
+       "analysis": "用两个弹簧测力计互成角度拉橡皮条，验证合力。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "物体以 v=5 m/s 做匀速直线运动，10 s 内位移多少？",
+       "options": [],
+       "answer": "s=50 m",
+       "analysis": "s=vt=5×10=50 m。"
+      },
+      {
+       "stem": "一物体初速为 0，加速度 a=3 m/s²，求 4 s 末的速度。",
+       "options": [],
+       "answer": "v=12 m/s",
+       "analysis": "v=at=3×4=12 m/s。"
+      },
+      {
+       "stem": "汽车以 20 m/s 行驶，急刹车加速度 -5 m/s²，求刹车距离。",
+       "options": [],
+       "answer": "s=40 m",
+       "analysis": "由 v²-v₀²=2as，0-400=2(-5)s ⇒ s=40 m。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 2 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "物体做匀速直线运动，速度 2 m/s，3 s 内位移为",
+       "options": [
+        "3 m",
+        "6 m",
+        "2 m",
+        "5 m"
+       ],
+       "answer": "B",
+       "analysis": "s=vt=2×3=6 m。"
+      },
+      {
+       "stem": "加速度描述的是",
+       "options": [
+        "速度的大小",
+        "速度变化的快慢",
+        "位移的大小",
+        "路程的长短"
+       ],
+       "answer": "B",
+       "analysis": "加速度 a=Δv/Δt，反映速度变化快慢。"
+      },
+      {
+       "stem": "自由落体加速度 g 约为",
+       "options": [
+        "9.8 m/s²",
+        "3.0 m/s²",
+        "6.0 m/s²",
+        "1.0 m/s²"
+       ],
+       "answer": "A",
+       "analysis": "地球表面附近 g≈9.8 m/s²。"
+      },
+      {
+       "stem": "在 v-t 图像中，图线的斜率表示",
+       "options": [
+        "位移",
+        "加速度",
+        "速度",
+        "时间"
+       ],
+       "answer": "B",
+       "analysis": "v-t 图斜率 = Δv/Δt = 加速度。"
+      },
+      {
+       "stem": "物体惯性大小取决于",
+       "options": [
+        "速度",
+        "质量",
+        "加速度",
+        "受力"
+       ],
+       "answer": "B",
+       "analysis": "质量是惯性大小的唯一量度。"
+      },
+      {
+       "stem": "牛顿第一定律又被称为",
+       "options": [
+        "作用力定律",
+        "惯性定律",
+        "引力定律",
+        "平衡定律"
+       ],
+       "answer": "B",
+       "analysis": "牛顿第一定律阐明惯性，又称惯性定律。"
+      },
+      {
+       "stem": "两个力 F₁=3 N、F₂=4 N，其合力大小可能为",
+       "options": [
+        "5 N",
+        "8 N",
+        "1 N",
+        "0 N"
+       ],
+       "answer": "A",
+       "analysis": "合力范围 |F₁-F₂|~F₁+F₂ 即 1~7 N，5 N 在内。"
+      },
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "国际单位制中，长度、质量、时间的基本单位分别是 ____、____、____。",
+       "options": [],
+       "answer": "米、千克、秒",
+       "analysis": "SI 基本单位：长度—米(m)，质量—千克(kg)，时间—秒(s)。"
+      },
+      {
+       "stem": "重力加速度的方向总是 ____。",
+       "options": [],
+       "answer": "竖直向下",
+       "analysis": "重力方向竖直向下指向地心。"
+      },
+      {
+       "stem": "1 m/s = ____ km/h。",
+       "options": [],
+       "answer": "3.6",
+       "analysis": "1 m/s = 3.6 km/h。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "研究匀变速直线运动时，常通过纸带上相邻计数点的 ____ 差来计算加速度。",
+       "options": [],
+       "answer": "位移（或 Δx）",
+       "analysis": "由 Δx=aT² 可求加速度。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "一物体初速为 0，加速度 a=3 m/s²，求 4 s 末的速度。",
+       "options": [],
+       "answer": "v=12 m/s",
+       "analysis": "v=at=3×4=12 m/s。"
+      },
+      {
+       "stem": "汽车以 20 m/s 行驶，急刹车加速度 -5 m/s²，求刹车距离。",
+       "options": [],
+       "answer": "s=40 m",
+       "analysis": "由 v²-v₀²=2as，0-400=2(-5)s ⇒ s=40 m。"
+      },
+      {
+       "stem": "汽车以初速度 v₀=10 m/s 匀减速行驶，加速度大小 a=2 m/s²，求刹车到停止所需时间。",
+       "options": [],
+       "answer": "t=5 s",
+       "analysis": "由 v=v₀-at=0 得 t=v₀/a=10/2=5 s。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 3 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "加速度描述的是",
+       "options": [
+        "速度的大小",
+        "速度变化的快慢",
+        "位移的大小",
+        "路程的长短"
+       ],
+       "answer": "B",
+       "analysis": "加速度 a=Δv/Δt，反映速度变化快慢。"
+      },
+      {
+       "stem": "自由落体加速度 g 约为",
+       "options": [
+        "9.8 m/s²",
+        "3.0 m/s²",
+        "6.0 m/s²",
+        "1.0 m/s²"
+       ],
+       "answer": "A",
+       "analysis": "地球表面附近 g≈9.8 m/s²。"
+      },
+      {
+       "stem": "在 v-t 图像中，图线的斜率表示",
+       "options": [
+        "位移",
+        "加速度",
+        "速度",
+        "时间"
+       ],
+       "answer": "B",
+       "analysis": "v-t 图斜率 = Δv/Δt = 加速度。"
+      },
+      {
+       "stem": "物体惯性大小取决于",
+       "options": [
+        "速度",
+        "质量",
+        "加速度",
+        "受力"
+       ],
+       "answer": "B",
+       "analysis": "质量是惯性大小的唯一量度。"
+      },
+      {
+       "stem": "牛顿第一定律又被称为",
+       "options": [
+        "作用力定律",
+        "惯性定律",
+        "引力定律",
+        "平衡定律"
+       ],
+       "answer": "B",
+       "analysis": "牛顿第一定律阐明惯性，又称惯性定律。"
+      },
+      {
+       "stem": "两个力 F₁=3 N、F₂=4 N，其合力大小可能为",
+       "options": [
+        "5 N",
+        "8 N",
+        "1 N",
+        "0 N"
+       ],
+       "answer": "A",
+       "analysis": "合力范围 |F₁-F₂|~F₁+F₂ 即 1~7 N，5 N 在内。"
+      },
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      },
+      {
+       "stem": "速度为零的时刻，加速度",
+       "options": [
+        "一定为零",
+        "可以不为零",
+        "一定不为零",
+        "无法确定"
+       ],
+       "answer": "B",
+       "analysis": "如竖直上抛到最高点时速度为零、加速度仍为 g。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "重力加速度的方向总是 ____。",
+       "options": [],
+       "answer": "竖直向下",
+       "analysis": "重力方向竖直向下指向地心。"
+      },
+      {
+       "stem": "1 m/s = ____ km/h。",
+       "options": [],
+       "answer": "3.6",
+       "analysis": "1 m/s = 3.6 km/h。"
+      },
+      {
+       "stem": "牛顿第二定律的数学表达式为 F = ____。",
+       "options": [],
+       "answer": "ma",
+       "analysis": "F=ma，力等于质量乘加速度。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "探究小车速度随时间变化规律时，常用 ____ 记录小车运动的位移与时间。",
+       "options": [],
+       "answer": "打点计时器",
+       "analysis": "打点计时器在纸带上打点，可测位移与时间。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "汽车以 20 m/s 行驶，急刹车加速度 -5 m/s²，求刹车距离。",
+       "options": [],
+       "answer": "s=40 m",
+       "analysis": "由 v²-v₀²=2as，0-400=2(-5)s ⇒ s=40 m。"
+      },
+      {
+       "stem": "汽车以初速度 v₀=10 m/s 匀减速行驶，加速度大小 a=2 m/s²，求刹车到停止所需时间。",
+       "options": [],
+       "answer": "t=5 s",
+       "analysis": "由 v=v₀-at=0 得 t=v₀/a=10/2=5 s。"
+      },
+      {
+       "stem": "物体从静止自由下落 2 s，求下落高度（取 g=9.8 m/s²）。",
+       "options": [],
+       "answer": "h=19.6 m",
+       "analysis": "h=½gt²=½×9.8×4=19.6 m。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 4 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "自由落体加速度 g 约为",
+       "options": [
+        "9.8 m/s²",
+        "3.0 m/s²",
+        "6.0 m/s²",
+        "1.0 m/s²"
+       ],
+       "answer": "A",
+       "analysis": "地球表面附近 g≈9.8 m/s²。"
+      },
+      {
+       "stem": "在 v-t 图像中，图线的斜率表示",
+       "options": [
+        "位移",
+        "加速度",
+        "速度",
+        "时间"
+       ],
+       "answer": "B",
+       "analysis": "v-t 图斜率 = Δv/Δt = 加速度。"
+      },
+      {
+       "stem": "物体惯性大小取决于",
+       "options": [
+        "速度",
+        "质量",
+        "加速度",
+        "受力"
+       ],
+       "answer": "B",
+       "analysis": "质量是惯性大小的唯一量度。"
+      },
+      {
+       "stem": "牛顿第一定律又被称为",
+       "options": [
+        "作用力定律",
+        "惯性定律",
+        "引力定律",
+        "平衡定律"
+       ],
+       "answer": "B",
+       "analysis": "牛顿第一定律阐明惯性，又称惯性定律。"
+      },
+      {
+       "stem": "两个力 F₁=3 N、F₂=4 N，其合力大小可能为",
+       "options": [
+        "5 N",
+        "8 N",
+        "1 N",
+        "0 N"
+       ],
+       "answer": "A",
+       "analysis": "合力范围 |F₁-F₂|~F₁+F₂ 即 1~7 N，5 N 在内。"
+      },
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      },
+      {
+       "stem": "速度为零的时刻，加速度",
+       "options": [
+        "一定为零",
+        "可以不为零",
+        "一定不为零",
+        "无法确定"
+       ],
+       "answer": "B",
+       "analysis": "如竖直上抛到最高点时速度为零、加速度仍为 g。"
+      },
+      {
+       "stem": "下列单位中属于国际单位制基本单位的是",
+       "options": [
+        "牛顿",
+        "米",
+        "焦耳",
+        "瓦特"
+       ],
+       "answer": "B",
+       "analysis": "米是长度基本单位；牛顿、焦耳、瓦特均为导出单位。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "1 m/s = ____ km/h。",
+       "options": [],
+       "answer": "3.6",
+       "analysis": "1 m/s = 3.6 km/h。"
+      },
+      {
+       "stem": "牛顿第二定律的数学表达式为 F = ____。",
+       "options": [],
+       "answer": "ma",
+       "analysis": "F=ma，力等于质量乘加速度。"
+      },
+      {
+       "stem": "在匀速直线运动中，物体的加速度为 ____。",
+       "options": [],
+       "answer": "0",
+       "analysis": "速度不变，加速度为 0。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "验证力的平行四边形定则实验中使用 ____ 测量力的大小。",
+       "options": [],
+       "answer": "弹簧测力计",
+       "analysis": "用两个弹簧测力计互成角度拉橡皮条，验证合力。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "汽车以初速度 v₀=10 m/s 匀减速行驶，加速度大小 a=2 m/s²，求刹车到停止所需时间。",
+       "options": [],
+       "answer": "t=5 s",
+       "analysis": "由 v=v₀-at=0 得 t=v₀/a=10/2=5 s。"
+      },
+      {
+       "stem": "物体从静止自由下落 2 s，求下落高度（取 g=9.8 m/s²）。",
+       "options": [],
+       "answer": "h=19.6 m",
+       "analysis": "h=½gt²=½×9.8×4=19.6 m。"
+      },
+      {
+       "stem": "水平推力 F=10 N 作用在质量 m=2 kg 的物体上，求加速度。",
+       "options": [],
+       "answer": "a=5 m/s²",
+       "analysis": "由 F=ma，a=F/m=10/2=5 m/s²。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 5 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "在 v-t 图像中，图线的斜率表示",
+       "options": [
+        "位移",
+        "加速度",
+        "速度",
+        "时间"
+       ],
+       "answer": "B",
+       "analysis": "v-t 图斜率 = Δv/Δt = 加速度。"
+      },
+      {
+       "stem": "物体惯性大小取决于",
+       "options": [
+        "速度",
+        "质量",
+        "加速度",
+        "受力"
+       ],
+       "answer": "B",
+       "analysis": "质量是惯性大小的唯一量度。"
+      },
+      {
+       "stem": "牛顿第一定律又被称为",
+       "options": [
+        "作用力定律",
+        "惯性定律",
+        "引力定律",
+        "平衡定律"
+       ],
+       "answer": "B",
+       "analysis": "牛顿第一定律阐明惯性，又称惯性定律。"
+      },
+      {
+       "stem": "两个力 F₁=3 N、F₂=4 N，其合力大小可能为",
+       "options": [
+        "5 N",
+        "8 N",
+        "1 N",
+        "0 N"
+       ],
+       "answer": "A",
+       "analysis": "合力范围 |F₁-F₂|~F₁+F₂ 即 1~7 N，5 N 在内。"
+      },
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      },
+      {
+       "stem": "速度为零的时刻，加速度",
+       "options": [
+        "一定为零",
+        "可以不为零",
+        "一定不为零",
+        "无法确定"
+       ],
+       "answer": "B",
+       "analysis": "如竖直上抛到最高点时速度为零、加速度仍为 g。"
+      },
+      {
+       "stem": "下列单位中属于国际单位制基本单位的是",
+       "options": [
+        "牛顿",
+        "米",
+        "焦耳",
+        "瓦特"
+       ],
+       "answer": "B",
+       "analysis": "米是长度基本单位；牛顿、焦耳、瓦特均为导出单位。"
+      },
+      {
+       "stem": "物体做匀减速直线运动，加速度方向与速度方向",
+       "options": [
+        "相同",
+        "相反",
+        "垂直",
+        "无关"
+       ],
+       "answer": "B",
+       "analysis": "减速时加速度与速度方向相反。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "牛顿第二定律的数学表达式为 F = ____。",
+       "options": [],
+       "answer": "ma",
+       "analysis": "F=ma，力等于质量乘加速度。"
+      },
+      {
+       "stem": "在匀速直线运动中，物体的加速度为 ____。",
+       "options": [],
+       "answer": "0",
+       "analysis": "速度不变，加速度为 0。"
+      },
+      {
+       "stem": "打点计时器使用的电源若为交流 50 Hz，则打点周期为 ____ s。",
+       "options": [],
+       "answer": "0.02",
+       "analysis": "T=1/f=1/50=0.02 s。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "研究匀变速直线运动时，常通过纸带上相邻计数点的 ____ 差来计算加速度。",
+       "options": [],
+       "answer": "位移（或 Δx）",
+       "analysis": "由 Δx=aT² 可求加速度。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "物体从静止自由下落 2 s，求下落高度（取 g=9.8 m/s²）。",
+       "options": [],
+       "answer": "h=19.6 m",
+       "analysis": "h=½gt²=½×9.8×4=19.6 m。"
+      },
+      {
+       "stem": "水平推力 F=10 N 作用在质量 m=2 kg 的物体上，求加速度。",
+       "options": [],
+       "answer": "a=5 m/s²",
+       "analysis": "由 F=ma，a=F/m=10/2=5 m/s²。"
+      },
+      {
+       "stem": "物体以 v=5 m/s 做匀速直线运动，10 s 内位移多少？",
+       "options": [],
+       "answer": "s=50 m",
+       "analysis": "s=vt=5×10=50 m。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 6 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "物体惯性大小取决于",
+       "options": [
+        "速度",
+        "质量",
+        "加速度",
+        "受力"
+       ],
+       "answer": "B",
+       "analysis": "质量是惯性大小的唯一量度。"
+      },
+      {
+       "stem": "牛顿第一定律又被称为",
+       "options": [
+        "作用力定律",
+        "惯性定律",
+        "引力定律",
+        "平衡定律"
+       ],
+       "answer": "B",
+       "analysis": "牛顿第一定律阐明惯性，又称惯性定律。"
+      },
+      {
+       "stem": "两个力 F₁=3 N、F₂=4 N，其合力大小可能为",
+       "options": [
+        "5 N",
+        "8 N",
+        "1 N",
+        "0 N"
+       ],
+       "answer": "A",
+       "analysis": "合力范围 |F₁-F₂|~F₁+F₂ 即 1~7 N，5 N 在内。"
+      },
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      },
+      {
+       "stem": "速度为零的时刻，加速度",
+       "options": [
+        "一定为零",
+        "可以不为零",
+        "一定不为零",
+        "无法确定"
+       ],
+       "answer": "B",
+       "analysis": "如竖直上抛到最高点时速度为零、加速度仍为 g。"
+      },
+      {
+       "stem": "下列单位中属于国际单位制基本单位的是",
+       "options": [
+        "牛顿",
+        "米",
+        "焦耳",
+        "瓦特"
+       ],
+       "answer": "B",
+       "analysis": "米是长度基本单位；牛顿、焦耳、瓦特均为导出单位。"
+      },
+      {
+       "stem": "物体做匀减速直线运动，加速度方向与速度方向",
+       "options": [
+        "相同",
+        "相反",
+        "垂直",
+        "无关"
+       ],
+       "answer": "B",
+       "analysis": "减速时加速度与速度方向相反。"
+      },
+      {
+       "stem": "下列物理量中属于标量的是",
+       "options": [
+        "位移",
+        "速度",
+        "加速度",
+        "时间"
+       ],
+       "answer": "D",
+       "analysis": "时间只有大小无方向，是标量。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "在匀速直线运动中，物体的加速度为 ____。",
+       "options": [],
+       "answer": "0",
+       "analysis": "速度不变，加速度为 0。"
+      },
+      {
+       "stem": "打点计时器使用的电源若为交流 50 Hz，则打点周期为 ____ s。",
+       "options": [],
+       "answer": "0.02",
+       "analysis": "T=1/f=1/50=0.02 s。"
+      },
+      {
+       "stem": "国际单位制中，长度、质量、时间的基本单位分别是 ____、____、____。",
+       "options": [],
+       "answer": "米、千克、秒",
+       "analysis": "SI 基本单位：长度—米(m)，质量—千克(kg)，时间—秒(s)。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "探究小车速度随时间变化规律时，常用 ____ 记录小车运动的位移与时间。",
+       "options": [],
+       "answer": "打点计时器",
+       "analysis": "打点计时器在纸带上打点，可测位移与时间。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "水平推力 F=10 N 作用在质量 m=2 kg 的物体上，求加速度。",
+       "options": [],
+       "answer": "a=5 m/s²",
+       "analysis": "由 F=ma，a=F/m=10/2=5 m/s²。"
+      },
+      {
+       "stem": "物体以 v=5 m/s 做匀速直线运动，10 s 内位移多少？",
+       "options": [],
+       "answer": "s=50 m",
+       "analysis": "s=vt=5×10=50 m。"
+      },
+      {
+       "stem": "一物体初速为 0，加速度 a=3 m/s²，求 4 s 末的速度。",
+       "options": [],
+       "answer": "v=12 m/s",
+       "analysis": "v=at=3×4=12 m/s。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 7 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "牛顿第一定律又被称为",
+       "options": [
+        "作用力定律",
+        "惯性定律",
+        "引力定律",
+        "平衡定律"
+       ],
+       "answer": "B",
+       "analysis": "牛顿第一定律阐明惯性，又称惯性定律。"
+      },
+      {
+       "stem": "两个力 F₁=3 N、F₂=4 N，其合力大小可能为",
+       "options": [
+        "5 N",
+        "8 N",
+        "1 N",
+        "0 N"
+       ],
+       "answer": "A",
+       "analysis": "合力范围 |F₁-F₂|~F₁+F₂ 即 1~7 N，5 N 在内。"
+      },
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      },
+      {
+       "stem": "速度为零的时刻，加速度",
+       "options": [
+        "一定为零",
+        "可以不为零",
+        "一定不为零",
+        "无法确定"
+       ],
+       "answer": "B",
+       "analysis": "如竖直上抛到最高点时速度为零、加速度仍为 g。"
+      },
+      {
+       "stem": "下列单位中属于国际单位制基本单位的是",
+       "options": [
+        "牛顿",
+        "米",
+        "焦耳",
+        "瓦特"
+       ],
+       "answer": "B",
+       "analysis": "米是长度基本单位；牛顿、焦耳、瓦特均为导出单位。"
+      },
+      {
+       "stem": "物体做匀减速直线运动，加速度方向与速度方向",
+       "options": [
+        "相同",
+        "相反",
+        "垂直",
+        "无关"
+       ],
+       "answer": "B",
+       "analysis": "减速时加速度与速度方向相反。"
+      },
+      {
+       "stem": "下列物理量中属于标量的是",
+       "options": [
+        "位移",
+        "速度",
+        "加速度",
+        "时间"
+       ],
+       "answer": "D",
+       "analysis": "时间只有大小无方向，是标量。"
+      },
+      {
+       "stem": "物体做匀速直线运动，速度 2 m/s，3 s 内位移为",
+       "options": [
+        "3 m",
+        "6 m",
+        "2 m",
+        "5 m"
+       ],
+       "answer": "B",
+       "analysis": "s=vt=2×3=6 m。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "打点计时器使用的电源若为交流 50 Hz，则打点周期为 ____ s。",
+       "options": [],
+       "answer": "0.02",
+       "analysis": "T=1/f=1/50=0.02 s。"
+      },
+      {
+       "stem": "国际单位制中，长度、质量、时间的基本单位分别是 ____、____、____。",
+       "options": [],
+       "answer": "米、千克、秒",
+       "analysis": "SI 基本单位：长度—米(m)，质量—千克(kg)，时间—秒(s)。"
+      },
+      {
+       "stem": "重力加速度的方向总是 ____。",
+       "options": [],
+       "answer": "竖直向下",
+       "analysis": "重力方向竖直向下指向地心。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "验证力的平行四边形定则实验中使用 ____ 测量力的大小。",
+       "options": [],
+       "answer": "弹簧测力计",
+       "analysis": "用两个弹簧测力计互成角度拉橡皮条，验证合力。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "物体以 v=5 m/s 做匀速直线运动，10 s 内位移多少？",
+       "options": [],
+       "answer": "s=50 m",
+       "analysis": "s=vt=5×10=50 m。"
+      },
+      {
+       "stem": "一物体初速为 0，加速度 a=3 m/s²，求 4 s 末的速度。",
+       "options": [],
+       "answer": "v=12 m/s",
+       "analysis": "v=at=3×4=12 m/s。"
+      },
+      {
+       "stem": "汽车以 20 m/s 行驶，急刹车加速度 -5 m/s²，求刹车距离。",
+       "options": [],
+       "answer": "s=40 m",
+       "analysis": "由 v²-v₀²=2as，0-400=2(-5)s ⇒ s=40 m。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 8 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "两个力 F₁=3 N、F₂=4 N，其合力大小可能为",
+       "options": [
+        "5 N",
+        "8 N",
+        "1 N",
+        "0 N"
+       ],
+       "answer": "A",
+       "analysis": "合力范围 |F₁-F₂|~F₁+F₂ 即 1~7 N，5 N 在内。"
+      },
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      },
+      {
+       "stem": "速度为零的时刻，加速度",
+       "options": [
+        "一定为零",
+        "可以不为零",
+        "一定不为零",
+        "无法确定"
+       ],
+       "answer": "B",
+       "analysis": "如竖直上抛到最高点时速度为零、加速度仍为 g。"
+      },
+      {
+       "stem": "下列单位中属于国际单位制基本单位的是",
+       "options": [
+        "牛顿",
+        "米",
+        "焦耳",
+        "瓦特"
+       ],
+       "answer": "B",
+       "analysis": "米是长度基本单位；牛顿、焦耳、瓦特均为导出单位。"
+      },
+      {
+       "stem": "物体做匀减速直线运动，加速度方向与速度方向",
+       "options": [
+        "相同",
+        "相反",
+        "垂直",
+        "无关"
+       ],
+       "answer": "B",
+       "analysis": "减速时加速度与速度方向相反。"
+      },
+      {
+       "stem": "下列物理量中属于标量的是",
+       "options": [
+        "位移",
+        "速度",
+        "加速度",
+        "时间"
+       ],
+       "answer": "D",
+       "analysis": "时间只有大小无方向，是标量。"
+      },
+      {
+       "stem": "物体做匀速直线运动，速度 2 m/s，3 s 内位移为",
+       "options": [
+        "3 m",
+        "6 m",
+        "2 m",
+        "5 m"
+       ],
+       "answer": "B",
+       "analysis": "s=vt=2×3=6 m。"
+      },
+      {
+       "stem": "加速度描述的是",
+       "options": [
+        "速度的大小",
+        "速度变化的快慢",
+        "位移的大小",
+        "路程的长短"
+       ],
+       "answer": "B",
+       "analysis": "加速度 a=Δv/Δt，反映速度变化快慢。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "国际单位制中，长度、质量、时间的基本单位分别是 ____、____、____。",
+       "options": [],
+       "answer": "米、千克、秒",
+       "analysis": "SI 基本单位：长度—米(m)，质量—千克(kg)，时间—秒(s)。"
+      },
+      {
+       "stem": "重力加速度的方向总是 ____。",
+       "options": [],
+       "answer": "竖直向下",
+       "analysis": "重力方向竖直向下指向地心。"
+      },
+      {
+       "stem": "1 m/s = ____ km/h。",
+       "options": [],
+       "answer": "3.6",
+       "analysis": "1 m/s = 3.6 km/h。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "研究匀变速直线运动时，常通过纸带上相邻计数点的 ____ 差来计算加速度。",
+       "options": [],
+       "answer": "位移（或 Δx）",
+       "analysis": "由 Δx=aT² 可求加速度。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "一物体初速为 0，加速度 a=3 m/s²，求 4 s 末的速度。",
+       "options": [],
+       "answer": "v=12 m/s",
+       "analysis": "v=at=3×4=12 m/s。"
+      },
+      {
+       "stem": "汽车以 20 m/s 行驶，急刹车加速度 -5 m/s²，求刹车距离。",
+       "options": [],
+       "answer": "s=40 m",
+       "analysis": "由 v²-v₀²=2as，0-400=2(-5)s ⇒ s=40 m。"
+      },
+      {
+       "stem": "汽车以初速度 v₀=10 m/s 匀减速行驶，加速度大小 a=2 m/s²，求刹车到停止所需时间。",
+       "options": [],
+       "answer": "t=5 s",
+       "analysis": "由 v=v₀-at=0 得 t=v₀/a=10/2=5 s。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 9 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "滑动摩擦力的方向",
+       "options": [
+        "与运动方向相同",
+        "与相对运动方向相反",
+        "总竖直向上",
+        "总水平向左"
+       ],
+       "answer": "B",
+       "analysis": "摩擦力总是阻碍相对运动，与相对运动方向相反。"
+      },
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      },
+      {
+       "stem": "速度为零的时刻，加速度",
+       "options": [
+        "一定为零",
+        "可以不为零",
+        "一定不为零",
+        "无法确定"
+       ],
+       "answer": "B",
+       "analysis": "如竖直上抛到最高点时速度为零、加速度仍为 g。"
+      },
+      {
+       "stem": "下列单位中属于国际单位制基本单位的是",
+       "options": [
+        "牛顿",
+        "米",
+        "焦耳",
+        "瓦特"
+       ],
+       "answer": "B",
+       "analysis": "米是长度基本单位；牛顿、焦耳、瓦特均为导出单位。"
+      },
+      {
+       "stem": "物体做匀减速直线运动，加速度方向与速度方向",
+       "options": [
+        "相同",
+        "相反",
+        "垂直",
+        "无关"
+       ],
+       "answer": "B",
+       "analysis": "减速时加速度与速度方向相反。"
+      },
+      {
+       "stem": "下列物理量中属于标量的是",
+       "options": [
+        "位移",
+        "速度",
+        "加速度",
+        "时间"
+       ],
+       "answer": "D",
+       "analysis": "时间只有大小无方向，是标量。"
+      },
+      {
+       "stem": "物体做匀速直线运动，速度 2 m/s，3 s 内位移为",
+       "options": [
+        "3 m",
+        "6 m",
+        "2 m",
+        "5 m"
+       ],
+       "answer": "B",
+       "analysis": "s=vt=2×3=6 m。"
+      },
+      {
+       "stem": "加速度描述的是",
+       "options": [
+        "速度的大小",
+        "速度变化的快慢",
+        "位移的大小",
+        "路程的长短"
+       ],
+       "answer": "B",
+       "analysis": "加速度 a=Δv/Δt，反映速度变化快慢。"
+      },
+      {
+       "stem": "自由落体加速度 g 约为",
+       "options": [
+        "9.8 m/s²",
+        "3.0 m/s²",
+        "6.0 m/s²",
+        "1.0 m/s²"
+       ],
+       "answer": "A",
+       "analysis": "地球表面附近 g≈9.8 m/s²。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "重力加速度的方向总是 ____。",
+       "options": [],
+       "answer": "竖直向下",
+       "analysis": "重力方向竖直向下指向地心。"
+      },
+      {
+       "stem": "1 m/s = ____ km/h。",
+       "options": [],
+       "answer": "3.6",
+       "analysis": "1 m/s = 3.6 km/h。"
+      },
+      {
+       "stem": "牛顿第二定律的数学表达式为 F = ____。",
+       "options": [],
+       "answer": "ma",
+       "analysis": "F=ma，力等于质量乘加速度。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "探究小车速度随时间变化规律时，常用 ____ 记录小车运动的位移与时间。",
+       "options": [],
+       "answer": "打点计时器",
+       "analysis": "打点计时器在纸带上打点，可测位移与时间。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "汽车以 20 m/s 行驶，急刹车加速度 -5 m/s²，求刹车距离。",
+       "options": [],
+       "answer": "s=40 m",
+       "analysis": "由 v²-v₀²=2as，0-400=2(-5)s ⇒ s=40 m。"
+      },
+      {
+       "stem": "汽车以初速度 v₀=10 m/s 匀减速行驶，加速度大小 a=2 m/s²，求刹车到停止所需时间。",
+       "options": [],
+       "answer": "t=5 s",
+       "analysis": "由 v=v₀-at=0 得 t=v₀/a=10/2=5 s。"
+      },
+      {
+       "stem": "物体从静止自由下落 2 s，求下落高度（取 g=9.8 m/s²）。",
+       "options": [],
+       "answer": "h=19.6 m",
+       "analysis": "h=½gt²=½×9.8×4=19.6 m。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "物理 模拟训练卷（第 10 套）",
+   "meta": "物理 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 10 题，50 分）",
+     "items": [
+      {
+       "stem": "研究地球绕太阳公转时，地球可视为",
+       "options": [
+        "质点",
+        "刚体",
+        "流体",
+        "不能简化"
+       ],
+       "answer": "A",
+       "analysis": "地球大小相对轨道半径可忽略，可视为质点。"
+      },
+      {
+       "stem": "匀加速直线运动位移公式为",
+       "options": [
+        "s=v₀t+½at²",
+        "s=v₀t",
+        "s=½at²",
+        "s=v₀+a"
+       ],
+       "answer": "A",
+       "analysis": "初速不为零的匀加速位移公式。"
+      },
+      {
+       "stem": "速度为零的时刻，加速度",
+       "options": [
+        "一定为零",
+        "可以不为零",
+        "一定不为零",
+        "无法确定"
+       ],
+       "answer": "B",
+       "analysis": "如竖直上抛到最高点时速度为零、加速度仍为 g。"
+      },
+      {
+       "stem": "下列单位中属于国际单位制基本单位的是",
+       "options": [
+        "牛顿",
+        "米",
+        "焦耳",
+        "瓦特"
+       ],
+       "answer": "B",
+       "analysis": "米是长度基本单位；牛顿、焦耳、瓦特均为导出单位。"
+      },
+      {
+       "stem": "物体做匀减速直线运动，加速度方向与速度方向",
+       "options": [
+        "相同",
+        "相反",
+        "垂直",
+        "无关"
+       ],
+       "answer": "B",
+       "analysis": "减速时加速度与速度方向相反。"
+      },
+      {
+       "stem": "下列物理量中属于标量的是",
+       "options": [
+        "位移",
+        "速度",
+        "加速度",
+        "时间"
+       ],
+       "answer": "D",
+       "analysis": "时间只有大小无方向，是标量。"
+      },
+      {
+       "stem": "物体做匀速直线运动，速度 2 m/s，3 s 内位移为",
+       "options": [
+        "3 m",
+        "6 m",
+        "2 m",
+        "5 m"
+       ],
+       "answer": "B",
+       "analysis": "s=vt=2×3=6 m。"
+      },
+      {
+       "stem": "加速度描述的是",
+       "options": [
+        "速度的大小",
+        "速度变化的快慢",
+        "位移的大小",
+        "路程的长短"
+       ],
+       "answer": "B",
+       "analysis": "加速度 a=Δv/Δt，反映速度变化快慢。"
+      },
+      {
+       "stem": "自由落体加速度 g 约为",
+       "options": [
+        "9.8 m/s²",
+        "3.0 m/s²",
+        "6.0 m/s²",
+        "1.0 m/s²"
+       ],
+       "answer": "A",
+       "analysis": "地球表面附近 g≈9.8 m/s²。"
+      },
+      {
+       "stem": "在 v-t 图像中，图线的斜率表示",
+       "options": [
+        "位移",
+        "加速度",
+        "速度",
+        "时间"
+       ],
+       "answer": "B",
+       "analysis": "v-t 图斜率 = Δv/Δt = 加速度。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 3 题，12 分）",
+     "items": [
+      {
+       "stem": "1 m/s = ____ km/h。",
+       "options": [],
+       "answer": "3.6",
+       "analysis": "1 m/s = 3.6 km/h。"
+      },
+      {
+       "stem": "牛顿第二定律的数学表达式为 F = ____。",
+       "options": [],
+       "answer": "ma",
+       "analysis": "F=ma，力等于质量乘加速度。"
+      },
+      {
+       "stem": "在匀速直线运动中，物体的加速度为 ____。",
+       "options": [],
+       "answer": "0",
+       "analysis": "速度不变，加速度为 0。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "验证力的平行四边形定则实验中使用 ____ 测量力的大小。",
+       "options": [],
+       "answer": "弹簧测力计",
+       "analysis": "用两个弹簧测力计互成角度拉橡皮条，验证合力。"
+      }
+     ]
+    },
+    {
+     "name": "四、计算与解答题（共 3 题，36 分）",
+     "items": [
+      {
+       "stem": "汽车以初速度 v₀=10 m/s 匀减速行驶，加速度大小 a=2 m/s²，求刹车到停止所需时间。",
+       "options": [],
+       "answer": "t=5 s",
+       "analysis": "由 v=v₀-at=0 得 t=v₀/a=10/2=5 s。"
+      },
+      {
+       "stem": "物体从静止自由下落 2 s，求下落高度（取 g=9.8 m/s²）。",
+       "options": [],
+       "answer": "h=19.6 m",
+       "analysis": "h=½gt²=½×9.8×4=19.6 m。"
+      },
+      {
+       "stem": "水平推力 F=10 N 作用在质量 m=2 kg 的物体上，求加速度。",
+       "options": [],
+       "answer": "a=5 m/s²",
+       "analysis": "由 F=ma，a=F/m=10/2=5 m/s²。"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "化学": [
+  {
+   "title": "化学 模拟训练卷（第 1 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "下列物质属于纯净物的是",
+       "options": [
+        "空气",
+        "食盐水",
+        "蒸馏水",
+        "石油"
+       ],
+       "answer": "C",
+       "analysis": "蒸馏水只含水分子，是纯净物。"
+      },
+      {
+       "stem": "下列物质属于电解质的是",
+       "options": [
+        "蔗糖",
+        "NaCl",
+        "酒精",
+        "铜"
+       ],
+       "answer": "B",
+       "analysis": "NaCl 在熔融或水溶液能导电，是电解质。"
+      },
+      {
+       "stem": "离子方程式 H⁺+OH⁻=H₂O 可表示的反应是",
+       "options": [
+        "弱酸中和",
+        "强酸强碱中和",
+        "金属置换",
+        "氧化还原反应"
+       ],
+       "answer": "B",
+       "analysis": "强酸强碱生成可溶性盐的中和均可用此式表示。"
+      },
+      {
+       "stem": "氧化还原反应的实质是",
+       "options": [
+        "元素化合价变化",
+        "电子转移",
+        "生成气体",
+        "放热"
+       ],
+       "answer": "B",
+       "analysis": "本质是有电子的转移（得失或偏移）。"
+      },
+      {
+       "stem": "还原剂在反应中",
+       "options": [
+        "被还原",
+        "被氧化",
+        "化合价降低",
+        "得电子"
+       ],
+       "answer": "B",
+       "analysis": "还原剂失电子，化合价升高，被氧化。"
+      },
+      {
+       "stem": "下列各组离子能大量共存的是",
+       "options": [
+        "Na⁺、K⁺、Cl⁻、NO₃⁻",
+        "Ag⁺、Cl⁻、Na⁺、NO₃⁻",
+        "Ba²⁺、SO₄²⁻、K⁺",
+        "H⁺、CO₃²⁻、Na⁺"
+       ],
+       "answer": "A",
+       "analysis": "B 生成 AgCl↓，C 生成 BaSO₄↓，D 生成 CO₂，均不共存。"
+      },
+      {
+       "stem": "钠与水反应的现象中错误的是",
+       "options": [
+        "熔成小球",
+        "浮在水面",
+        "四处游动",
+        "沉入水底"
+       ],
+       "answer": "D",
+       "analysis": "钠密度小于水，应浮在水面。"
+      },
+      {
+       "stem": "标准状况下，22.4 L 任何气体的物质的量约为",
+       "options": [
+        "0.5 mol",
+        "1 mol",
+        "2 mol",
+        "22.4 mol"
+       ],
+       "answer": "B",
+       "analysis": "标准状况气体摩尔体积 22.4 L/mol。"
+      },
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "在氧化还原反应中，化合价升高的物质被 ____。",
+       "options": [],
+       "answer": "氧化",
+       "analysis": "失电子、化合价升高 → 被氧化。"
+      },
+      {
+       "stem": "配制 0.1 mol/L 的 NaCl 溶液 100 mL，需称量 NaCl ____ g（M=58.5）。",
+       "options": [],
+       "answer": "0.585",
+       "analysis": "m=nM=cVM=0.1×0.1×58.5=0.585 g。"
+      },
+      {
+       "stem": "除去 NaCl 溶液中少量 Na₂SO₄，可加入适量 ____ 溶液后过滤。",
+       "options": [],
+       "answer": "BaCl₂",
+       "analysis": "Ba²⁺+SO₄²⁻=BaSO₄↓，除去硫酸根。"
+      },
+      {
+       "stem": "物质的量的单位是 ____。",
+       "options": [],
+       "answer": "mol",
+       "analysis": "物质的量单位为摩尔，符号 mol。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "用 pH 试纸测定溶液酸碱度时，不可用 ____ 直接蘸取待测液。",
+       "options": [],
+       "answer": "湿润的试纸（或手）",
+       "analysis": "应取干燥 pH 试纸，用玻璃棒蘸取点滴于试纸。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "除去 NaCl 中混有的 Na₂SO₄，写出所加试剂及相关离子方程式。",
+       "options": [],
+       "answer": "加 BaCl₂；Ba²⁺+SO₄²⁻=BaSO₄↓",
+       "analysis": "Ba²⁺ 与 SO₄²⁻ 生成难溶 BaSO₄ 除去硫酸根。"
+      },
+      {
+       "stem": "配平并写出加热 KMnO₄ 分解制 O₂ 的方程式。",
+       "options": [],
+       "answer": "2KMnO₄=K₂MnO₄+MnO₂+O₂↑",
+       "analysis": "锰元素化合价变化，氧以 O₂ 放出。"
+      },
+      {
+       "stem": "某溶液加 AgNO₃ 和稀 HNO₃ 生成白色沉淀，说明含什么离子？写出离子方程式。",
+       "options": [],
+       "answer": "含 Cl⁻；Ag⁺+Cl⁻=AgCl↓",
+       "analysis": "白色沉淀不溶于稀硝酸，特征检验 Cl⁻。"
+      },
+      {
+       "stem": "计算 5.85 g NaCl（M=58.5 g/mol）的物质的量。",
+       "options": [],
+       "answer": "n=0.1 mol",
+       "analysis": "n=m/M=5.85/58.5=0.1 mol。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 2 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "下列物质属于电解质的是",
+       "options": [
+        "蔗糖",
+        "NaCl",
+        "酒精",
+        "铜"
+       ],
+       "answer": "B",
+       "analysis": "NaCl 在熔融或水溶液能导电，是电解质。"
+      },
+      {
+       "stem": "离子方程式 H⁺+OH⁻=H₂O 可表示的反应是",
+       "options": [
+        "弱酸中和",
+        "强酸强碱中和",
+        "金属置换",
+        "氧化还原反应"
+       ],
+       "answer": "B",
+       "analysis": "强酸强碱生成可溶性盐的中和均可用此式表示。"
+      },
+      {
+       "stem": "氧化还原反应的实质是",
+       "options": [
+        "元素化合价变化",
+        "电子转移",
+        "生成气体",
+        "放热"
+       ],
+       "answer": "B",
+       "analysis": "本质是有电子的转移（得失或偏移）。"
+      },
+      {
+       "stem": "还原剂在反应中",
+       "options": [
+        "被还原",
+        "被氧化",
+        "化合价降低",
+        "得电子"
+       ],
+       "answer": "B",
+       "analysis": "还原剂失电子，化合价升高，被氧化。"
+      },
+      {
+       "stem": "下列各组离子能大量共存的是",
+       "options": [
+        "Na⁺、K⁺、Cl⁻、NO₃⁻",
+        "Ag⁺、Cl⁻、Na⁺、NO₃⁻",
+        "Ba²⁺、SO₄²⁻、K⁺",
+        "H⁺、CO₃²⁻、Na⁺"
+       ],
+       "answer": "A",
+       "analysis": "B 生成 AgCl↓，C 生成 BaSO₄↓，D 生成 CO₂，均不共存。"
+      },
+      {
+       "stem": "钠与水反应的现象中错误的是",
+       "options": [
+        "熔成小球",
+        "浮在水面",
+        "四处游动",
+        "沉入水底"
+       ],
+       "answer": "D",
+       "analysis": "钠密度小于水，应浮在水面。"
+      },
+      {
+       "stem": "标准状况下，22.4 L 任何气体的物质的量约为",
+       "options": [
+        "0.5 mol",
+        "1 mol",
+        "2 mol",
+        "22.4 mol"
+       ],
+       "answer": "B",
+       "analysis": "标准状况气体摩尔体积 22.4 L/mol。"
+      },
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "配制 0.1 mol/L 的 NaCl 溶液 100 mL，需称量 NaCl ____ g（M=58.5）。",
+       "options": [],
+       "answer": "0.585",
+       "analysis": "m=nM=cVM=0.1×0.1×58.5=0.585 g。"
+      },
+      {
+       "stem": "除去 NaCl 溶液中少量 Na₂SO₄，可加入适量 ____ 溶液后过滤。",
+       "options": [],
+       "answer": "BaCl₂",
+       "analysis": "Ba²⁺+SO₄²⁻=BaSO₄↓，除去硫酸根。"
+      },
+      {
+       "stem": "物质的量的单位是 ____。",
+       "options": [],
+       "answer": "mol",
+       "analysis": "物质的量单位为摩尔，符号 mol。"
+      },
+      {
+       "stem": "标准状况下气体摩尔体积约为 ____。",
+       "options": [],
+       "answer": "22.4 L/mol",
+       "analysis": "标准状况（0℃、101 kPa）下 Vm≈22.4 L/mol。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "蒸馏实验中，温度计水银球应位于蒸馏烧瓶 ____ 处。",
+       "options": [],
+       "answer": "支管口",
+       "analysis": "测蒸气温度，水银球与支管口相平。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "配平并写出加热 KMnO₄ 分解制 O₂ 的方程式。",
+       "options": [],
+       "answer": "2KMnO₄=K₂MnO₄+MnO₂+O₂↑",
+       "analysis": "锰元素化合价变化，氧以 O₂ 放出。"
+      },
+      {
+       "stem": "某溶液加 AgNO₃ 和稀 HNO₃ 生成白色沉淀，说明含什么离子？写出离子方程式。",
+       "options": [],
+       "answer": "含 Cl⁻；Ag⁺+Cl⁻=AgCl↓",
+       "analysis": "白色沉淀不溶于稀硝酸，特征检验 Cl⁻。"
+      },
+      {
+       "stem": "计算 5.85 g NaCl（M=58.5 g/mol）的物质的量。",
+       "options": [],
+       "answer": "n=0.1 mol",
+       "analysis": "n=m/M=5.85/58.5=0.1 mol。"
+      },
+      {
+       "stem": "标况下 3.36 L CO₂ 的物质的量及质量（M=44）各是多少？",
+       "options": [],
+       "answer": "n=0.15 mol，m=6.6 g",
+       "analysis": "n=3.36/22.4=0.15 mol；m=0.15×44=6.6 g。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 3 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "离子方程式 H⁺+OH⁻=H₂O 可表示的反应是",
+       "options": [
+        "弱酸中和",
+        "强酸强碱中和",
+        "金属置换",
+        "氧化还原反应"
+       ],
+       "answer": "B",
+       "analysis": "强酸强碱生成可溶性盐的中和均可用此式表示。"
+      },
+      {
+       "stem": "氧化还原反应的实质是",
+       "options": [
+        "元素化合价变化",
+        "电子转移",
+        "生成气体",
+        "放热"
+       ],
+       "answer": "B",
+       "analysis": "本质是有电子的转移（得失或偏移）。"
+      },
+      {
+       "stem": "还原剂在反应中",
+       "options": [
+        "被还原",
+        "被氧化",
+        "化合价降低",
+        "得电子"
+       ],
+       "answer": "B",
+       "analysis": "还原剂失电子，化合价升高，被氧化。"
+      },
+      {
+       "stem": "下列各组离子能大量共存的是",
+       "options": [
+        "Na⁺、K⁺、Cl⁻、NO₃⁻",
+        "Ag⁺、Cl⁻、Na⁺、NO₃⁻",
+        "Ba²⁺、SO₄²⁻、K⁺",
+        "H⁺、CO₃²⁻、Na⁺"
+       ],
+       "answer": "A",
+       "analysis": "B 生成 AgCl↓，C 生成 BaSO₄↓，D 生成 CO₂，均不共存。"
+      },
+      {
+       "stem": "钠与水反应的现象中错误的是",
+       "options": [
+        "熔成小球",
+        "浮在水面",
+        "四处游动",
+        "沉入水底"
+       ],
+       "answer": "D",
+       "analysis": "钠密度小于水，应浮在水面。"
+      },
+      {
+       "stem": "标准状况下，22.4 L 任何气体的物质的量约为",
+       "options": [
+        "0.5 mol",
+        "1 mol",
+        "2 mol",
+        "22.4 mol"
+       ],
+       "answer": "B",
+       "analysis": "标准状况气体摩尔体积 22.4 L/mol。"
+      },
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      },
+      {
+       "stem": "检验 Cl⁻ 常用的试剂是",
+       "options": [
+        "AgNO₃ 和稀 HNO₃",
+        "BaCl₂",
+        "盐酸",
+        "石蕊"
+       ],
+       "answer": "A",
+       "analysis": "Ag⁺+Cl⁻=AgCl↓（白），不溶于稀硝酸。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "除去 NaCl 溶液中少量 Na₂SO₄，可加入适量 ____ 溶液后过滤。",
+       "options": [],
+       "answer": "BaCl₂",
+       "analysis": "Ba²⁺+SO₄²⁻=BaSO₄↓，除去硫酸根。"
+      },
+      {
+       "stem": "物质的量的单位是 ____。",
+       "options": [],
+       "answer": "mol",
+       "analysis": "物质的量单位为摩尔，符号 mol。"
+      },
+      {
+       "stem": "标准状况下气体摩尔体积约为 ____。",
+       "options": [],
+       "answer": "22.4 L/mol",
+       "analysis": "标准状况（0℃、101 kPa）下 Vm≈22.4 L/mol。"
+      },
+      {
+       "stem": "离子反应发生的条件通常是生成 ____、____ 或弱电解质。",
+       "options": [],
+       "answer": "沉淀、气体",
+       "analysis": "离子反应趋向生成更难溶、更易逸出或难电离的物质。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "焰色试验中，钠元素火焰呈 ____ 色，钾元素需透过 ____ 观察呈紫色。",
+       "options": [],
+       "answer": "黄、蓝色钴玻璃",
+       "analysis": "钠黄、钾紫（钴玻璃滤去钠黄光干扰）。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "某溶液加 AgNO₃ 和稀 HNO₃ 生成白色沉淀，说明含什么离子？写出离子方程式。",
+       "options": [],
+       "answer": "含 Cl⁻；Ag⁺+Cl⁻=AgCl↓",
+       "analysis": "白色沉淀不溶于稀硝酸，特征检验 Cl⁻。"
+      },
+      {
+       "stem": "计算 5.85 g NaCl（M=58.5 g/mol）的物质的量。",
+       "options": [],
+       "answer": "n=0.1 mol",
+       "analysis": "n=m/M=5.85/58.5=0.1 mol。"
+      },
+      {
+       "stem": "标况下 3.36 L CO₂ 的物质的量及质量（M=44）各是多少？",
+       "options": [],
+       "answer": "n=0.15 mol，m=6.6 g",
+       "analysis": "n=3.36/22.4=0.15 mol；m=0.15×44=6.6 g。"
+      },
+      {
+       "stem": "写出钠与水反应的化学方程式。",
+       "options": [],
+       "answer": "2Na+2H₂O=2NaOH+H₂↑",
+       "analysis": "钠置换水中氢，生成 NaOH 与 H₂。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 4 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "氧化还原反应的实质是",
+       "options": [
+        "元素化合价变化",
+        "电子转移",
+        "生成气体",
+        "放热"
+       ],
+       "answer": "B",
+       "analysis": "本质是有电子的转移（得失或偏移）。"
+      },
+      {
+       "stem": "还原剂在反应中",
+       "options": [
+        "被还原",
+        "被氧化",
+        "化合价降低",
+        "得电子"
+       ],
+       "answer": "B",
+       "analysis": "还原剂失电子，化合价升高，被氧化。"
+      },
+      {
+       "stem": "下列各组离子能大量共存的是",
+       "options": [
+        "Na⁺、K⁺、Cl⁻、NO₃⁻",
+        "Ag⁺、Cl⁻、Na⁺、NO₃⁻",
+        "Ba²⁺、SO₄²⁻、K⁺",
+        "H⁺、CO₃²⁻、Na⁺"
+       ],
+       "answer": "A",
+       "analysis": "B 生成 AgCl↓，C 生成 BaSO₄↓，D 生成 CO₂，均不共存。"
+      },
+      {
+       "stem": "钠与水反应的现象中错误的是",
+       "options": [
+        "熔成小球",
+        "浮在水面",
+        "四处游动",
+        "沉入水底"
+       ],
+       "answer": "D",
+       "analysis": "钠密度小于水，应浮在水面。"
+      },
+      {
+       "stem": "标准状况下，22.4 L 任何气体的物质的量约为",
+       "options": [
+        "0.5 mol",
+        "1 mol",
+        "2 mol",
+        "22.4 mol"
+       ],
+       "answer": "B",
+       "analysis": "标准状况气体摩尔体积 22.4 L/mol。"
+      },
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      },
+      {
+       "stem": "检验 Cl⁻ 常用的试剂是",
+       "options": [
+        "AgNO₃ 和稀 HNO₃",
+        "BaCl₂",
+        "盐酸",
+        "石蕊"
+       ],
+       "answer": "A",
+       "analysis": "Ag⁺+Cl⁻=AgCl↓（白），不溶于稀硝酸。"
+      },
+      {
+       "stem": "物质的量及其单位的符号是",
+       "options": [
+        "mol、n",
+        "M、m",
+        "V、v",
+        "T、t"
+       ],
+       "answer": "A",
+       "analysis": "物质的量符号 n，单位 mol。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "物质的量的单位是 ____。",
+       "options": [],
+       "answer": "mol",
+       "analysis": "物质的量单位为摩尔，符号 mol。"
+      },
+      {
+       "stem": "标准状况下气体摩尔体积约为 ____。",
+       "options": [],
+       "answer": "22.4 L/mol",
+       "analysis": "标准状况（0℃、101 kPa）下 Vm≈22.4 L/mol。"
+      },
+      {
+       "stem": "离子反应发生的条件通常是生成 ____、____ 或弱电解质。",
+       "options": [],
+       "answer": "沉淀、气体",
+       "analysis": "离子反应趋向生成更难溶、更易逸出或难电离的物质。"
+      },
+      {
+       "stem": "金属钠通常保存在 ____ 中。",
+       "options": [],
+       "answer": "煤油（或石蜡油）",
+       "analysis": "钠易与空气、水反应，密度大于煤油，故存于煤油隔绝空气。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "检验溶液中是否含 SO₄²⁻，应先加 ____，再加 BaCl₂ 溶液。",
+       "options": [],
+       "answer": "稀盐酸",
+       "analysis": "先加盐酸排除 CO₃²⁻、SO₃²⁻ 等干扰，再生成 BaSO₄ 白沉淀。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "计算 5.85 g NaCl（M=58.5 g/mol）的物质的量。",
+       "options": [],
+       "answer": "n=0.1 mol",
+       "analysis": "n=m/M=5.85/58.5=0.1 mol。"
+      },
+      {
+       "stem": "标况下 3.36 L CO₂ 的物质的量及质量（M=44）各是多少？",
+       "options": [],
+       "answer": "n=0.15 mol，m=6.6 g",
+       "analysis": "n=3.36/22.4=0.15 mol；m=0.15×44=6.6 g。"
+      },
+      {
+       "stem": "写出钠与水反应的化学方程式。",
+       "options": [],
+       "answer": "2Na+2H₂O=2NaOH+H₂↑",
+       "analysis": "钠置换水中氢，生成 NaOH 与 H₂。"
+      },
+      {
+       "stem": "除去 NaCl 中混有的 Na₂SO₄，写出所加试剂及相关离子方程式。",
+       "options": [],
+       "answer": "加 BaCl₂；Ba²⁺+SO₄²⁻=BaSO₄↓",
+       "analysis": "Ba²⁺ 与 SO₄²⁻ 生成难溶 BaSO₄ 除去硫酸根。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 5 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "还原剂在反应中",
+       "options": [
+        "被还原",
+        "被氧化",
+        "化合价降低",
+        "得电子"
+       ],
+       "answer": "B",
+       "analysis": "还原剂失电子，化合价升高，被氧化。"
+      },
+      {
+       "stem": "下列各组离子能大量共存的是",
+       "options": [
+        "Na⁺、K⁺、Cl⁻、NO₃⁻",
+        "Ag⁺、Cl⁻、Na⁺、NO₃⁻",
+        "Ba²⁺、SO₄²⁻、K⁺",
+        "H⁺、CO₃²⁻、Na⁺"
+       ],
+       "answer": "A",
+       "analysis": "B 生成 AgCl↓，C 生成 BaSO₄↓，D 生成 CO₂，均不共存。"
+      },
+      {
+       "stem": "钠与水反应的现象中错误的是",
+       "options": [
+        "熔成小球",
+        "浮在水面",
+        "四处游动",
+        "沉入水底"
+       ],
+       "answer": "D",
+       "analysis": "钠密度小于水，应浮在水面。"
+      },
+      {
+       "stem": "标准状况下，22.4 L 任何气体的物质的量约为",
+       "options": [
+        "0.5 mol",
+        "1 mol",
+        "2 mol",
+        "22.4 mol"
+       ],
+       "answer": "B",
+       "analysis": "标准状况气体摩尔体积 22.4 L/mol。"
+      },
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      },
+      {
+       "stem": "检验 Cl⁻ 常用的试剂是",
+       "options": [
+        "AgNO₃ 和稀 HNO₃",
+        "BaCl₂",
+        "盐酸",
+        "石蕊"
+       ],
+       "answer": "A",
+       "analysis": "Ag⁺+Cl⁻=AgCl↓（白），不溶于稀硝酸。"
+      },
+      {
+       "stem": "物质的量及其单位的符号是",
+       "options": [
+        "mol、n",
+        "M、m",
+        "V、v",
+        "T、t"
+       ],
+       "answer": "A",
+       "analysis": "物质的量符号 n，单位 mol。"
+      },
+      {
+       "stem": "氧化还原反应中，元素化合价升高表明该物质被",
+       "options": [
+        "还原",
+        "氧化",
+        "分解",
+        "化合"
+       ],
+       "answer": "B",
+       "analysis": "化合价升高 = 失电子 = 被氧化。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "标准状况下气体摩尔体积约为 ____。",
+       "options": [],
+       "answer": "22.4 L/mol",
+       "analysis": "标准状况（0℃、101 kPa）下 Vm≈22.4 L/mol。"
+      },
+      {
+       "stem": "离子反应发生的条件通常是生成 ____、____ 或弱电解质。",
+       "options": [],
+       "answer": "沉淀、气体",
+       "analysis": "离子反应趋向生成更难溶、更易逸出或难电离的物质。"
+      },
+      {
+       "stem": "金属钠通常保存在 ____ 中。",
+       "options": [],
+       "answer": "煤油（或石蜡油）",
+       "analysis": "钠易与空气、水反应，密度大于煤油，故存于煤油隔绝空气。"
+      },
+      {
+       "stem": "写出 NaOH 的电离方程式：NaOH = ____。",
+       "options": [],
+       "answer": "Na⁺ + OH⁻",
+       "analysis": "NaOH 为强碱，完全电离。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "用 pH 试纸测定溶液酸碱度时，不可用 ____ 直接蘸取待测液。",
+       "options": [],
+       "answer": "湿润的试纸（或手）",
+       "analysis": "应取干燥 pH 试纸，用玻璃棒蘸取点滴于试纸。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "标况下 3.36 L CO₂ 的物质的量及质量（M=44）各是多少？",
+       "options": [],
+       "answer": "n=0.15 mol，m=6.6 g",
+       "analysis": "n=3.36/22.4=0.15 mol；m=0.15×44=6.6 g。"
+      },
+      {
+       "stem": "写出钠与水反应的化学方程式。",
+       "options": [],
+       "answer": "2Na+2H₂O=2NaOH+H₂↑",
+       "analysis": "钠置换水中氢，生成 NaOH 与 H₂。"
+      },
+      {
+       "stem": "除去 NaCl 中混有的 Na₂SO₄，写出所加试剂及相关离子方程式。",
+       "options": [],
+       "answer": "加 BaCl₂；Ba²⁺+SO₄²⁻=BaSO₄↓",
+       "analysis": "Ba²⁺ 与 SO₄²⁻ 生成难溶 BaSO₄ 除去硫酸根。"
+      },
+      {
+       "stem": "配平并写出加热 KMnO₄ 分解制 O₂ 的方程式。",
+       "options": [],
+       "answer": "2KMnO₄=K₂MnO₄+MnO₂+O₂↑",
+       "analysis": "锰元素化合价变化，氧以 O₂ 放出。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 6 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "下列各组离子能大量共存的是",
+       "options": [
+        "Na⁺、K⁺、Cl⁻、NO₃⁻",
+        "Ag⁺、Cl⁻、Na⁺、NO₃⁻",
+        "Ba²⁺、SO₄²⁻、K⁺",
+        "H⁺、CO₃²⁻、Na⁺"
+       ],
+       "answer": "A",
+       "analysis": "B 生成 AgCl↓，C 生成 BaSO₄↓，D 生成 CO₂，均不共存。"
+      },
+      {
+       "stem": "钠与水反应的现象中错误的是",
+       "options": [
+        "熔成小球",
+        "浮在水面",
+        "四处游动",
+        "沉入水底"
+       ],
+       "answer": "D",
+       "analysis": "钠密度小于水，应浮在水面。"
+      },
+      {
+       "stem": "标准状况下，22.4 L 任何气体的物质的量约为",
+       "options": [
+        "0.5 mol",
+        "1 mol",
+        "2 mol",
+        "22.4 mol"
+       ],
+       "answer": "B",
+       "analysis": "标准状况气体摩尔体积 22.4 L/mol。"
+      },
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      },
+      {
+       "stem": "检验 Cl⁻ 常用的试剂是",
+       "options": [
+        "AgNO₃ 和稀 HNO₃",
+        "BaCl₂",
+        "盐酸",
+        "石蕊"
+       ],
+       "answer": "A",
+       "analysis": "Ag⁺+Cl⁻=AgCl↓（白），不溶于稀硝酸。"
+      },
+      {
+       "stem": "物质的量及其单位的符号是",
+       "options": [
+        "mol、n",
+        "M、m",
+        "V、v",
+        "T、t"
+       ],
+       "answer": "A",
+       "analysis": "物质的量符号 n，单位 mol。"
+      },
+      {
+       "stem": "氧化还原反应中，元素化合价升高表明该物质被",
+       "options": [
+        "还原",
+        "氧化",
+        "分解",
+        "化合"
+       ],
+       "answer": "B",
+       "analysis": "化合价升高 = 失电子 = 被氧化。"
+      },
+      {
+       "stem": "下列物质属于纯净物的是",
+       "options": [
+        "空气",
+        "食盐水",
+        "蒸馏水",
+        "石油"
+       ],
+       "answer": "C",
+       "analysis": "蒸馏水只含水分子，是纯净物。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "离子反应发生的条件通常是生成 ____、____ 或弱电解质。",
+       "options": [],
+       "answer": "沉淀、气体",
+       "analysis": "离子反应趋向生成更难溶、更易逸出或难电离的物质。"
+      },
+      {
+       "stem": "金属钠通常保存在 ____ 中。",
+       "options": [],
+       "answer": "煤油（或石蜡油）",
+       "analysis": "钠易与空气、水反应，密度大于煤油，故存于煤油隔绝空气。"
+      },
+      {
+       "stem": "写出 NaOH 的电离方程式：NaOH = ____。",
+       "options": [],
+       "answer": "Na⁺ + OH⁻",
+       "analysis": "NaOH 为强碱，完全电离。"
+      },
+      {
+       "stem": "在氧化还原反应中，化合价升高的物质被 ____。",
+       "options": [],
+       "answer": "氧化",
+       "analysis": "失电子、化合价升高 → 被氧化。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "蒸馏实验中，温度计水银球应位于蒸馏烧瓶 ____ 处。",
+       "options": [],
+       "answer": "支管口",
+       "analysis": "测蒸气温度，水银球与支管口相平。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "写出钠与水反应的化学方程式。",
+       "options": [],
+       "answer": "2Na+2H₂O=2NaOH+H₂↑",
+       "analysis": "钠置换水中氢，生成 NaOH 与 H₂。"
+      },
+      {
+       "stem": "除去 NaCl 中混有的 Na₂SO₄，写出所加试剂及相关离子方程式。",
+       "options": [],
+       "answer": "加 BaCl₂；Ba²⁺+SO₄²⁻=BaSO₄↓",
+       "analysis": "Ba²⁺ 与 SO₄²⁻ 生成难溶 BaSO₄ 除去硫酸根。"
+      },
+      {
+       "stem": "配平并写出加热 KMnO₄ 分解制 O₂ 的方程式。",
+       "options": [],
+       "answer": "2KMnO₄=K₂MnO₄+MnO₂+O₂↑",
+       "analysis": "锰元素化合价变化，氧以 O₂ 放出。"
+      },
+      {
+       "stem": "某溶液加 AgNO₃ 和稀 HNO₃ 生成白色沉淀，说明含什么离子？写出离子方程式。",
+       "options": [],
+       "answer": "含 Cl⁻；Ag⁺+Cl⁻=AgCl↓",
+       "analysis": "白色沉淀不溶于稀硝酸，特征检验 Cl⁻。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 7 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "钠与水反应的现象中错误的是",
+       "options": [
+        "熔成小球",
+        "浮在水面",
+        "四处游动",
+        "沉入水底"
+       ],
+       "answer": "D",
+       "analysis": "钠密度小于水，应浮在水面。"
+      },
+      {
+       "stem": "标准状况下，22.4 L 任何气体的物质的量约为",
+       "options": [
+        "0.5 mol",
+        "1 mol",
+        "2 mol",
+        "22.4 mol"
+       ],
+       "answer": "B",
+       "analysis": "标准状况气体摩尔体积 22.4 L/mol。"
+      },
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      },
+      {
+       "stem": "检验 Cl⁻ 常用的试剂是",
+       "options": [
+        "AgNO₃ 和稀 HNO₃",
+        "BaCl₂",
+        "盐酸",
+        "石蕊"
+       ],
+       "answer": "A",
+       "analysis": "Ag⁺+Cl⁻=AgCl↓（白），不溶于稀硝酸。"
+      },
+      {
+       "stem": "物质的量及其单位的符号是",
+       "options": [
+        "mol、n",
+        "M、m",
+        "V、v",
+        "T、t"
+       ],
+       "answer": "A",
+       "analysis": "物质的量符号 n，单位 mol。"
+      },
+      {
+       "stem": "氧化还原反应中，元素化合价升高表明该物质被",
+       "options": [
+        "还原",
+        "氧化",
+        "分解",
+        "化合"
+       ],
+       "answer": "B",
+       "analysis": "化合价升高 = 失电子 = 被氧化。"
+      },
+      {
+       "stem": "下列物质属于纯净物的是",
+       "options": [
+        "空气",
+        "食盐水",
+        "蒸馏水",
+        "石油"
+       ],
+       "answer": "C",
+       "analysis": "蒸馏水只含水分子，是纯净物。"
+      },
+      {
+       "stem": "下列物质属于电解质的是",
+       "options": [
+        "蔗糖",
+        "NaCl",
+        "酒精",
+        "铜"
+       ],
+       "answer": "B",
+       "analysis": "NaCl 在熔融或水溶液能导电，是电解质。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "金属钠通常保存在 ____ 中。",
+       "options": [],
+       "answer": "煤油（或石蜡油）",
+       "analysis": "钠易与空气、水反应，密度大于煤油，故存于煤油隔绝空气。"
+      },
+      {
+       "stem": "写出 NaOH 的电离方程式：NaOH = ____。",
+       "options": [],
+       "answer": "Na⁺ + OH⁻",
+       "analysis": "NaOH 为强碱，完全电离。"
+      },
+      {
+       "stem": "在氧化还原反应中，化合价升高的物质被 ____。",
+       "options": [],
+       "answer": "氧化",
+       "analysis": "失电子、化合价升高 → 被氧化。"
+      },
+      {
+       "stem": "配制 0.1 mol/L 的 NaCl 溶液 100 mL，需称量 NaCl ____ g（M=58.5）。",
+       "options": [],
+       "answer": "0.585",
+       "analysis": "m=nM=cVM=0.1×0.1×58.5=0.585 g。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "焰色试验中，钠元素火焰呈 ____ 色，钾元素需透过 ____ 观察呈紫色。",
+       "options": [],
+       "answer": "黄、蓝色钴玻璃",
+       "analysis": "钠黄、钾紫（钴玻璃滤去钠黄光干扰）。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "除去 NaCl 中混有的 Na₂SO₄，写出所加试剂及相关离子方程式。",
+       "options": [],
+       "answer": "加 BaCl₂；Ba²⁺+SO₄²⁻=BaSO₄↓",
+       "analysis": "Ba²⁺ 与 SO₄²⁻ 生成难溶 BaSO₄ 除去硫酸根。"
+      },
+      {
+       "stem": "配平并写出加热 KMnO₄ 分解制 O₂ 的方程式。",
+       "options": [],
+       "answer": "2KMnO₄=K₂MnO₄+MnO₂+O₂↑",
+       "analysis": "锰元素化合价变化，氧以 O₂ 放出。"
+      },
+      {
+       "stem": "某溶液加 AgNO₃ 和稀 HNO₃ 生成白色沉淀，说明含什么离子？写出离子方程式。",
+       "options": [],
+       "answer": "含 Cl⁻；Ag⁺+Cl⁻=AgCl↓",
+       "analysis": "白色沉淀不溶于稀硝酸，特征检验 Cl⁻。"
+      },
+      {
+       "stem": "计算 5.85 g NaCl（M=58.5 g/mol）的物质的量。",
+       "options": [],
+       "answer": "n=0.1 mol",
+       "analysis": "n=m/M=5.85/58.5=0.1 mol。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 8 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "标准状况下，22.4 L 任何气体的物质的量约为",
+       "options": [
+        "0.5 mol",
+        "1 mol",
+        "2 mol",
+        "22.4 mol"
+       ],
+       "answer": "B",
+       "analysis": "标准状况气体摩尔体积 22.4 L/mol。"
+      },
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      },
+      {
+       "stem": "检验 Cl⁻ 常用的试剂是",
+       "options": [
+        "AgNO₃ 和稀 HNO₃",
+        "BaCl₂",
+        "盐酸",
+        "石蕊"
+       ],
+       "answer": "A",
+       "analysis": "Ag⁺+Cl⁻=AgCl↓（白），不溶于稀硝酸。"
+      },
+      {
+       "stem": "物质的量及其单位的符号是",
+       "options": [
+        "mol、n",
+        "M、m",
+        "V、v",
+        "T、t"
+       ],
+       "answer": "A",
+       "analysis": "物质的量符号 n，单位 mol。"
+      },
+      {
+       "stem": "氧化还原反应中，元素化合价升高表明该物质被",
+       "options": [
+        "还原",
+        "氧化",
+        "分解",
+        "化合"
+       ],
+       "answer": "B",
+       "analysis": "化合价升高 = 失电子 = 被氧化。"
+      },
+      {
+       "stem": "下列物质属于纯净物的是",
+       "options": [
+        "空气",
+        "食盐水",
+        "蒸馏水",
+        "石油"
+       ],
+       "answer": "C",
+       "analysis": "蒸馏水只含水分子，是纯净物。"
+      },
+      {
+       "stem": "下列物质属于电解质的是",
+       "options": [
+        "蔗糖",
+        "NaCl",
+        "酒精",
+        "铜"
+       ],
+       "answer": "B",
+       "analysis": "NaCl 在熔融或水溶液能导电，是电解质。"
+      },
+      {
+       "stem": "离子方程式 H⁺+OH⁻=H₂O 可表示的反应是",
+       "options": [
+        "弱酸中和",
+        "强酸强碱中和",
+        "金属置换",
+        "氧化还原反应"
+       ],
+       "answer": "B",
+       "analysis": "强酸强碱生成可溶性盐的中和均可用此式表示。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "写出 NaOH 的电离方程式：NaOH = ____。",
+       "options": [],
+       "answer": "Na⁺ + OH⁻",
+       "analysis": "NaOH 为强碱，完全电离。"
+      },
+      {
+       "stem": "在氧化还原反应中，化合价升高的物质被 ____。",
+       "options": [],
+       "answer": "氧化",
+       "analysis": "失电子、化合价升高 → 被氧化。"
+      },
+      {
+       "stem": "配制 0.1 mol/L 的 NaCl 溶液 100 mL，需称量 NaCl ____ g（M=58.5）。",
+       "options": [],
+       "answer": "0.585",
+       "analysis": "m=nM=cVM=0.1×0.1×58.5=0.585 g。"
+      },
+      {
+       "stem": "除去 NaCl 溶液中少量 Na₂SO₄，可加入适量 ____ 溶液后过滤。",
+       "options": [],
+       "answer": "BaCl₂",
+       "analysis": "Ba²⁺+SO₄²⁻=BaSO₄↓，除去硫酸根。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "检验溶液中是否含 SO₄²⁻，应先加 ____，再加 BaCl₂ 溶液。",
+       "options": [],
+       "answer": "稀盐酸",
+       "analysis": "先加盐酸排除 CO₃²⁻、SO₃²⁻ 等干扰，再生成 BaSO₄ 白沉淀。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "配平并写出加热 KMnO₄ 分解制 O₂ 的方程式。",
+       "options": [],
+       "answer": "2KMnO₄=K₂MnO₄+MnO₂+O₂↑",
+       "analysis": "锰元素化合价变化，氧以 O₂ 放出。"
+      },
+      {
+       "stem": "某溶液加 AgNO₃ 和稀 HNO₃ 生成白色沉淀，说明含什么离子？写出离子方程式。",
+       "options": [],
+       "answer": "含 Cl⁻；Ag⁺+Cl⁻=AgCl↓",
+       "analysis": "白色沉淀不溶于稀硝酸，特征检验 Cl⁻。"
+      },
+      {
+       "stem": "计算 5.85 g NaCl（M=58.5 g/mol）的物质的量。",
+       "options": [],
+       "answer": "n=0.1 mol",
+       "analysis": "n=m/M=5.85/58.5=0.1 mol。"
+      },
+      {
+       "stem": "标况下 3.36 L CO₂ 的物质的量及质量（M=44）各是多少？",
+       "options": [],
+       "answer": "n=0.15 mol，m=6.6 g",
+       "analysis": "n=3.36/22.4=0.15 mol；m=0.15×44=6.6 g。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 9 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "下列分散系中属于胶体的是",
+       "options": [
+        "泥浆水",
+        "蔗糖水",
+        "豆浆",
+        "食盐水"
+       ],
+       "answer": "C",
+       "analysis": "豆浆是典型的胶体分散系。"
+      },
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      },
+      {
+       "stem": "检验 Cl⁻ 常用的试剂是",
+       "options": [
+        "AgNO₃ 和稀 HNO₃",
+        "BaCl₂",
+        "盐酸",
+        "石蕊"
+       ],
+       "answer": "A",
+       "analysis": "Ag⁺+Cl⁻=AgCl↓（白），不溶于稀硝酸。"
+      },
+      {
+       "stem": "物质的量及其单位的符号是",
+       "options": [
+        "mol、n",
+        "M、m",
+        "V、v",
+        "T、t"
+       ],
+       "answer": "A",
+       "analysis": "物质的量符号 n，单位 mol。"
+      },
+      {
+       "stem": "氧化还原反应中，元素化合价升高表明该物质被",
+       "options": [
+        "还原",
+        "氧化",
+        "分解",
+        "化合"
+       ],
+       "answer": "B",
+       "analysis": "化合价升高 = 失电子 = 被氧化。"
+      },
+      {
+       "stem": "下列物质属于纯净物的是",
+       "options": [
+        "空气",
+        "食盐水",
+        "蒸馏水",
+        "石油"
+       ],
+       "answer": "C",
+       "analysis": "蒸馏水只含水分子，是纯净物。"
+      },
+      {
+       "stem": "下列物质属于电解质的是",
+       "options": [
+        "蔗糖",
+        "NaCl",
+        "酒精",
+        "铜"
+       ],
+       "answer": "B",
+       "analysis": "NaCl 在熔融或水溶液能导电，是电解质。"
+      },
+      {
+       "stem": "离子方程式 H⁺+OH⁻=H₂O 可表示的反应是",
+       "options": [
+        "弱酸中和",
+        "强酸强碱中和",
+        "金属置换",
+        "氧化还原反应"
+       ],
+       "answer": "B",
+       "analysis": "强酸强碱生成可溶性盐的中和均可用此式表示。"
+      },
+      {
+       "stem": "氧化还原反应的实质是",
+       "options": [
+        "元素化合价变化",
+        "电子转移",
+        "生成气体",
+        "放热"
+       ],
+       "answer": "B",
+       "analysis": "本质是有电子的转移（得失或偏移）。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "在氧化还原反应中，化合价升高的物质被 ____。",
+       "options": [],
+       "answer": "氧化",
+       "analysis": "失电子、化合价升高 → 被氧化。"
+      },
+      {
+       "stem": "配制 0.1 mol/L 的 NaCl 溶液 100 mL，需称量 NaCl ____ g（M=58.5）。",
+       "options": [],
+       "answer": "0.585",
+       "analysis": "m=nM=cVM=0.1×0.1×58.5=0.585 g。"
+      },
+      {
+       "stem": "除去 NaCl 溶液中少量 Na₂SO₄，可加入适量 ____ 溶液后过滤。",
+       "options": [],
+       "answer": "BaCl₂",
+       "analysis": "Ba²⁺+SO₄²⁻=BaSO₄↓，除去硫酸根。"
+      },
+      {
+       "stem": "物质的量的单位是 ____。",
+       "options": [],
+       "answer": "mol",
+       "analysis": "物质的量单位为摩尔，符号 mol。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "用 pH 试纸测定溶液酸碱度时，不可用 ____ 直接蘸取待测液。",
+       "options": [],
+       "answer": "湿润的试纸（或手）",
+       "analysis": "应取干燥 pH 试纸，用玻璃棒蘸取点滴于试纸。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "某溶液加 AgNO₃ 和稀 HNO₃ 生成白色沉淀，说明含什么离子？写出离子方程式。",
+       "options": [],
+       "answer": "含 Cl⁻；Ag⁺+Cl⁻=AgCl↓",
+       "analysis": "白色沉淀不溶于稀硝酸，特征检验 Cl⁻。"
+      },
+      {
+       "stem": "计算 5.85 g NaCl（M=58.5 g/mol）的物质的量。",
+       "options": [],
+       "answer": "n=0.1 mol",
+       "analysis": "n=m/M=5.85/58.5=0.1 mol。"
+      },
+      {
+       "stem": "标况下 3.36 L CO₂ 的物质的量及质量（M=44）各是多少？",
+       "options": [],
+       "answer": "n=0.15 mol，m=6.6 g",
+       "analysis": "n=3.36/22.4=0.15 mol；m=0.15×44=6.6 g。"
+      },
+      {
+       "stem": "写出钠与水反应的化学方程式。",
+       "options": [],
+       "answer": "2Na+2H₂O=2NaOH+H₂↑",
+       "analysis": "钠置换水中氢，生成 NaOH 与 H₂。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "化学 模拟训练卷（第 10 套）",
+   "meta": "化学 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、单项选择题（每题 5 分，共 12 题，50 分）",
+     "items": [
+      {
+       "stem": "除去 CO₂ 中混有的少量 HCl，应通过的试剂是",
+       "options": [
+        "NaOH 溶液",
+        "饱和 NaHCO₃ 溶液",
+        "水",
+        "浓硫酸"
+       ],
+       "answer": "B",
+       "analysis": "饱和 NaHCO₃ 吸收 HCl 且不大量吸收 CO₂。"
+      },
+      {
+       "stem": "配制一定物质的量浓度溶液时必需的仪器是",
+       "options": [
+        "容量瓶",
+        "量筒",
+        "漏斗",
+        "蒸发皿"
+       ],
+       "answer": "A",
+       "analysis": "容量瓶用于精确配制一定体积溶液。"
+      },
+      {
+       "stem": "反应 CuO+H₂=Cu+H₂O 中，还原剂是",
+       "options": [
+        "CuO",
+        "H₂",
+        "Cu",
+        "H₂O"
+       ],
+       "answer": "B",
+       "analysis": "H₂ 失电子被氧化，是还原剂。"
+      },
+      {
+       "stem": "下列物质溶于水后溶液显碱性的是",
+       "options": [
+        "NaCl",
+        "Na₂O",
+        "HCl",
+        "SO₂"
+       ],
+       "answer": "B",
+       "analysis": "Na₂O 与水反应生成 NaOH，溶液显碱性。"
+      },
+      {
+       "stem": "检验 Cl⁻ 常用的试剂是",
+       "options": [
+        "AgNO₃ 和稀 HNO₃",
+        "BaCl₂",
+        "盐酸",
+        "石蕊"
+       ],
+       "answer": "A",
+       "analysis": "Ag⁺+Cl⁻=AgCl↓（白），不溶于稀硝酸。"
+      },
+      {
+       "stem": "物质的量及其单位的符号是",
+       "options": [
+        "mol、n",
+        "M、m",
+        "V、v",
+        "T、t"
+       ],
+       "answer": "A",
+       "analysis": "物质的量符号 n，单位 mol。"
+      },
+      {
+       "stem": "氧化还原反应中，元素化合价升高表明该物质被",
+       "options": [
+        "还原",
+        "氧化",
+        "分解",
+        "化合"
+       ],
+       "answer": "B",
+       "analysis": "化合价升高 = 失电子 = 被氧化。"
+      },
+      {
+       "stem": "下列物质属于纯净物的是",
+       "options": [
+        "空气",
+        "食盐水",
+        "蒸馏水",
+        "石油"
+       ],
+       "answer": "C",
+       "analysis": "蒸馏水只含水分子，是纯净物。"
+      },
+      {
+       "stem": "下列物质属于电解质的是",
+       "options": [
+        "蔗糖",
+        "NaCl",
+        "酒精",
+        "铜"
+       ],
+       "answer": "B",
+       "analysis": "NaCl 在熔融或水溶液能导电，是电解质。"
+      },
+      {
+       "stem": "离子方程式 H⁺+OH⁻=H₂O 可表示的反应是",
+       "options": [
+        "弱酸中和",
+        "强酸强碱中和",
+        "金属置换",
+        "氧化还原反应"
+       ],
+       "answer": "B",
+       "analysis": "强酸强碱生成可溶性盐的中和均可用此式表示。"
+      },
+      {
+       "stem": "氧化还原反应的实质是",
+       "options": [
+        "元素化合价变化",
+        "电子转移",
+        "生成气体",
+        "放热"
+       ],
+       "answer": "B",
+       "analysis": "本质是有电子的转移（得失或偏移）。"
+      },
+      {
+       "stem": "还原剂在反应中",
+       "options": [
+        "被还原",
+        "被氧化",
+        "化合价降低",
+        "得电子"
+       ],
+       "answer": "B",
+       "analysis": "还原剂失电子，化合价升高，被氧化。"
+      }
+     ]
+    },
+    {
+     "name": "二、填空题（每题 4 分，共 4 题，16 分）",
+     "items": [
+      {
+       "stem": "配制 0.1 mol/L 的 NaCl 溶液 100 mL，需称量 NaCl ____ g（M=58.5）。",
+       "options": [],
+       "answer": "0.585",
+       "analysis": "m=nM=cVM=0.1×0.1×58.5=0.585 g。"
+      },
+      {
+       "stem": "除去 NaCl 溶液中少量 Na₂SO₄，可加入适量 ____ 溶液后过滤。",
+       "options": [],
+       "answer": "BaCl₂",
+       "analysis": "Ba²⁺+SO₄²⁻=BaSO₄↓，除去硫酸根。"
+      },
+      {
+       "stem": "物质的量的单位是 ____。",
+       "options": [],
+       "answer": "mol",
+       "analysis": "物质的量单位为摩尔，符号 mol。"
+      },
+      {
+       "stem": "标准状况下气体摩尔体积约为 ____。",
+       "options": [],
+       "answer": "22.4 L/mol",
+       "analysis": "标准状况（0℃、101 kPa）下 Vm≈22.4 L/mol。"
+      }
+     ]
+    },
+    {
+     "name": "三、实验题（共 1 题，12 分）",
+     "items": [
+      {
+       "stem": "蒸馏实验中，温度计水银球应位于蒸馏烧瓶 ____ 处。",
+       "options": [],
+       "answer": "支管口",
+       "analysis": "测蒸气温度，水银球与支管口相平。"
+      }
+     ]
+    },
+    {
+     "name": "四、综合解答题（共 4 题，32 分）",
+     "items": [
+      {
+       "stem": "计算 5.85 g NaCl（M=58.5 g/mol）的物质的量。",
+       "options": [],
+       "answer": "n=0.1 mol",
+       "analysis": "n=m/M=5.85/58.5=0.1 mol。"
+      },
+      {
+       "stem": "标况下 3.36 L CO₂ 的物质的量及质量（M=44）各是多少？",
+       "options": [],
+       "answer": "n=0.15 mol，m=6.6 g",
+       "analysis": "n=3.36/22.4=0.15 mol；m=0.15×44=6.6 g。"
+      },
+      {
+       "stem": "写出钠与水反应的化学方程式。",
+       "options": [],
+       "answer": "2Na+2H₂O=2NaOH+H₂↑",
+       "analysis": "钠置换水中氢，生成 NaOH 与 H₂。"
+      },
+      {
+       "stem": "除去 NaCl 中混有的 Na₂SO₄，写出所加试剂及相关离子方程式。",
+       "options": [],
+       "answer": "加 BaCl₂；Ba²⁺+SO₄²⁻=BaSO₄↓",
+       "analysis": "Ba²⁺ 与 SO₄²⁻ 生成难溶 BaSO₄ 除去硫酸根。"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "语文": [
+  {
+   "title": "语文 模拟训练卷（第 1 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】朱自清《春》节选：\"盼望着，盼望着，东风来了，春天的脚步近了。\" 这句话使用的修辞手法是",
+       "options": [
+        "反复、比喻",
+        "排比、夸张",
+        "对偶、借代",
+        "设问、反问"
+       ],
+       "answer": "A",
+       "analysis": "\"盼望着，盼望着\"为反复，\"春天的脚步\"为比喻。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"一切都像刚睡醒的样子，欣欣然张开了眼。\" 运用的修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "夸张",
+        "排比"
+       ],
+       "answer": "B",
+       "analysis": "赋予万物人的情态\"睡醒\"\"睁眼\"，是拟人。"
+      },
+      {
+       "stem": "【现代文阅读】鲁迅《从百草园到三味书屋》节选：\"不必说碧绿的菜畦，光滑的石井栏，高大的皂荚树……\" 这段景物描写的顺序是",
+       "options": [
+        "由植物到动物",
+        "由动物到植物",
+        "由高到低",
+        "由远及近"
+       ],
+       "answer": "A",
+       "analysis": "先写植物（菜畦、树）后写动物（蝉、黄蜂、叫天子）。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"油蛉在这里低唱，蟋蟀们在这里弹琴。\" 修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "排比",
+        "夸张"
+       ],
+       "answer": "B",
+       "analysis": "\"低唱\"\"弹琴\"赋予昆虫人的动作，拟人。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【默写】锲而舍之，朽木不折；锲而不舍，____。",
+       "options": [],
+       "answer": "金石可镂",
+       "analysis": "出自《劝学》，强调坚持。"
+      },
+      {
+       "stem": "【文言实词】\"假舟楫者，非能水也，而绝江河。\" 中\"绝\"意为",
+       "options": [
+        "断绝",
+        "横渡",
+        "极尽",
+        "消失"
+       ],
+       "answer": "B",
+       "analysis": "\"绝江河\"即横渡江河。"
+      },
+      {
+       "stem": "【文言虚词】\"青，取之于蓝，而青于蓝。\" 中\"而\"表",
+       "options": [
+        "顺承",
+        "转折",
+        "并列",
+        "修饰"
+       ],
+       "answer": "B",
+       "analysis": "前后语意转折，意为\"却\"。"
+      },
+      {
+       "stem": "【古诗文】《荀子·劝学》：\"学不可以已。\" 句意是",
+       "options": [
+        "学习并不难",
+        "学习不可以停止",
+        "学习要速成",
+        "学习没有用处"
+       ],
+       "answer": "B",
+       "analysis": "\"已\"意为停止，全句指学习不能停止。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】下列标点符号使用正确的一项是",
+       "options": [
+        "我不知道他去哪儿？",
+        "他说：\"走吧。\"",
+        "苹果、梨、香蕉、等",
+        "以上都对"
+       ],
+       "answer": "B",
+       "analysis": "A 陈述句应用句号；C 顿号与\"等\"重复。"
+      },
+      {
+       "stem": "【语言运用】仿写：例句\"书是钥匙，能开启智慧之门。\" 恰当的一项是",
+       "options": [
+        "书是钥匙，能开启智慧之门",
+        "书是灯塔，能照亮前行之路",
+        "书是桌子，能摆放物品",
+        "书是食物，能吃下肚"
+       ],
+       "answer": "B",
+       "analysis": "运用比喻且句式一致、意蕴相合。"
+      },
+      {
+       "stem": "【语言运用】\"静谧\"一词中\"谧\"的读音是",
+       "options": [
+        "bì",
+        "mì",
+        "nì",
+        "pì"
+       ],
+       "answer": "B",
+       "analysis": "\"谧\"读 mì，意为安静。"
+      },
+      {
+       "stem": "【语言运用】下列词语书写完全正确的一项是",
+       "options": [
+        "再接再励",
+        "再接再厉",
+        "不记其数",
+        "迫不急待"
+       ],
+       "answer": "B",
+       "analysis": "A 应为\"厉\"，C 应为\"计\"，D 应为\"及\"。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《那一刻，我长大了》。请列出写作要点。",
+       "options": [],
+       "answer": "选取一个具体事件（如照顾家人、独立解决困难），描写\"那一刻\"的心理变化，点明\"长大\"的内涵。",
+       "analysis": "评分要点：情节真实、心理刻画细腻、升华自然。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 2 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】同上：\"一切都像刚睡醒的样子，欣欣然张开了眼。\" 运用的修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "夸张",
+        "排比"
+       ],
+       "answer": "B",
+       "analysis": "赋予万物人的情态\"睡醒\"\"睁眼\"，是拟人。"
+      },
+      {
+       "stem": "【现代文阅读】鲁迅《从百草园到三味书屋》节选：\"不必说碧绿的菜畦，光滑的石井栏，高大的皂荚树……\" 这段景物描写的顺序是",
+       "options": [
+        "由植物到动物",
+        "由动物到植物",
+        "由高到低",
+        "由远及近"
+       ],
+       "answer": "A",
+       "analysis": "先写植物（菜畦、树）后写动物（蝉、黄蜂、叫天子）。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"油蛉在这里低唱，蟋蟀们在这里弹琴。\" 修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "排比",
+        "夸张"
+       ],
+       "answer": "B",
+       "analysis": "\"低唱\"\"弹琴\"赋予昆虫人的动作，拟人。"
+      },
+      {
+       "stem": "【现代文阅读】朱自清《背影》节选：\"我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去……\" 主要运用了",
+       "options": [
+        "语言描写",
+        "心理描写",
+        "外貌与动作描写",
+        "环境描写"
+       ],
+       "answer": "C",
+       "analysis": "\"戴着\"\"穿着\"为外貌，\"走\"\"探身\"为动作描写。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【文言实词】\"假舟楫者，非能水也，而绝江河。\" 中\"绝\"意为",
+       "options": [
+        "断绝",
+        "横渡",
+        "极尽",
+        "消失"
+       ],
+       "answer": "B",
+       "analysis": "\"绝江河\"即横渡江河。"
+      },
+      {
+       "stem": "【文言虚词】\"青，取之于蓝，而青于蓝。\" 中\"而\"表",
+       "options": [
+        "顺承",
+        "转折",
+        "并列",
+        "修饰"
+       ],
+       "answer": "B",
+       "analysis": "前后语意转折，意为\"却\"。"
+      },
+      {
+       "stem": "【古诗文】《荀子·劝学》：\"学不可以已。\" 句意是",
+       "options": [
+        "学习并不难",
+        "学习不可以停止",
+        "学习要速成",
+        "学习没有用处"
+       ],
+       "answer": "B",
+       "analysis": "\"已\"意为停止，全句指学习不能停止。"
+      },
+      {
+       "stem": "【古诗文】\"君子博学而日参省乎己，则知明而行无过矣。\" 强调",
+       "options": [
+        "博学即可",
+        "每日反省自我",
+        "依靠天赋",
+        "师从名师"
+       ],
+       "answer": "B",
+       "analysis": "\"参省乎己\"即反省自己，可增智慧少过错。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】仿写：例句\"书是钥匙，能开启智慧之门。\" 恰当的一项是",
+       "options": [
+        "书是钥匙，能开启智慧之门",
+        "书是灯塔，能照亮前行之路",
+        "书是桌子，能摆放物品",
+        "书是食物，能吃下肚"
+       ],
+       "answer": "B",
+       "analysis": "运用比喻且句式一致、意蕴相合。"
+      },
+      {
+       "stem": "【语言运用】\"静谧\"一词中\"谧\"的读音是",
+       "options": [
+        "bì",
+        "mì",
+        "nì",
+        "pì"
+       ],
+       "answer": "B",
+       "analysis": "\"谧\"读 mì，意为安静。"
+      },
+      {
+       "stem": "【语言运用】下列词语书写完全正确的一项是",
+       "options": [
+        "再接再励",
+        "再接再厉",
+        "不记其数",
+        "迫不急待"
+       ],
+       "answer": "B",
+       "analysis": "A 应为\"厉\"，C 应为\"计\"，D 应为\"及\"。"
+      },
+      {
+       "stem": "【语言运用】\"请惠存\"一词用于",
+       "options": [
+        "自己保存",
+        "请对方保存（赠物时）",
+        "赠送礼物动作",
+        "表示道歉"
+       ],
+       "answer": "B",
+       "analysis": "\"惠存\"是敬辞，请别人保存自己赠送的东西。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《这，才是成熟的模样》。请列出写作要点。",
+       "options": [],
+       "answer": "立意：成熟是责任与担当；选材：一次克服困难的成长经历；结构：叙述+抒情+议论；语言：细腻描写，真情实感。",
+       "analysis": "评分要点：中心明确、内容充实、情感真实、结构完整。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 3 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】鲁迅《从百草园到三味书屋》节选：\"不必说碧绿的菜畦，光滑的石井栏，高大的皂荚树……\" 这段景物描写的顺序是",
+       "options": [
+        "由植物到动物",
+        "由动物到植物",
+        "由高到低",
+        "由远及近"
+       ],
+       "answer": "A",
+       "analysis": "先写植物（菜畦、树）后写动物（蝉、黄蜂、叫天子）。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"油蛉在这里低唱，蟋蟀们在这里弹琴。\" 修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "排比",
+        "夸张"
+       ],
+       "answer": "B",
+       "analysis": "\"低唱\"\"弹琴\"赋予昆虫人的动作，拟人。"
+      },
+      {
+       "stem": "【现代文阅读】朱自清《背影》节选：\"我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去……\" 主要运用了",
+       "options": [
+        "语言描写",
+        "心理描写",
+        "外貌与动作描写",
+        "环境描写"
+       ],
+       "answer": "C",
+       "analysis": "\"戴着\"\"穿着\"为外貌，\"走\"\"探身\"为动作描写。"
+      },
+      {
+       "stem": "【现代文阅读】同上：父亲穿过铁道买橘子的行为，主要表现了",
+       "options": [
+        "父亲的笨拙",
+        "父亲对儿子的深爱",
+        "路途的艰难",
+        "作者的后悔"
+       ],
+       "answer": "B",
+       "analysis": "细节刻画父亲不辞辛苦为子买橘，彰显父爱。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【文言虚词】\"青，取之于蓝，而青于蓝。\" 中\"而\"表",
+       "options": [
+        "顺承",
+        "转折",
+        "并列",
+        "修饰"
+       ],
+       "answer": "B",
+       "analysis": "前后语意转折，意为\"却\"。"
+      },
+      {
+       "stem": "【古诗文】《荀子·劝学》：\"学不可以已。\" 句意是",
+       "options": [
+        "学习并不难",
+        "学习不可以停止",
+        "学习要速成",
+        "学习没有用处"
+       ],
+       "answer": "B",
+       "analysis": "\"已\"意为停止，全句指学习不能停止。"
+      },
+      {
+       "stem": "【古诗文】\"君子博学而日参省乎己，则知明而行无过矣。\" 强调",
+       "options": [
+        "博学即可",
+        "每日反省自我",
+        "依靠天赋",
+        "师从名师"
+       ],
+       "answer": "B",
+       "analysis": "\"参省乎己\"即反省自己，可增智慧少过错。"
+      },
+      {
+       "stem": "【古诗文】韩愈《师说》：\"师者，所以传道受业解惑也。\" 该句句式为",
+       "options": [
+        "判断句",
+        "被动句",
+        "倒装句",
+        "省略句"
+       ],
+       "answer": "A",
+       "analysis": "\"者……也\"表判断。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】\"静谧\"一词中\"谧\"的读音是",
+       "options": [
+        "bì",
+        "mì",
+        "nì",
+        "pì"
+       ],
+       "answer": "B",
+       "analysis": "\"谧\"读 mì，意为安静。"
+      },
+      {
+       "stem": "【语言运用】下列词语书写完全正确的一项是",
+       "options": [
+        "再接再励",
+        "再接再厉",
+        "不记其数",
+        "迫不急待"
+       ],
+       "answer": "B",
+       "analysis": "A 应为\"厉\"，C 应为\"计\"，D 应为\"及\"。"
+      },
+      {
+       "stem": "【语言运用】\"请惠存\"一词用于",
+       "options": [
+        "自己保存",
+        "请对方保存（赠物时）",
+        "赠送礼物动作",
+        "表示道歉"
+       ],
+       "answer": "B",
+       "analysis": "\"惠存\"是敬辞，请别人保存自己赠送的东西。"
+      },
+      {
+       "stem": "【语言运用】将下面句子排序正确的一项是：①清晨我来到公园 ②草坪上露珠晶莹 ③鸟儿在枝头歌唱 ④这一切让人心旷神怡",
+       "options": [
+        "①②③④",
+        "②①③④",
+        "③①②④",
+        "④①②③"
+       ],
+       "answer": "A",
+       "analysis": "按时间先后与观察顺序：到公园→见露珠→闻鸟鸣→抒发感受。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《劳动的滋味》。请列出写作要点。",
+       "options": [],
+       "answer": "写一次具体劳动体验（如家务、农活、志愿服务），突出过程描写与\"滋味\"（感悟：劳动创造价值、来之不易）。",
+       "analysis": "评分要点：有细节、有感悟、扣题紧密。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 4 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】同上：\"油蛉在这里低唱，蟋蟀们在这里弹琴。\" 修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "排比",
+        "夸张"
+       ],
+       "answer": "B",
+       "analysis": "\"低唱\"\"弹琴\"赋予昆虫人的动作，拟人。"
+      },
+      {
+       "stem": "【现代文阅读】朱自清《背影》节选：\"我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去……\" 主要运用了",
+       "options": [
+        "语言描写",
+        "心理描写",
+        "外貌与动作描写",
+        "环境描写"
+       ],
+       "answer": "C",
+       "analysis": "\"戴着\"\"穿着\"为外貌，\"走\"\"探身\"为动作描写。"
+      },
+      {
+       "stem": "【现代文阅读】同上：父亲穿过铁道买橘子的行为，主要表现了",
+       "options": [
+        "父亲的笨拙",
+        "父亲对儿子的深爱",
+        "路途的艰难",
+        "作者的后悔"
+       ],
+       "answer": "B",
+       "analysis": "细节刻画父亲不辞辛苦为子买橘，彰显父爱。"
+      },
+      {
+       "stem": "【现代文阅读】老舍《济南的冬天》节选：\"对于一个在北平住惯的人，像我，冬天要是不刮风，便觉得是奇迹。\" 主要表达方式是",
+       "options": [
+        "议论",
+        "说明",
+        "记叙",
+        "描写"
+       ],
+       "answer": "C",
+       "analysis": "叙述个人感受与经历，属记叙。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【古诗文】《荀子·劝学》：\"学不可以已。\" 句意是",
+       "options": [
+        "学习并不难",
+        "学习不可以停止",
+        "学习要速成",
+        "学习没有用处"
+       ],
+       "answer": "B",
+       "analysis": "\"已\"意为停止，全句指学习不能停止。"
+      },
+      {
+       "stem": "【古诗文】\"君子博学而日参省乎己，则知明而行无过矣。\" 强调",
+       "options": [
+        "博学即可",
+        "每日反省自我",
+        "依靠天赋",
+        "师从名师"
+       ],
+       "answer": "B",
+       "analysis": "\"参省乎己\"即反省自己，可增智慧少过错。"
+      },
+      {
+       "stem": "【古诗文】韩愈《师说》：\"师者，所以传道受业解惑也。\" 该句句式为",
+       "options": [
+        "判断句",
+        "被动句",
+        "倒装句",
+        "省略句"
+       ],
+       "answer": "A",
+       "analysis": "\"者……也\"表判断。"
+      },
+      {
+       "stem": "【古诗文】\"是故弟子不必不如师，师不必贤于弟子。\" 说明",
+       "options": [
+        "弟子必不如师",
+        "师生可互相学习",
+        "师必贤于弟子",
+        "不必从师"
+       ],
+       "answer": "B",
+       "analysis": "闻道有先后，师生各有长短，可互相学习。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】下列词语书写完全正确的一项是",
+       "options": [
+        "再接再励",
+        "再接再厉",
+        "不记其数",
+        "迫不急待"
+       ],
+       "answer": "B",
+       "analysis": "A 应为\"厉\"，C 应为\"计\"，D 应为\"及\"。"
+      },
+      {
+       "stem": "【语言运用】\"请惠存\"一词用于",
+       "options": [
+        "自己保存",
+        "请对方保存（赠物时）",
+        "赠送礼物动作",
+        "表示道歉"
+       ],
+       "answer": "B",
+       "analysis": "\"惠存\"是敬辞，请别人保存自己赠送的东西。"
+      },
+      {
+       "stem": "【语言运用】将下面句子排序正确的一项是：①清晨我来到公园 ②草坪上露珠晶莹 ③鸟儿在枝头歌唱 ④这一切让人心旷神怡",
+       "options": [
+        "①②③④",
+        "②①③④",
+        "③①②④",
+        "④①②③"
+       ],
+       "answer": "A",
+       "analysis": "按时间先后与观察顺序：到公园→见露珠→闻鸟鸣→抒发感受。"
+      },
+      {
+       "stem": "【语言运用】下列句子中成语使用正确的一项是",
+       "options": [
+        "运动会开幕式气势磅礴，令人叹为观止",
+        "他上课总是娓娓动听地睡觉",
+        "这篇小说差强人意，漏洞百出",
+        "以上都不对"
+       ],
+       "answer": "A",
+       "analysis": "叹为观止形容赞叹，使用正确；B、C 误用。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《留一点____给自己》（半命题）。请列出写作要点。",
+       "options": [],
+       "answer": "补全如\"留一点微笑/空间/勇气给自己\"；写自我鼓励或调节的事例，结尾点明留白的意义。",
+       "analysis": "评分要点：补题有新意、叙事具体、立意积极。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 5 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】朱自清《背影》节选：\"我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去……\" 主要运用了",
+       "options": [
+        "语言描写",
+        "心理描写",
+        "外貌与动作描写",
+        "环境描写"
+       ],
+       "answer": "C",
+       "analysis": "\"戴着\"\"穿着\"为外貌，\"走\"\"探身\"为动作描写。"
+      },
+      {
+       "stem": "【现代文阅读】同上：父亲穿过铁道买橘子的行为，主要表现了",
+       "options": [
+        "父亲的笨拙",
+        "父亲对儿子的深爱",
+        "路途的艰难",
+        "作者的后悔"
+       ],
+       "answer": "B",
+       "analysis": "细节刻画父亲不辞辛苦为子买橘，彰显父爱。"
+      },
+      {
+       "stem": "【现代文阅读】老舍《济南的冬天》节选：\"对于一个在北平住惯的人，像我，冬天要是不刮风，便觉得是奇迹。\" 主要表达方式是",
+       "options": [
+        "议论",
+        "说明",
+        "记叙",
+        "描写"
+       ],
+       "answer": "C",
+       "analysis": "叙述个人感受与经历，属记叙。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"山坡上卧着些小村庄，小村庄的房顶上卧着点雪。\" 中\"卧\"字妙在",
+       "options": [
+        "写出村庄高大",
+        "运用拟人，静景写活",
+        "强调雪大",
+        "说明位置低"
+       ],
+       "answer": "B",
+       "analysis": "\"卧\"拟人化，将静谧雪景写得温静可亲。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【古诗文】\"君子博学而日参省乎己，则知明而行无过矣。\" 强调",
+       "options": [
+        "博学即可",
+        "每日反省自我",
+        "依靠天赋",
+        "师从名师"
+       ],
+       "answer": "B",
+       "analysis": "\"参省乎己\"即反省自己，可增智慧少过错。"
+      },
+      {
+       "stem": "【古诗文】韩愈《师说》：\"师者，所以传道受业解惑也。\" 该句句式为",
+       "options": [
+        "判断句",
+        "被动句",
+        "倒装句",
+        "省略句"
+       ],
+       "answer": "A",
+       "analysis": "\"者……也\"表判断。"
+      },
+      {
+       "stem": "【古诗文】\"是故弟子不必不如师，师不必贤于弟子。\" 说明",
+       "options": [
+        "弟子必不如师",
+        "师生可互相学习",
+        "师必贤于弟子",
+        "不必从师"
+       ],
+       "answer": "B",
+       "analysis": "闻道有先后，师生各有长短，可互相学习。"
+      },
+      {
+       "stem": "【默写】故不积跬步，____；不积小流，____。",
+       "options": [],
+       "answer": "无以至千里；无以成江海",
+       "analysis": "出自《劝学》，强调积累。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】\"请惠存\"一词用于",
+       "options": [
+        "自己保存",
+        "请对方保存（赠物时）",
+        "赠送礼物动作",
+        "表示道歉"
+       ],
+       "answer": "B",
+       "analysis": "\"惠存\"是敬辞，请别人保存自己赠送的东西。"
+      },
+      {
+       "stem": "【语言运用】将下面句子排序正确的一项是：①清晨我来到公园 ②草坪上露珠晶莹 ③鸟儿在枝头歌唱 ④这一切让人心旷神怡",
+       "options": [
+        "①②③④",
+        "②①③④",
+        "③①②④",
+        "④①②③"
+       ],
+       "answer": "A",
+       "analysis": "按时间先后与观察顺序：到公园→见露珠→闻鸟鸣→抒发感受。"
+      },
+      {
+       "stem": "【语言运用】下列句子中成语使用正确的一项是",
+       "options": [
+        "运动会开幕式气势磅礴，令人叹为观止",
+        "他上课总是娓娓动听地睡觉",
+        "这篇小说差强人意，漏洞百出",
+        "以上都不对"
+       ],
+       "answer": "A",
+       "analysis": "叹为观止形容赞叹，使用正确；B、C 误用。"
+      },
+      {
+       "stem": "【语言运用】病句：\"通过老师的帮助，使我的成绩提高了。\" 病因及修改是",
+       "options": [
+        "搭配不当，删\"成绩\"",
+        "缺主语，删\"通过\"或\"使\"",
+        "重复累赘，删\"帮助\"",
+        "语序不当，调顺序"
+       ],
+       "answer": "B",
+       "analysis": "\"通过……使\"并用淹没主语，删其一。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《那一刻，我长大了》。请列出写作要点。",
+       "options": [],
+       "answer": "选取一个具体事件（如照顾家人、独立解决困难），描写\"那一刻\"的心理变化，点明\"长大\"的内涵。",
+       "analysis": "评分要点：情节真实、心理刻画细腻、升华自然。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 6 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】同上：父亲穿过铁道买橘子的行为，主要表现了",
+       "options": [
+        "父亲的笨拙",
+        "父亲对儿子的深爱",
+        "路途的艰难",
+        "作者的后悔"
+       ],
+       "answer": "B",
+       "analysis": "细节刻画父亲不辞辛苦为子买橘，彰显父爱。"
+      },
+      {
+       "stem": "【现代文阅读】老舍《济南的冬天》节选：\"对于一个在北平住惯的人，像我，冬天要是不刮风，便觉得是奇迹。\" 主要表达方式是",
+       "options": [
+        "议论",
+        "说明",
+        "记叙",
+        "描写"
+       ],
+       "answer": "C",
+       "analysis": "叙述个人感受与经历，属记叙。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"山坡上卧着些小村庄，小村庄的房顶上卧着点雪。\" 中\"卧\"字妙在",
+       "options": [
+        "写出村庄高大",
+        "运用拟人，静景写活",
+        "强调雪大",
+        "说明位置低"
+       ],
+       "answer": "B",
+       "analysis": "\"卧\"拟人化，将静谧雪景写得温静可亲。"
+      },
+      {
+       "stem": "【现代文阅读】朱自清《春》节选：\"盼望着，盼望着，东风来了，春天的脚步近了。\" 这句话使用的修辞手法是",
+       "options": [
+        "反复、比喻",
+        "排比、夸张",
+        "对偶、借代",
+        "设问、反问"
+       ],
+       "answer": "A",
+       "analysis": "\"盼望着，盼望着\"为反复，\"春天的脚步\"为比喻。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【古诗文】韩愈《师说》：\"师者，所以传道受业解惑也。\" 该句句式为",
+       "options": [
+        "判断句",
+        "被动句",
+        "倒装句",
+        "省略句"
+       ],
+       "answer": "A",
+       "analysis": "\"者……也\"表判断。"
+      },
+      {
+       "stem": "【古诗文】\"是故弟子不必不如师，师不必贤于弟子。\" 说明",
+       "options": [
+        "弟子必不如师",
+        "师生可互相学习",
+        "师必贤于弟子",
+        "不必从师"
+       ],
+       "answer": "B",
+       "analysis": "闻道有先后，师生各有长短，可互相学习。"
+      },
+      {
+       "stem": "【默写】故不积跬步，____；不积小流，____。",
+       "options": [],
+       "answer": "无以至千里；无以成江海",
+       "analysis": "出自《劝学》，强调积累。"
+      },
+      {
+       "stem": "【默写】锲而舍之，朽木不折；锲而不舍，____。",
+       "options": [],
+       "answer": "金石可镂",
+       "analysis": "出自《劝学》，强调坚持。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】将下面句子排序正确的一项是：①清晨我来到公园 ②草坪上露珠晶莹 ③鸟儿在枝头歌唱 ④这一切让人心旷神怡",
+       "options": [
+        "①②③④",
+        "②①③④",
+        "③①②④",
+        "④①②③"
+       ],
+       "answer": "A",
+       "analysis": "按时间先后与观察顺序：到公园→见露珠→闻鸟鸣→抒发感受。"
+      },
+      {
+       "stem": "【语言运用】下列句子中成语使用正确的一项是",
+       "options": [
+        "运动会开幕式气势磅礴，令人叹为观止",
+        "他上课总是娓娓动听地睡觉",
+        "这篇小说差强人意，漏洞百出",
+        "以上都不对"
+       ],
+       "answer": "A",
+       "analysis": "叹为观止形容赞叹，使用正确；B、C 误用。"
+      },
+      {
+       "stem": "【语言运用】病句：\"通过老师的帮助，使我的成绩提高了。\" 病因及修改是",
+       "options": [
+        "搭配不当，删\"成绩\"",
+        "缺主语，删\"通过\"或\"使\"",
+        "重复累赘，删\"帮助\"",
+        "语序不当，调顺序"
+       ],
+       "answer": "B",
+       "analysis": "\"通过……使\"并用淹没主语，删其一。"
+      },
+      {
+       "stem": "【语言运用】下列标点符号使用正确的一项是",
+       "options": [
+        "我不知道他去哪儿？",
+        "他说：\"走吧。\"",
+        "苹果、梨、香蕉、等",
+        "以上都对"
+       ],
+       "answer": "B",
+       "analysis": "A 陈述句应用句号；C 顿号与\"等\"重复。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《这，才是成熟的模样》。请列出写作要点。",
+       "options": [],
+       "answer": "立意：成熟是责任与担当；选材：一次克服困难的成长经历；结构：叙述+抒情+议论；语言：细腻描写，真情实感。",
+       "analysis": "评分要点：中心明确、内容充实、情感真实、结构完整。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 7 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】老舍《济南的冬天》节选：\"对于一个在北平住惯的人，像我，冬天要是不刮风，便觉得是奇迹。\" 主要表达方式是",
+       "options": [
+        "议论",
+        "说明",
+        "记叙",
+        "描写"
+       ],
+       "answer": "C",
+       "analysis": "叙述个人感受与经历，属记叙。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"山坡上卧着些小村庄，小村庄的房顶上卧着点雪。\" 中\"卧\"字妙在",
+       "options": [
+        "写出村庄高大",
+        "运用拟人，静景写活",
+        "强调雪大",
+        "说明位置低"
+       ],
+       "answer": "B",
+       "analysis": "\"卧\"拟人化，将静谧雪景写得温静可亲。"
+      },
+      {
+       "stem": "【现代文阅读】朱自清《春》节选：\"盼望着，盼望着，东风来了，春天的脚步近了。\" 这句话使用的修辞手法是",
+       "options": [
+        "反复、比喻",
+        "排比、夸张",
+        "对偶、借代",
+        "设问、反问"
+       ],
+       "answer": "A",
+       "analysis": "\"盼望着，盼望着\"为反复，\"春天的脚步\"为比喻。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"一切都像刚睡醒的样子，欣欣然张开了眼。\" 运用的修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "夸张",
+        "排比"
+       ],
+       "answer": "B",
+       "analysis": "赋予万物人的情态\"睡醒\"\"睁眼\"，是拟人。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【古诗文】\"是故弟子不必不如师，师不必贤于弟子。\" 说明",
+       "options": [
+        "弟子必不如师",
+        "师生可互相学习",
+        "师必贤于弟子",
+        "不必从师"
+       ],
+       "answer": "B",
+       "analysis": "闻道有先后，师生各有长短，可互相学习。"
+      },
+      {
+       "stem": "【默写】故不积跬步，____；不积小流，____。",
+       "options": [],
+       "answer": "无以至千里；无以成江海",
+       "analysis": "出自《劝学》，强调积累。"
+      },
+      {
+       "stem": "【默写】锲而舍之，朽木不折；锲而不舍，____。",
+       "options": [],
+       "answer": "金石可镂",
+       "analysis": "出自《劝学》，强调坚持。"
+      },
+      {
+       "stem": "【文言实词】\"假舟楫者，非能水也，而绝江河。\" 中\"绝\"意为",
+       "options": [
+        "断绝",
+        "横渡",
+        "极尽",
+        "消失"
+       ],
+       "answer": "B",
+       "analysis": "\"绝江河\"即横渡江河。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】下列句子中成语使用正确的一项是",
+       "options": [
+        "运动会开幕式气势磅礴，令人叹为观止",
+        "他上课总是娓娓动听地睡觉",
+        "这篇小说差强人意，漏洞百出",
+        "以上都不对"
+       ],
+       "answer": "A",
+       "analysis": "叹为观止形容赞叹，使用正确；B、C 误用。"
+      },
+      {
+       "stem": "【语言运用】病句：\"通过老师的帮助，使我的成绩提高了。\" 病因及修改是",
+       "options": [
+        "搭配不当，删\"成绩\"",
+        "缺主语，删\"通过\"或\"使\"",
+        "重复累赘，删\"帮助\"",
+        "语序不当，调顺序"
+       ],
+       "answer": "B",
+       "analysis": "\"通过……使\"并用淹没主语，删其一。"
+      },
+      {
+       "stem": "【语言运用】下列标点符号使用正确的一项是",
+       "options": [
+        "我不知道他去哪儿？",
+        "他说：\"走吧。\"",
+        "苹果、梨、香蕉、等",
+        "以上都对"
+       ],
+       "answer": "B",
+       "analysis": "A 陈述句应用句号；C 顿号与\"等\"重复。"
+      },
+      {
+       "stem": "【语言运用】仿写：例句\"书是钥匙，能开启智慧之门。\" 恰当的一项是",
+       "options": [
+        "书是钥匙，能开启智慧之门",
+        "书是灯塔，能照亮前行之路",
+        "书是桌子，能摆放物品",
+        "书是食物，能吃下肚"
+       ],
+       "answer": "B",
+       "analysis": "运用比喻且句式一致、意蕴相合。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《劳动的滋味》。请列出写作要点。",
+       "options": [],
+       "answer": "写一次具体劳动体验（如家务、农活、志愿服务），突出过程描写与\"滋味\"（感悟：劳动创造价值、来之不易）。",
+       "analysis": "评分要点：有细节、有感悟、扣题紧密。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 8 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】同上：\"山坡上卧着些小村庄，小村庄的房顶上卧着点雪。\" 中\"卧\"字妙在",
+       "options": [
+        "写出村庄高大",
+        "运用拟人，静景写活",
+        "强调雪大",
+        "说明位置低"
+       ],
+       "answer": "B",
+       "analysis": "\"卧\"拟人化，将静谧雪景写得温静可亲。"
+      },
+      {
+       "stem": "【现代文阅读】朱自清《春》节选：\"盼望着，盼望着，东风来了，春天的脚步近了。\" 这句话使用的修辞手法是",
+       "options": [
+        "反复、比喻",
+        "排比、夸张",
+        "对偶、借代",
+        "设问、反问"
+       ],
+       "answer": "A",
+       "analysis": "\"盼望着，盼望着\"为反复，\"春天的脚步\"为比喻。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"一切都像刚睡醒的样子，欣欣然张开了眼。\" 运用的修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "夸张",
+        "排比"
+       ],
+       "answer": "B",
+       "analysis": "赋予万物人的情态\"睡醒\"\"睁眼\"，是拟人。"
+      },
+      {
+       "stem": "【现代文阅读】鲁迅《从百草园到三味书屋》节选：\"不必说碧绿的菜畦，光滑的石井栏，高大的皂荚树……\" 这段景物描写的顺序是",
+       "options": [
+        "由植物到动物",
+        "由动物到植物",
+        "由高到低",
+        "由远及近"
+       ],
+       "answer": "A",
+       "analysis": "先写植物（菜畦、树）后写动物（蝉、黄蜂、叫天子）。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【默写】故不积跬步，____；不积小流，____。",
+       "options": [],
+       "answer": "无以至千里；无以成江海",
+       "analysis": "出自《劝学》，强调积累。"
+      },
+      {
+       "stem": "【默写】锲而舍之，朽木不折；锲而不舍，____。",
+       "options": [],
+       "answer": "金石可镂",
+       "analysis": "出自《劝学》，强调坚持。"
+      },
+      {
+       "stem": "【文言实词】\"假舟楫者，非能水也，而绝江河。\" 中\"绝\"意为",
+       "options": [
+        "断绝",
+        "横渡",
+        "极尽",
+        "消失"
+       ],
+       "answer": "B",
+       "analysis": "\"绝江河\"即横渡江河。"
+      },
+      {
+       "stem": "【文言虚词】\"青，取之于蓝，而青于蓝。\" 中\"而\"表",
+       "options": [
+        "顺承",
+        "转折",
+        "并列",
+        "修饰"
+       ],
+       "answer": "B",
+       "analysis": "前后语意转折，意为\"却\"。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】病句：\"通过老师的帮助，使我的成绩提高了。\" 病因及修改是",
+       "options": [
+        "搭配不当，删\"成绩\"",
+        "缺主语，删\"通过\"或\"使\"",
+        "重复累赘，删\"帮助\"",
+        "语序不当，调顺序"
+       ],
+       "answer": "B",
+       "analysis": "\"通过……使\"并用淹没主语，删其一。"
+      },
+      {
+       "stem": "【语言运用】下列标点符号使用正确的一项是",
+       "options": [
+        "我不知道他去哪儿？",
+        "他说：\"走吧。\"",
+        "苹果、梨、香蕉、等",
+        "以上都对"
+       ],
+       "answer": "B",
+       "analysis": "A 陈述句应用句号；C 顿号与\"等\"重复。"
+      },
+      {
+       "stem": "【语言运用】仿写：例句\"书是钥匙，能开启智慧之门。\" 恰当的一项是",
+       "options": [
+        "书是钥匙，能开启智慧之门",
+        "书是灯塔，能照亮前行之路",
+        "书是桌子，能摆放物品",
+        "书是食物，能吃下肚"
+       ],
+       "answer": "B",
+       "analysis": "运用比喻且句式一致、意蕴相合。"
+      },
+      {
+       "stem": "【语言运用】\"静谧\"一词中\"谧\"的读音是",
+       "options": [
+        "bì",
+        "mì",
+        "nì",
+        "pì"
+       ],
+       "answer": "B",
+       "analysis": "\"谧\"读 mì，意为安静。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《留一点____给自己》（半命题）。请列出写作要点。",
+       "options": [],
+       "answer": "补全如\"留一点微笑/空间/勇气给自己\"；写自我鼓励或调节的事例，结尾点明留白的意义。",
+       "analysis": "评分要点：补题有新意、叙事具体、立意积极。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 9 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】朱自清《春》节选：\"盼望着，盼望着，东风来了，春天的脚步近了。\" 这句话使用的修辞手法是",
+       "options": [
+        "反复、比喻",
+        "排比、夸张",
+        "对偶、借代",
+        "设问、反问"
+       ],
+       "answer": "A",
+       "analysis": "\"盼望着，盼望着\"为反复，\"春天的脚步\"为比喻。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"一切都像刚睡醒的样子，欣欣然张开了眼。\" 运用的修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "夸张",
+        "排比"
+       ],
+       "answer": "B",
+       "analysis": "赋予万物人的情态\"睡醒\"\"睁眼\"，是拟人。"
+      },
+      {
+       "stem": "【现代文阅读】鲁迅《从百草园到三味书屋》节选：\"不必说碧绿的菜畦，光滑的石井栏，高大的皂荚树……\" 这段景物描写的顺序是",
+       "options": [
+        "由植物到动物",
+        "由动物到植物",
+        "由高到低",
+        "由远及近"
+       ],
+       "answer": "A",
+       "analysis": "先写植物（菜畦、树）后写动物（蝉、黄蜂、叫天子）。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"油蛉在这里低唱，蟋蟀们在这里弹琴。\" 修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "排比",
+        "夸张"
+       ],
+       "answer": "B",
+       "analysis": "\"低唱\"\"弹琴\"赋予昆虫人的动作，拟人。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【默写】锲而舍之，朽木不折；锲而不舍，____。",
+       "options": [],
+       "answer": "金石可镂",
+       "analysis": "出自《劝学》，强调坚持。"
+      },
+      {
+       "stem": "【文言实词】\"假舟楫者，非能水也，而绝江河。\" 中\"绝\"意为",
+       "options": [
+        "断绝",
+        "横渡",
+        "极尽",
+        "消失"
+       ],
+       "answer": "B",
+       "analysis": "\"绝江河\"即横渡江河。"
+      },
+      {
+       "stem": "【文言虚词】\"青，取之于蓝，而青于蓝。\" 中\"而\"表",
+       "options": [
+        "顺承",
+        "转折",
+        "并列",
+        "修饰"
+       ],
+       "answer": "B",
+       "analysis": "前后语意转折，意为\"却\"。"
+      },
+      {
+       "stem": "【古诗文】《荀子·劝学》：\"学不可以已。\" 句意是",
+       "options": [
+        "学习并不难",
+        "学习不可以停止",
+        "学习要速成",
+        "学习没有用处"
+       ],
+       "answer": "B",
+       "analysis": "\"已\"意为停止，全句指学习不能停止。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】下列标点符号使用正确的一项是",
+       "options": [
+        "我不知道他去哪儿？",
+        "他说：\"走吧。\"",
+        "苹果、梨、香蕉、等",
+        "以上都对"
+       ],
+       "answer": "B",
+       "analysis": "A 陈述句应用句号；C 顿号与\"等\"重复。"
+      },
+      {
+       "stem": "【语言运用】仿写：例句\"书是钥匙，能开启智慧之门。\" 恰当的一项是",
+       "options": [
+        "书是钥匙，能开启智慧之门",
+        "书是灯塔，能照亮前行之路",
+        "书是桌子，能摆放物品",
+        "书是食物，能吃下肚"
+       ],
+       "answer": "B",
+       "analysis": "运用比喻且句式一致、意蕴相合。"
+      },
+      {
+       "stem": "【语言运用】\"静谧\"一词中\"谧\"的读音是",
+       "options": [
+        "bì",
+        "mì",
+        "nì",
+        "pì"
+       ],
+       "answer": "B",
+       "analysis": "\"谧\"读 mì，意为安静。"
+      },
+      {
+       "stem": "【语言运用】下列词语书写完全正确的一项是",
+       "options": [
+        "再接再励",
+        "再接再厉",
+        "不记其数",
+        "迫不急待"
+       ],
+       "answer": "B",
+       "analysis": "A 应为\"厉\"，C 应为\"计\"，D 应为\"及\"。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《那一刻，我长大了》。请列出写作要点。",
+       "options": [],
+       "answer": "选取一个具体事件（如照顾家人、独立解决困难），描写\"那一刻\"的心理变化，点明\"长大\"的内涵。",
+       "analysis": "评分要点：情节真实、心理刻画细腻、升华自然。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "语文 模拟训练卷（第 10 套）",
+   "meta": "语文 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、现代文阅读（共 4 题，36 分）",
+     "items": [
+      {
+       "stem": "【现代文阅读】同上：\"一切都像刚睡醒的样子，欣欣然张开了眼。\" 运用的修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "夸张",
+        "排比"
+       ],
+       "answer": "B",
+       "analysis": "赋予万物人的情态\"睡醒\"\"睁眼\"，是拟人。"
+      },
+      {
+       "stem": "【现代文阅读】鲁迅《从百草园到三味书屋》节选：\"不必说碧绿的菜畦，光滑的石井栏，高大的皂荚树……\" 这段景物描写的顺序是",
+       "options": [
+        "由植物到动物",
+        "由动物到植物",
+        "由高到低",
+        "由远及近"
+       ],
+       "answer": "A",
+       "analysis": "先写植物（菜畦、树）后写动物（蝉、黄蜂、叫天子）。"
+      },
+      {
+       "stem": "【现代文阅读】同上：\"油蛉在这里低唱，蟋蟀们在这里弹琴。\" 修辞是",
+       "options": [
+        "比喻",
+        "拟人",
+        "排比",
+        "夸张"
+       ],
+       "answer": "B",
+       "analysis": "\"低唱\"\"弹琴\"赋予昆虫人的动作，拟人。"
+      },
+      {
+       "stem": "【现代文阅读】朱自清《背影》节选：\"我看见他戴着黑布小帽，穿着黑布大马褂，深青布棉袍，蹒跚地走到铁道边，慢慢探身下去……\" 主要运用了",
+       "options": [
+        "语言描写",
+        "心理描写",
+        "外貌与动作描写",
+        "环境描写"
+       ],
+       "answer": "C",
+       "analysis": "\"戴着\"\"穿着\"为外貌，\"走\"\"探身\"为动作描写。"
+      }
+     ]
+    },
+    {
+     "name": "二、古诗文阅读（共 4 题，24 分）",
+     "items": [
+      {
+       "stem": "【文言实词】\"假舟楫者，非能水也，而绝江河。\" 中\"绝\"意为",
+       "options": [
+        "断绝",
+        "横渡",
+        "极尽",
+        "消失"
+       ],
+       "answer": "B",
+       "analysis": "\"绝江河\"即横渡江河。"
+      },
+      {
+       "stem": "【文言虚词】\"青，取之于蓝，而青于蓝。\" 中\"而\"表",
+       "options": [
+        "顺承",
+        "转折",
+        "并列",
+        "修饰"
+       ],
+       "answer": "B",
+       "analysis": "前后语意转折，意为\"却\"。"
+      },
+      {
+       "stem": "【古诗文】《荀子·劝学》：\"学不可以已。\" 句意是",
+       "options": [
+        "学习并不难",
+        "学习不可以停止",
+        "学习要速成",
+        "学习没有用处"
+       ],
+       "answer": "B",
+       "analysis": "\"已\"意为停止，全句指学习不能停止。"
+      },
+      {
+       "stem": "【古诗文】\"君子博学而日参省乎己，则知明而行无过矣。\" 强调",
+       "options": [
+        "博学即可",
+        "每日反省自我",
+        "依靠天赋",
+        "师从名师"
+       ],
+       "answer": "B",
+       "analysis": "\"参省乎己\"即反省自己，可增智慧少过错。"
+      }
+     ]
+    },
+    {
+     "name": "三、语言运用（共 4 题，20 分）",
+     "items": [
+      {
+       "stem": "【语言运用】仿写：例句\"书是钥匙，能开启智慧之门。\" 恰当的一项是",
+       "options": [
+        "书是钥匙，能开启智慧之门",
+        "书是灯塔，能照亮前行之路",
+        "书是桌子，能摆放物品",
+        "书是食物，能吃下肚"
+       ],
+       "answer": "B",
+       "analysis": "运用比喻且句式一致、意蕴相合。"
+      },
+      {
+       "stem": "【语言运用】\"静谧\"一词中\"谧\"的读音是",
+       "options": [
+        "bì",
+        "mì",
+        "nì",
+        "pì"
+       ],
+       "answer": "B",
+       "analysis": "\"谧\"读 mì，意为安静。"
+      },
+      {
+       "stem": "【语言运用】下列词语书写完全正确的一项是",
+       "options": [
+        "再接再励",
+        "再接再厉",
+        "不记其数",
+        "迫不急待"
+       ],
+       "answer": "B",
+       "analysis": "A 应为\"厉\"，C 应为\"计\"，D 应为\"及\"。"
+      },
+      {
+       "stem": "【语言运用】\"请惠存\"一词用于",
+       "options": [
+        "自己保存",
+        "请对方保存（赠物时）",
+        "赠送礼物动作",
+        "表示道歉"
+       ],
+       "answer": "B",
+       "analysis": "\"惠存\"是敬辞，请别人保存自己赠送的东西。"
+      }
+     ]
+    },
+    {
+     "name": "四、作文（1 题，70 分）",
+     "items": [
+      {
+       "stem": "【作文】题目《这，才是成熟的模样》。请列出写作要点。",
+       "options": [],
+       "answer": "立意：成熟是责任与担当；选材：一次克服困难的成长经历；结构：叙述+抒情+议论；语言：细腻描写，真情实感。",
+       "analysis": "评分要点：中心明确、内容充实、情感真实、结构完整。"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "英语": [
+  {
+   "title": "英语 模拟训练卷（第 1 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】Tom is a student. He likes reading books. Every morning he reads for an hour. What does Tom like doing?",
+       "options": [
+        "Reading books",
+        "Playing football",
+        "Watching TV",
+        "Sleeping"
+       ],
+       "answer": "A",
+       "analysis": "原文 He likes reading books。"
+      },
+      {
+       "stem": "【Reading】Mary has a cat. Its name is Mimi. Mimi is white and small. What color is Mimi?",
+       "options": [
+        "White",
+        "Black",
+        "Brown",
+        "Yellow"
+       ],
+       "answer": "A",
+       "analysis": "原文 Mimi is white。"
+      },
+      {
+       "stem": "【Reading】It is sunny today. We go to the park. We fly kites and have a picnic. What is the weather like?",
+       "options": [
+        "Sunny",
+        "Rainy",
+        "Windy",
+        "Snowy"
+       ],
+       "answer": "A",
+       "analysis": "原文 It is sunny today。"
+      },
+      {
+       "stem": "【Reading】My school is big. There are 30 classes. We have Chinese, math, English and PE. How many classes are there?",
+       "options": [
+        "30",
+        "20",
+        "40",
+        "50"
+       ],
+       "answer": "A",
+       "analysis": "原文 There are 30 classes。"
+      },
+      {
+       "stem": "【Reading】Lucy is from London. She speaks English. She wants to learn Chinese. Where is Lucy from?",
+       "options": [
+        "London",
+        "Paris",
+        "New York",
+        "Tokyo"
+       ],
+       "answer": "A",
+       "analysis": "原文 Lucy is from London。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "I __ it some water.",
+       "options": [
+        "give",
+        "gives",
+        "gave",
+        "giving"
+       ],
+       "answer": "C",
+       "analysis": "过去时 gave。"
+      },
+      {
+       "stem": "We played __.",
+       "options": [
+        "happy",
+        "happily",
+        "happiness",
+        "happiest"
+       ],
+       "answer": "B",
+       "analysis": "修饰动词用副词 happily。"
+      },
+      {
+       "stem": "Then my mother __ me.",
+       "options": [
+        "call",
+        "calls",
+        "called",
+        "calling"
+       ],
+       "answer": "C",
+       "analysis": "过去时 called。"
+      },
+      {
+       "stem": "We __ home together.",
+       "options": [
+        "walk",
+        "walked",
+        "walking",
+        "walks"
+       ],
+       "answer": "B",
+       "analysis": "过去时 walked。"
+      },
+      {
+       "stem": "I was very __ that day.",
+       "options": [
+        "happily",
+        "happy",
+        "happiness",
+        "unhappily"
+       ],
+       "answer": "B",
+       "analysis": "be 后接形容词 happy。"
+      },
+      {
+       "stem": "My father __ a new bike for me.",
+       "options": [
+        "buy",
+        "buys",
+        "bought",
+        "buying"
+       ],
+       "answer": "C",
+       "analysis": "过去时 bought。"
+      },
+      {
+       "stem": "I __ it every day.",
+       "options": [
+        "ride",
+        "rides",
+        "rode",
+        "riding"
+       ],
+       "answer": "A",
+       "analysis": "every day 用一般现在时，主语 I 用 ride。"
+      },
+      {
+       "stem": "School __ at 8:00.",
+       "options": [
+        "start",
+        "starts",
+        "started",
+        "starting"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，第三人称单数 starts。"
+      },
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "They went to the park __ (happy).",
+       "options": [],
+       "answer": "happily",
+       "analysis": "修饰动词用副词 happily。"
+      },
+      {
+       "stem": "My mother __ (cook) dinner now.",
+       "options": [],
+       "answer": "is cooking",
+       "analysis": "now 现在进行时。"
+      },
+      {
+       "stem": "He __ (can) swim when he was five.",
+       "options": [],
+       "answer": "could",
+       "analysis": "过去能力用 could。"
+      },
+      {
+       "stem": "I enjoy __ (read) novels.",
+       "options": [],
+       "answer": "reading",
+       "analysis": "enjoy doing。"
+      },
+      {
+       "stem": "The book is __ (interest).",
+       "options": [],
+       "answer": "interesting",
+       "analysis": "物作主语用 interesting。"
+      },
+      {
+       "stem": "She said she __ (will) come.",
+       "options": [],
+       "answer": "would",
+       "analysis": "间接引语 will→would。"
+      },
+      {
+       "stem": "We __ (visit) the museum last week.",
+       "options": [],
+       "answer": "visited",
+       "analysis": "last week 过去时。"
+      },
+      {
+       "stem": "He made me __ (laugh).",
+       "options": [],
+       "answer": "laugh",
+       "analysis": "make sb. do sth."
+      },
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】以日记形式写\"一次难忘的周末\"。要点：时间、活动（如爬山/做家务）、感受。",
+       "options": [],
+       "answer": "格式：左上角日期+天气；正文记叙活动经过；结尾抒发感受。用一般过去时。",
+       "analysis": "评分：时态正确、细节生动、感受真实。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 2 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】Mary has a cat. Its name is Mimi. Mimi is white and small. What color is Mimi?",
+       "options": [
+        "White",
+        "Black",
+        "Brown",
+        "Yellow"
+       ],
+       "answer": "A",
+       "analysis": "原文 Mimi is white。"
+      },
+      {
+       "stem": "【Reading】It is sunny today. We go to the park. We fly kites and have a picnic. What is the weather like?",
+       "options": [
+        "Sunny",
+        "Rainy",
+        "Windy",
+        "Snowy"
+       ],
+       "answer": "A",
+       "analysis": "原文 It is sunny today。"
+      },
+      {
+       "stem": "【Reading】My school is big. There are 30 classes. We have Chinese, math, English and PE. How many classes are there?",
+       "options": [
+        "30",
+        "20",
+        "40",
+        "50"
+       ],
+       "answer": "A",
+       "analysis": "原文 There are 30 classes。"
+      },
+      {
+       "stem": "【Reading】Lucy is from London. She speaks English. She wants to learn Chinese. Where is Lucy from?",
+       "options": [
+        "London",
+        "Paris",
+        "New York",
+        "Tokyo"
+       ],
+       "answer": "A",
+       "analysis": "原文 Lucy is from London。"
+      },
+      {
+       "stem": "【Reading】A: Can I help you? B: I want a red skirt. A: Here you are. Where are they?",
+       "options": [
+        "In a shop",
+        "At school",
+        "At home",
+        "In a library"
+       ],
+       "answer": "A",
+       "analysis": "买裙子场景发生在商店。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "We played __.",
+       "options": [
+        "happy",
+        "happily",
+        "happiness",
+        "happiest"
+       ],
+       "answer": "B",
+       "analysis": "修饰动词用副词 happily。"
+      },
+      {
+       "stem": "Then my mother __ me.",
+       "options": [
+        "call",
+        "calls",
+        "called",
+        "calling"
+       ],
+       "answer": "C",
+       "analysis": "过去时 called。"
+      },
+      {
+       "stem": "We __ home together.",
+       "options": [
+        "walk",
+        "walked",
+        "walking",
+        "walks"
+       ],
+       "answer": "B",
+       "analysis": "过去时 walked。"
+      },
+      {
+       "stem": "I was very __ that day.",
+       "options": [
+        "happily",
+        "happy",
+        "happiness",
+        "unhappily"
+       ],
+       "answer": "B",
+       "analysis": "be 后接形容词 happy。"
+      },
+      {
+       "stem": "My father __ a new bike for me.",
+       "options": [
+        "buy",
+        "buys",
+        "bought",
+        "buying"
+       ],
+       "answer": "C",
+       "analysis": "过去时 bought。"
+      },
+      {
+       "stem": "I __ it every day.",
+       "options": [
+        "ride",
+        "rides",
+        "rode",
+        "riding"
+       ],
+       "answer": "A",
+       "analysis": "every day 用一般现在时，主语 I 用 ride。"
+      },
+      {
+       "stem": "School __ at 8:00.",
+       "options": [
+        "start",
+        "starts",
+        "started",
+        "starting"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，第三人称单数 starts。"
+      },
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "My mother __ (cook) dinner now.",
+       "options": [],
+       "answer": "is cooking",
+       "analysis": "now 现在进行时。"
+      },
+      {
+       "stem": "He __ (can) swim when he was five.",
+       "options": [],
+       "answer": "could",
+       "analysis": "过去能力用 could。"
+      },
+      {
+       "stem": "I enjoy __ (read) novels.",
+       "options": [],
+       "answer": "reading",
+       "analysis": "enjoy doing。"
+      },
+      {
+       "stem": "The book is __ (interest).",
+       "options": [],
+       "answer": "interesting",
+       "analysis": "物作主语用 interesting。"
+      },
+      {
+       "stem": "She said she __ (will) come.",
+       "options": [],
+       "answer": "would",
+       "analysis": "间接引语 will→would。"
+      },
+      {
+       "stem": "We __ (visit) the museum last week.",
+       "options": [],
+       "answer": "visited",
+       "analysis": "last week 过去时。"
+      },
+      {
+       "stem": "He made me __ (laugh).",
+       "options": [],
+       "answer": "laugh",
+       "analysis": "make sb. do sth."
+      },
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】假定你是李华，给英国笔友 Tom 写一封邮件介绍你的学校生活。要点：1.课程丰富 2.社团活动 3.邀请他来访。",
+       "options": [],
+       "answer": "格式：开头 Dear Tom, 问候；正文三段分别对应三个要点（用一般现在时）；结尾 I'm looking forward to your reply. 注意书信格式与要点齐全。",
+       "analysis": "评分：格式正确、要点完整、时态准确、语句通顺。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 3 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】It is sunny today. We go to the park. We fly kites and have a picnic. What is the weather like?",
+       "options": [
+        "Sunny",
+        "Rainy",
+        "Windy",
+        "Snowy"
+       ],
+       "answer": "A",
+       "analysis": "原文 It is sunny today。"
+      },
+      {
+       "stem": "【Reading】My school is big. There are 30 classes. We have Chinese, math, English and PE. How many classes are there?",
+       "options": [
+        "30",
+        "20",
+        "40",
+        "50"
+       ],
+       "answer": "A",
+       "analysis": "原文 There are 30 classes。"
+      },
+      {
+       "stem": "【Reading】Lucy is from London. She speaks English. She wants to learn Chinese. Where is Lucy from?",
+       "options": [
+        "London",
+        "Paris",
+        "New York",
+        "Tokyo"
+       ],
+       "answer": "A",
+       "analysis": "原文 Lucy is from London。"
+      },
+      {
+       "stem": "【Reading】A: Can I help you? B: I want a red skirt. A: Here you are. Where are they?",
+       "options": [
+        "In a shop",
+        "At school",
+        "At home",
+        "In a library"
+       ],
+       "answer": "A",
+       "analysis": "买裙子场景发生在商店。"
+      },
+      {
+       "stem": "【Reading】It's 7:00. Time for breakfast. I have milk and bread. What does the writer have for breakfast?",
+       "options": [
+        "Milk and bread",
+        "Eggs",
+        "Rice",
+        "Noodles"
+       ],
+       "answer": "A",
+       "analysis": "原文 I have milk and bread。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "Then my mother __ me.",
+       "options": [
+        "call",
+        "calls",
+        "called",
+        "calling"
+       ],
+       "answer": "C",
+       "analysis": "过去时 called。"
+      },
+      {
+       "stem": "We __ home together.",
+       "options": [
+        "walk",
+        "walked",
+        "walking",
+        "walks"
+       ],
+       "answer": "B",
+       "analysis": "过去时 walked。"
+      },
+      {
+       "stem": "I was very __ that day.",
+       "options": [
+        "happily",
+        "happy",
+        "happiness",
+        "unhappily"
+       ],
+       "answer": "B",
+       "analysis": "be 后接形容词 happy。"
+      },
+      {
+       "stem": "My father __ a new bike for me.",
+       "options": [
+        "buy",
+        "buys",
+        "bought",
+        "buying"
+       ],
+       "answer": "C",
+       "analysis": "过去时 bought。"
+      },
+      {
+       "stem": "I __ it every day.",
+       "options": [
+        "ride",
+        "rides",
+        "rode",
+        "riding"
+       ],
+       "answer": "A",
+       "analysis": "every day 用一般现在时，主语 I 用 ride。"
+      },
+      {
+       "stem": "School __ at 8:00.",
+       "options": [
+        "start",
+        "starts",
+        "started",
+        "starting"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，第三人称单数 starts。"
+      },
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      },
+      {
+       "stem": "He __ to bed at 9:00.",
+       "options": [
+        "go",
+        "goes",
+        "went",
+        "going"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，三单 goes。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "He __ (can) swim when he was five.",
+       "options": [],
+       "answer": "could",
+       "analysis": "过去能力用 could。"
+      },
+      {
+       "stem": "I enjoy __ (read) novels.",
+       "options": [],
+       "answer": "reading",
+       "analysis": "enjoy doing。"
+      },
+      {
+       "stem": "The book is __ (interest).",
+       "options": [],
+       "answer": "interesting",
+       "analysis": "物作主语用 interesting。"
+      },
+      {
+       "stem": "She said she __ (will) come.",
+       "options": [],
+       "answer": "would",
+       "analysis": "间接引语 will→would。"
+      },
+      {
+       "stem": "We __ (visit) the museum last week.",
+       "options": [],
+       "answer": "visited",
+       "analysis": "last week 过去时。"
+      },
+      {
+       "stem": "He made me __ (laugh).",
+       "options": [],
+       "answer": "laugh",
+       "analysis": "make sb. do sth."
+      },
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      },
+      {
+       "stem": "If it __ (rain) tomorrow, we will stay home.",
+       "options": [],
+       "answer": "rains",
+       "analysis": "条件状语从句主将从现，三单 rains。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】以\"My Favorite Sport\"为题写一篇约 60 词短文。要点：运动名称、喜欢的原因、运动频率。",
+       "options": [],
+       "answer": "结构：首句点明运动；中间写原因（健康/快乐/交友）；末句写频率（every weekend）。用一般现在时。",
+       "analysis": "评分：覆盖要点、逻辑清晰、无重大语法错误。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 4 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】My school is big. There are 30 classes. We have Chinese, math, English and PE. How many classes are there?",
+       "options": [
+        "30",
+        "20",
+        "40",
+        "50"
+       ],
+       "answer": "A",
+       "analysis": "原文 There are 30 classes。"
+      },
+      {
+       "stem": "【Reading】Lucy is from London. She speaks English. She wants to learn Chinese. Where is Lucy from?",
+       "options": [
+        "London",
+        "Paris",
+        "New York",
+        "Tokyo"
+       ],
+       "answer": "A",
+       "analysis": "原文 Lucy is from London。"
+      },
+      {
+       "stem": "【Reading】A: Can I help you? B: I want a red skirt. A: Here you are. Where are they?",
+       "options": [
+        "In a shop",
+        "At school",
+        "At home",
+        "In a library"
+       ],
+       "answer": "A",
+       "analysis": "买裙子场景发生在商店。"
+      },
+      {
+       "stem": "【Reading】It's 7:00. Time for breakfast. I have milk and bread. What does the writer have for breakfast?",
+       "options": [
+        "Milk and bread",
+        "Eggs",
+        "Rice",
+        "Noodles"
+       ],
+       "answer": "A",
+       "analysis": "原文 I have milk and bread。"
+      },
+      {
+       "stem": "【Reading】My friend Jack is good at sports. He plays basketball after school. What sport does Jack play?",
+       "options": [
+        "Basketball",
+        "Football",
+        "Tennis",
+        "Swimming"
+       ],
+       "answer": "A",
+       "analysis": "原文 He plays basketball。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "We __ home together.",
+       "options": [
+        "walk",
+        "walked",
+        "walking",
+        "walks"
+       ],
+       "answer": "B",
+       "analysis": "过去时 walked。"
+      },
+      {
+       "stem": "I was very __ that day.",
+       "options": [
+        "happily",
+        "happy",
+        "happiness",
+        "unhappily"
+       ],
+       "answer": "B",
+       "analysis": "be 后接形容词 happy。"
+      },
+      {
+       "stem": "My father __ a new bike for me.",
+       "options": [
+        "buy",
+        "buys",
+        "bought",
+        "buying"
+       ],
+       "answer": "C",
+       "analysis": "过去时 bought。"
+      },
+      {
+       "stem": "I __ it every day.",
+       "options": [
+        "ride",
+        "rides",
+        "rode",
+        "riding"
+       ],
+       "answer": "A",
+       "analysis": "every day 用一般现在时，主语 I 用 ride。"
+      },
+      {
+       "stem": "School __ at 8:00.",
+       "options": [
+        "start",
+        "starts",
+        "started",
+        "starting"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，第三人称单数 starts。"
+      },
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      },
+      {
+       "stem": "He __ to bed at 9:00.",
+       "options": [
+        "go",
+        "goes",
+        "went",
+        "going"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，三单 goes。"
+      },
+      {
+       "stem": "__ you like apples?",
+       "options": [
+        "Do",
+        "Does",
+        "Are",
+        "Is"
+       ],
+       "answer": "A",
+       "analysis": "主语 you 用助动词 Do。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "I enjoy __ (read) novels.",
+       "options": [],
+       "answer": "reading",
+       "analysis": "enjoy doing。"
+      },
+      {
+       "stem": "The book is __ (interest).",
+       "options": [],
+       "answer": "interesting",
+       "analysis": "物作主语用 interesting。"
+      },
+      {
+       "stem": "She said she __ (will) come.",
+       "options": [],
+       "answer": "would",
+       "analysis": "间接引语 will→would。"
+      },
+      {
+       "stem": "We __ (visit) the museum last week.",
+       "options": [],
+       "answer": "visited",
+       "analysis": "last week 过去时。"
+      },
+      {
+       "stem": "He made me __ (laugh).",
+       "options": [],
+       "answer": "laugh",
+       "analysis": "make sb. do sth."
+      },
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      },
+      {
+       "stem": "If it __ (rain) tomorrow, we will stay home.",
+       "options": [],
+       "answer": "rains",
+       "analysis": "条件状语从句主将从现，三单 rains。"
+      },
+      {
+       "stem": "She __ (go) to school by bike every day.",
+       "options": [],
+       "answer": "goes",
+       "analysis": "主语三单，一般现在时 goes。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】你是班长，写一则通知：本周六上午 8:00 在校门口集合去博物馆。要点：时间、地点、携带物品（笔记本、水）。",
+       "options": [],
+       "answer": "格式：NOTICE 标题；正文写明时间、地点、事项、携带物；落款 班长+日期。",
+       "analysis": "评分：要素齐全、语言简洁、格式规范。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 5 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】Lucy is from London. She speaks English. She wants to learn Chinese. Where is Lucy from?",
+       "options": [
+        "London",
+        "Paris",
+        "New York",
+        "Tokyo"
+       ],
+       "answer": "A",
+       "analysis": "原文 Lucy is from London。"
+      },
+      {
+       "stem": "【Reading】A: Can I help you? B: I want a red skirt. A: Here you are. Where are they?",
+       "options": [
+        "In a shop",
+        "At school",
+        "At home",
+        "In a library"
+       ],
+       "answer": "A",
+       "analysis": "买裙子场景发生在商店。"
+      },
+      {
+       "stem": "【Reading】It's 7:00. Time for breakfast. I have milk and bread. What does the writer have for breakfast?",
+       "options": [
+        "Milk and bread",
+        "Eggs",
+        "Rice",
+        "Noodles"
+       ],
+       "answer": "A",
+       "analysis": "原文 I have milk and bread。"
+      },
+      {
+       "stem": "【Reading】My friend Jack is good at sports. He plays basketball after school. What sport does Jack play?",
+       "options": [
+        "Basketball",
+        "Football",
+        "Tennis",
+        "Swimming"
+       ],
+       "answer": "A",
+       "analysis": "原文 He plays basketball。"
+      },
+      {
+       "stem": "【Reading】We should protect the earth. We can plant more trees and save water. What can we do to help?",
+       "options": [
+        "Plant trees and save water",
+        "Cut trees",
+        "Waste water",
+        "Kill animals"
+       ],
+       "answer": "A",
+       "analysis": "原文 plant more trees and save water。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "I was very __ that day.",
+       "options": [
+        "happily",
+        "happy",
+        "happiness",
+        "unhappily"
+       ],
+       "answer": "B",
+       "analysis": "be 后接形容词 happy。"
+      },
+      {
+       "stem": "My father __ a new bike for me.",
+       "options": [
+        "buy",
+        "buys",
+        "bought",
+        "buying"
+       ],
+       "answer": "C",
+       "analysis": "过去时 bought。"
+      },
+      {
+       "stem": "I __ it every day.",
+       "options": [
+        "ride",
+        "rides",
+        "rode",
+        "riding"
+       ],
+       "answer": "A",
+       "analysis": "every day 用一般现在时，主语 I 用 ride。"
+      },
+      {
+       "stem": "School __ at 8:00.",
+       "options": [
+        "start",
+        "starts",
+        "started",
+        "starting"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，第三人称单数 starts。"
+      },
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      },
+      {
+       "stem": "He __ to bed at 9:00.",
+       "options": [
+        "go",
+        "goes",
+        "went",
+        "going"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，三单 goes。"
+      },
+      {
+       "stem": "__ you like apples?",
+       "options": [
+        "Do",
+        "Does",
+        "Are",
+        "Is"
+       ],
+       "answer": "A",
+       "analysis": "主语 you 用助动词 Do。"
+      },
+      {
+       "stem": "There __ some milk in the glass.",
+       "options": [
+        "is",
+        "are",
+        "am",
+        "be"
+       ],
+       "answer": "A",
+       "analysis": "milk 不可数，用 is。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "The book is __ (interest).",
+       "options": [],
+       "answer": "interesting",
+       "analysis": "物作主语用 interesting。"
+      },
+      {
+       "stem": "She said she __ (will) come.",
+       "options": [],
+       "answer": "would",
+       "analysis": "间接引语 will→would。"
+      },
+      {
+       "stem": "We __ (visit) the museum last week.",
+       "options": [],
+       "answer": "visited",
+       "analysis": "last week 过去时。"
+      },
+      {
+       "stem": "He made me __ (laugh).",
+       "options": [],
+       "answer": "laugh",
+       "analysis": "make sb. do sth."
+      },
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      },
+      {
+       "stem": "If it __ (rain) tomorrow, we will stay home.",
+       "options": [],
+       "answer": "rains",
+       "analysis": "条件状语从句主将从现，三单 rains。"
+      },
+      {
+       "stem": "She __ (go) to school by bike every day.",
+       "options": [],
+       "answer": "goes",
+       "analysis": "主语三单，一般现在时 goes。"
+      },
+      {
+       "stem": "They __ (be) students.",
+       "options": [],
+       "answer": "are",
+       "analysis": "复数用 are。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】以日记形式写\"一次难忘的周末\"。要点：时间、活动（如爬山/做家务）、感受。",
+       "options": [],
+       "answer": "格式：左上角日期+天气；正文记叙活动经过；结尾抒发感受。用一般过去时。",
+       "analysis": "评分：时态正确、细节生动、感受真实。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 6 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】A: Can I help you? B: I want a red skirt. A: Here you are. Where are they?",
+       "options": [
+        "In a shop",
+        "At school",
+        "At home",
+        "In a library"
+       ],
+       "answer": "A",
+       "analysis": "买裙子场景发生在商店。"
+      },
+      {
+       "stem": "【Reading】It's 7:00. Time for breakfast. I have milk and bread. What does the writer have for breakfast?",
+       "options": [
+        "Milk and bread",
+        "Eggs",
+        "Rice",
+        "Noodles"
+       ],
+       "answer": "A",
+       "analysis": "原文 I have milk and bread。"
+      },
+      {
+       "stem": "【Reading】My friend Jack is good at sports. He plays basketball after school. What sport does Jack play?",
+       "options": [
+        "Basketball",
+        "Football",
+        "Tennis",
+        "Swimming"
+       ],
+       "answer": "A",
+       "analysis": "原文 He plays basketball。"
+      },
+      {
+       "stem": "【Reading】We should protect the earth. We can plant more trees and save water. What can we do to help?",
+       "options": [
+        "Plant trees and save water",
+        "Cut trees",
+        "Waste water",
+        "Kill animals"
+       ],
+       "answer": "A",
+       "analysis": "原文 plant more trees and save water。"
+      },
+      {
+       "stem": "【Reading】English is useful. I study it hard every day. Why does the writer study English?",
+       "options": [
+        "Because it is useful",
+        "Because it is easy",
+        "Because it is boring",
+        "Because he must"
+       ],
+       "answer": "A",
+       "analysis": "原文 English is useful。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "My father __ a new bike for me.",
+       "options": [
+        "buy",
+        "buys",
+        "bought",
+        "buying"
+       ],
+       "answer": "C",
+       "analysis": "过去时 bought。"
+      },
+      {
+       "stem": "I __ it every day.",
+       "options": [
+        "ride",
+        "rides",
+        "rode",
+        "riding"
+       ],
+       "answer": "A",
+       "analysis": "every day 用一般现在时，主语 I 用 ride。"
+      },
+      {
+       "stem": "School __ at 8:00.",
+       "options": [
+        "start",
+        "starts",
+        "started",
+        "starting"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，第三人称单数 starts。"
+      },
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      },
+      {
+       "stem": "He __ to bed at 9:00.",
+       "options": [
+        "go",
+        "goes",
+        "went",
+        "going"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，三单 goes。"
+      },
+      {
+       "stem": "__ you like apples?",
+       "options": [
+        "Do",
+        "Does",
+        "Are",
+        "Is"
+       ],
+       "answer": "A",
+       "analysis": "主语 you 用助动词 Do。"
+      },
+      {
+       "stem": "There __ some milk in the glass.",
+       "options": [
+        "is",
+        "are",
+        "am",
+        "be"
+       ],
+       "answer": "A",
+       "analysis": "milk 不可数，用 is。"
+      },
+      {
+       "stem": "I am __ in music.",
+       "options": [
+        "interest",
+        "interested",
+        "interesting",
+        "interests"
+       ],
+       "answer": "B",
+       "analysis": "be interested in 对……感兴趣。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "She said she __ (will) come.",
+       "options": [],
+       "answer": "would",
+       "analysis": "间接引语 will→would。"
+      },
+      {
+       "stem": "We __ (visit) the museum last week.",
+       "options": [],
+       "answer": "visited",
+       "analysis": "last week 过去时。"
+      },
+      {
+       "stem": "He made me __ (laugh).",
+       "options": [],
+       "answer": "laugh",
+       "analysis": "make sb. do sth."
+      },
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      },
+      {
+       "stem": "If it __ (rain) tomorrow, we will stay home.",
+       "options": [],
+       "answer": "rains",
+       "analysis": "条件状语从句主将从现，三单 rains。"
+      },
+      {
+       "stem": "She __ (go) to school by bike every day.",
+       "options": [],
+       "answer": "goes",
+       "analysis": "主语三单，一般现在时 goes。"
+      },
+      {
+       "stem": "They __ (be) students.",
+       "options": [],
+       "answer": "are",
+       "analysis": "复数用 are。"
+      },
+      {
+       "stem": "He __ (have) a dog.",
+       "options": [],
+       "answer": "has",
+       "analysis": "三单 has。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】假定你是李华，给英国笔友 Tom 写一封邮件介绍你的学校生活。要点：1.课程丰富 2.社团活动 3.邀请他来访。",
+       "options": [],
+       "answer": "格式：开头 Dear Tom, 问候；正文三段分别对应三个要点（用一般现在时）；结尾 I'm looking forward to your reply. 注意书信格式与要点齐全。",
+       "analysis": "评分：格式正确、要点完整、时态准确、语句通顺。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 7 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】It's 7:00. Time for breakfast. I have milk and bread. What does the writer have for breakfast?",
+       "options": [
+        "Milk and bread",
+        "Eggs",
+        "Rice",
+        "Noodles"
+       ],
+       "answer": "A",
+       "analysis": "原文 I have milk and bread。"
+      },
+      {
+       "stem": "【Reading】My friend Jack is good at sports. He plays basketball after school. What sport does Jack play?",
+       "options": [
+        "Basketball",
+        "Football",
+        "Tennis",
+        "Swimming"
+       ],
+       "answer": "A",
+       "analysis": "原文 He plays basketball。"
+      },
+      {
+       "stem": "【Reading】We should protect the earth. We can plant more trees and save water. What can we do to help?",
+       "options": [
+        "Plant trees and save water",
+        "Cut trees",
+        "Waste water",
+        "Kill animals"
+       ],
+       "answer": "A",
+       "analysis": "原文 plant more trees and save water。"
+      },
+      {
+       "stem": "【Reading】English is useful. I study it hard every day. Why does the writer study English?",
+       "options": [
+        "Because it is useful",
+        "Because it is easy",
+        "Because it is boring",
+        "Because he must"
+       ],
+       "answer": "A",
+       "analysis": "原文 English is useful。"
+      },
+      {
+       "stem": "【Reading】Tom is a student. He likes reading books. Every morning he reads for an hour. What does Tom like doing?",
+       "options": [
+        "Reading books",
+        "Playing football",
+        "Watching TV",
+        "Sleeping"
+       ],
+       "answer": "A",
+       "analysis": "原文 He likes reading books。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "I __ it every day.",
+       "options": [
+        "ride",
+        "rides",
+        "rode",
+        "riding"
+       ],
+       "answer": "A",
+       "analysis": "every day 用一般现在时，主语 I 用 ride。"
+      },
+      {
+       "stem": "School __ at 8:00.",
+       "options": [
+        "start",
+        "starts",
+        "started",
+        "starting"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，第三人称单数 starts。"
+      },
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      },
+      {
+       "stem": "He __ to bed at 9:00.",
+       "options": [
+        "go",
+        "goes",
+        "went",
+        "going"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，三单 goes。"
+      },
+      {
+       "stem": "__ you like apples?",
+       "options": [
+        "Do",
+        "Does",
+        "Are",
+        "Is"
+       ],
+       "answer": "A",
+       "analysis": "主语 you 用助动词 Do。"
+      },
+      {
+       "stem": "There __ some milk in the glass.",
+       "options": [
+        "is",
+        "are",
+        "am",
+        "be"
+       ],
+       "answer": "A",
+       "analysis": "milk 不可数，用 is。"
+      },
+      {
+       "stem": "I am __ in music.",
+       "options": [
+        "interest",
+        "interested",
+        "interesting",
+        "interests"
+       ],
+       "answer": "B",
+       "analysis": "be interested in 对……感兴趣。"
+      },
+      {
+       "stem": "Last Sunday, I __ to the park.",
+       "options": [
+        "go",
+        "went",
+        "going",
+        "goes"
+       ],
+       "answer": "B",
+       "analysis": "last Sunday 用一般过去时 went。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "We __ (visit) the museum last week.",
+       "options": [],
+       "answer": "visited",
+       "analysis": "last week 过去时。"
+      },
+      {
+       "stem": "He made me __ (laugh).",
+       "options": [],
+       "answer": "laugh",
+       "analysis": "make sb. do sth."
+      },
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      },
+      {
+       "stem": "If it __ (rain) tomorrow, we will stay home.",
+       "options": [],
+       "answer": "rains",
+       "analysis": "条件状语从句主将从现，三单 rains。"
+      },
+      {
+       "stem": "She __ (go) to school by bike every day.",
+       "options": [],
+       "answer": "goes",
+       "analysis": "主语三单，一般现在时 goes。"
+      },
+      {
+       "stem": "They __ (be) students.",
+       "options": [],
+       "answer": "are",
+       "analysis": "复数用 are。"
+      },
+      {
+       "stem": "He __ (have) a dog.",
+       "options": [],
+       "answer": "has",
+       "analysis": "三单 has。"
+      },
+      {
+       "stem": "I __ (not like) apples.",
+       "options": [],
+       "answer": "don't like",
+       "analysis": "主语 I 用 don't。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】以\"My Favorite Sport\"为题写一篇约 60 词短文。要点：运动名称、喜欢的原因、运动频率。",
+       "options": [],
+       "answer": "结构：首句点明运动；中间写原因（健康/快乐/交友）；末句写频率（every weekend）。用一般现在时。",
+       "analysis": "评分：覆盖要点、逻辑清晰、无重大语法错误。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 8 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】My friend Jack is good at sports. He plays basketball after school. What sport does Jack play?",
+       "options": [
+        "Basketball",
+        "Football",
+        "Tennis",
+        "Swimming"
+       ],
+       "answer": "A",
+       "analysis": "原文 He plays basketball。"
+      },
+      {
+       "stem": "【Reading】We should protect the earth. We can plant more trees and save water. What can we do to help?",
+       "options": [
+        "Plant trees and save water",
+        "Cut trees",
+        "Waste water",
+        "Kill animals"
+       ],
+       "answer": "A",
+       "analysis": "原文 plant more trees and save water。"
+      },
+      {
+       "stem": "【Reading】English is useful. I study it hard every day. Why does the writer study English?",
+       "options": [
+        "Because it is useful",
+        "Because it is easy",
+        "Because it is boring",
+        "Because he must"
+       ],
+       "answer": "A",
+       "analysis": "原文 English is useful。"
+      },
+      {
+       "stem": "【Reading】Tom is a student. He likes reading books. Every morning he reads for an hour. What does Tom like doing?",
+       "options": [
+        "Reading books",
+        "Playing football",
+        "Watching TV",
+        "Sleeping"
+       ],
+       "answer": "A",
+       "analysis": "原文 He likes reading books。"
+      },
+      {
+       "stem": "【Reading】Mary has a cat. Its name is Mimi. Mimi is white and small. What color is Mimi?",
+       "options": [
+        "White",
+        "Black",
+        "Brown",
+        "Yellow"
+       ],
+       "answer": "A",
+       "analysis": "原文 Mimi is white。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "School __ at 8:00.",
+       "options": [
+        "start",
+        "starts",
+        "started",
+        "starting"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，第三人称单数 starts。"
+      },
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      },
+      {
+       "stem": "He __ to bed at 9:00.",
+       "options": [
+        "go",
+        "goes",
+        "went",
+        "going"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，三单 goes。"
+      },
+      {
+       "stem": "__ you like apples?",
+       "options": [
+        "Do",
+        "Does",
+        "Are",
+        "Is"
+       ],
+       "answer": "A",
+       "analysis": "主语 you 用助动词 Do。"
+      },
+      {
+       "stem": "There __ some milk in the glass.",
+       "options": [
+        "is",
+        "are",
+        "am",
+        "be"
+       ],
+       "answer": "A",
+       "analysis": "milk 不可数，用 is。"
+      },
+      {
+       "stem": "I am __ in music.",
+       "options": [
+        "interest",
+        "interested",
+        "interesting",
+        "interests"
+       ],
+       "answer": "B",
+       "analysis": "be interested in 对……感兴趣。"
+      },
+      {
+       "stem": "Last Sunday, I __ to the park.",
+       "options": [
+        "go",
+        "went",
+        "going",
+        "goes"
+       ],
+       "answer": "B",
+       "analysis": "last Sunday 用一般过去时 went。"
+      },
+      {
+       "stem": "The weather was __.",
+       "options": [
+        "sun",
+        "suny",
+        "sunny",
+        "sunning"
+       ],
+       "answer": "C",
+       "analysis": "be 动词后接形容词 sunny。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "He made me __ (laugh).",
+       "options": [],
+       "answer": "laugh",
+       "analysis": "make sb. do sth."
+      },
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      },
+      {
+       "stem": "If it __ (rain) tomorrow, we will stay home.",
+       "options": [],
+       "answer": "rains",
+       "analysis": "条件状语从句主将从现，三单 rains。"
+      },
+      {
+       "stem": "She __ (go) to school by bike every day.",
+       "options": [],
+       "answer": "goes",
+       "analysis": "主语三单，一般现在时 goes。"
+      },
+      {
+       "stem": "They __ (be) students.",
+       "options": [],
+       "answer": "are",
+       "analysis": "复数用 are。"
+      },
+      {
+       "stem": "He __ (have) a dog.",
+       "options": [],
+       "answer": "has",
+       "analysis": "三单 has。"
+      },
+      {
+       "stem": "I __ (not like) apples.",
+       "options": [],
+       "answer": "don't like",
+       "analysis": "主语 I 用 don't。"
+      },
+      {
+       "stem": "__ (do) he play soccer?",
+       "options": [],
+       "answer": "Does",
+       "analysis": "三单用 Does。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】你是班长，写一则通知：本周六上午 8:00 在校门口集合去博物馆。要点：时间、地点、携带物品（笔记本、水）。",
+       "options": [],
+       "answer": "格式：NOTICE 标题；正文写明时间、地点、事项、携带物；落款 班长+日期。",
+       "analysis": "评分：要素齐全、语言简洁、格式规范。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 9 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】We should protect the earth. We can plant more trees and save water. What can we do to help?",
+       "options": [
+        "Plant trees and save water",
+        "Cut trees",
+        "Waste water",
+        "Kill animals"
+       ],
+       "answer": "A",
+       "analysis": "原文 plant more trees and save water。"
+      },
+      {
+       "stem": "【Reading】English is useful. I study it hard every day. Why does the writer study English?",
+       "options": [
+        "Because it is useful",
+        "Because it is easy",
+        "Because it is boring",
+        "Because he must"
+       ],
+       "answer": "A",
+       "analysis": "原文 English is useful。"
+      },
+      {
+       "stem": "【Reading】Tom is a student. He likes reading books. Every morning he reads for an hour. What does Tom like doing?",
+       "options": [
+        "Reading books",
+        "Playing football",
+        "Watching TV",
+        "Sleeping"
+       ],
+       "answer": "A",
+       "analysis": "原文 He likes reading books。"
+      },
+      {
+       "stem": "【Reading】Mary has a cat. Its name is Mimi. Mimi is white and small. What color is Mimi?",
+       "options": [
+        "White",
+        "Black",
+        "Brown",
+        "Yellow"
+       ],
+       "answer": "A",
+       "analysis": "原文 Mimi is white。"
+      },
+      {
+       "stem": "【Reading】It is sunny today. We go to the park. We fly kites and have a picnic. What is the weather like?",
+       "options": [
+        "Sunny",
+        "Rainy",
+        "Windy",
+        "Snowy"
+       ],
+       "answer": "A",
+       "analysis": "原文 It is sunny today。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "I like __ English.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "to reading"
+       ],
+       "answer": "C",
+       "analysis": "like doing sth."
+      },
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      },
+      {
+       "stem": "He __ to bed at 9:00.",
+       "options": [
+        "go",
+        "goes",
+        "went",
+        "going"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，三单 goes。"
+      },
+      {
+       "stem": "__ you like apples?",
+       "options": [
+        "Do",
+        "Does",
+        "Are",
+        "Is"
+       ],
+       "answer": "A",
+       "analysis": "主语 you 用助动词 Do。"
+      },
+      {
+       "stem": "There __ some milk in the glass.",
+       "options": [
+        "is",
+        "are",
+        "am",
+        "be"
+       ],
+       "answer": "A",
+       "analysis": "milk 不可数，用 is。"
+      },
+      {
+       "stem": "I am __ in music.",
+       "options": [
+        "interest",
+        "interested",
+        "interesting",
+        "interests"
+       ],
+       "answer": "B",
+       "analysis": "be interested in 对……感兴趣。"
+      },
+      {
+       "stem": "Last Sunday, I __ to the park.",
+       "options": [
+        "go",
+        "went",
+        "going",
+        "goes"
+       ],
+       "answer": "B",
+       "analysis": "last Sunday 用一般过去时 went。"
+      },
+      {
+       "stem": "The weather was __.",
+       "options": [
+        "sun",
+        "suny",
+        "sunny",
+        "sunning"
+       ],
+       "answer": "C",
+       "analysis": "be 动词后接形容词 sunny。"
+      },
+      {
+       "stem": "I __ a book under a tree.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "red"
+       ],
+       "answer": "A",
+       "analysis": "讲述过去用 read（过去式同形）。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "It's time __ (go) home.",
+       "options": [],
+       "answer": "to go",
+       "analysis": "It's time to do。"
+      },
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      },
+      {
+       "stem": "If it __ (rain) tomorrow, we will stay home.",
+       "options": [],
+       "answer": "rains",
+       "analysis": "条件状语从句主将从现，三单 rains。"
+      },
+      {
+       "stem": "She __ (go) to school by bike every day.",
+       "options": [],
+       "answer": "goes",
+       "analysis": "主语三单，一般现在时 goes。"
+      },
+      {
+       "stem": "They __ (be) students.",
+       "options": [],
+       "answer": "are",
+       "analysis": "复数用 are。"
+      },
+      {
+       "stem": "He __ (have) a dog.",
+       "options": [],
+       "answer": "has",
+       "analysis": "三单 has。"
+      },
+      {
+       "stem": "I __ (not like) apples.",
+       "options": [],
+       "answer": "don't like",
+       "analysis": "主语 I 用 don't。"
+      },
+      {
+       "stem": "__ (do) he play soccer?",
+       "options": [],
+       "answer": "Does",
+       "analysis": "三单用 Does。"
+      },
+      {
+       "stem": "We __ (watch) TV now.",
+       "options": [],
+       "answer": "are watching",
+       "analysis": "now 用现在进行时。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】以日记形式写\"一次难忘的周末\"。要点：时间、活动（如爬山/做家务）、感受。",
+       "options": [],
+       "answer": "格式：左上角日期+天气；正文记叙活动经过；结尾抒发感受。用一般过去时。",
+       "analysis": "评分：时态正确、细节生动、感受真实。"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "英语 模拟训练卷（第 10 套）",
+   "meta": "英语 · 高一必修综合模拟（完整套卷 · 满分 150 分 · 附答案）",
+   "sections": [
+    {
+     "name": "一、阅读理解（每题 4 分，共 5 题，40 分）",
+     "items": [
+      {
+       "stem": "【Reading】English is useful. I study it hard every day. Why does the writer study English?",
+       "options": [
+        "Because it is useful",
+        "Because it is easy",
+        "Because it is boring",
+        "Because he must"
+       ],
+       "answer": "A",
+       "analysis": "原文 English is useful。"
+      },
+      {
+       "stem": "【Reading】Tom is a student. He likes reading books. Every morning he reads for an hour. What does Tom like doing?",
+       "options": [
+        "Reading books",
+        "Playing football",
+        "Watching TV",
+        "Sleeping"
+       ],
+       "answer": "A",
+       "analysis": "原文 He likes reading books。"
+      },
+      {
+       "stem": "【Reading】Mary has a cat. Its name is Mimi. Mimi is white and small. What color is Mimi?",
+       "options": [
+        "White",
+        "Black",
+        "Brown",
+        "Yellow"
+       ],
+       "answer": "A",
+       "analysis": "原文 Mimi is white。"
+      },
+      {
+       "stem": "【Reading】It is sunny today. We go to the park. We fly kites and have a picnic. What is the weather like?",
+       "options": [
+        "Sunny",
+        "Rainy",
+        "Windy",
+        "Snowy"
+       ],
+       "answer": "A",
+       "analysis": "原文 It is sunny today。"
+      },
+      {
+       "stem": "【Reading】My school is big. There are 30 classes. We have Chinese, math, English and PE. How many classes are there?",
+       "options": [
+        "30",
+        "20",
+        "40",
+        "50"
+       ],
+       "answer": "A",
+       "analysis": "原文 There are 30 classes。"
+      }
+     ]
+    },
+    {
+     "name": "二、完形填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "She __ a song now.",
+       "options": [
+        "sing",
+        "sings",
+        "is singing",
+        "sang"
+       ],
+       "answer": "C",
+       "analysis": "now 用现在进行时 is singing。"
+      },
+      {
+       "stem": "They __ football yesterday.",
+       "options": [
+        "play",
+        "plays",
+        "played",
+        "playing"
+       ],
+       "answer": "C",
+       "analysis": "yesterday 用过去时 played。"
+      },
+      {
+       "stem": "He __ to bed at 9:00.",
+       "options": [
+        "go",
+        "goes",
+        "went",
+        "going"
+       ],
+       "answer": "B",
+       "analysis": "一般现在时，三单 goes。"
+      },
+      {
+       "stem": "__ you like apples?",
+       "options": [
+        "Do",
+        "Does",
+        "Are",
+        "Is"
+       ],
+       "answer": "A",
+       "analysis": "主语 you 用助动词 Do。"
+      },
+      {
+       "stem": "There __ some milk in the glass.",
+       "options": [
+        "is",
+        "are",
+        "am",
+        "be"
+       ],
+       "answer": "A",
+       "analysis": "milk 不可数，用 is。"
+      },
+      {
+       "stem": "I am __ in music.",
+       "options": [
+        "interest",
+        "interested",
+        "interesting",
+        "interests"
+       ],
+       "answer": "B",
+       "analysis": "be interested in 对……感兴趣。"
+      },
+      {
+       "stem": "Last Sunday, I __ to the park.",
+       "options": [
+        "go",
+        "went",
+        "going",
+        "goes"
+       ],
+       "answer": "B",
+       "analysis": "last Sunday 用一般过去时 went。"
+      },
+      {
+       "stem": "The weather was __.",
+       "options": [
+        "sun",
+        "suny",
+        "sunny",
+        "sunning"
+       ],
+       "answer": "C",
+       "analysis": "be 动词后接形容词 sunny。"
+      },
+      {
+       "stem": "I __ a book under a tree.",
+       "options": [
+        "read",
+        "reads",
+        "reading",
+        "red"
+       ],
+       "answer": "A",
+       "analysis": "讲述过去用 read（过去式同形）。"
+      },
+      {
+       "stem": "A little dog __ to me.",
+       "options": [
+        "come",
+        "comes",
+        "came",
+        "coming"
+       ],
+       "answer": "C",
+       "analysis": "过去时 came。"
+      }
+     ]
+    },
+    {
+     "name": "三、语法填空（每题 2 分，共 10 题，20 分）",
+     "items": [
+      {
+       "stem": "__ (not be) late again.",
+       "options": [],
+       "answer": "Don't be",
+       "analysis": "祈使句否定 Don't be。"
+      },
+      {
+       "stem": "The boy is good at __ (play) basketball.",
+       "options": [],
+       "answer": "playing",
+       "analysis": "be good at doing。"
+      },
+      {
+       "stem": "If it __ (rain) tomorrow, we will stay home.",
+       "options": [],
+       "answer": "rains",
+       "analysis": "条件状语从句主将从现，三单 rains。"
+      },
+      {
+       "stem": "She __ (go) to school by bike every day.",
+       "options": [],
+       "answer": "goes",
+       "analysis": "主语三单，一般现在时 goes。"
+      },
+      {
+       "stem": "They __ (be) students.",
+       "options": [],
+       "answer": "are",
+       "analysis": "复数用 are。"
+      },
+      {
+       "stem": "He __ (have) a dog.",
+       "options": [],
+       "answer": "has",
+       "analysis": "三单 has。"
+      },
+      {
+       "stem": "I __ (not like) apples.",
+       "options": [],
+       "answer": "don't like",
+       "analysis": "主语 I 用 don't。"
+      },
+      {
+       "stem": "__ (do) he play soccer?",
+       "options": [],
+       "answer": "Does",
+       "analysis": "三单用 Does。"
+      },
+      {
+       "stem": "We __ (watch) TV now.",
+       "options": [],
+       "answer": "are watching",
+       "analysis": "now 用现在进行时。"
+      },
+      {
+       "stem": "She __ (read) a book yesterday.",
+       "options": [],
+       "answer": "read",
+       "analysis": "yesterday 用过去式 read。"
+      }
+     ]
+    },
+    {
+     "name": "四、书面表达（1 题，20 分）",
+     "items": [
+      {
+       "stem": "【Writing】假定你是李华，给英国笔友 Tom 写一封邮件介绍你的学校生活。要点：1.课程丰富 2.社团活动 3.邀请他来访。",
+       "options": [],
+       "answer": "格式：开头 Dear Tom, 问候；正文三段分别对应三个要点（用一般现在时）；结尾 I'm looking forward to your reply. 注意书信格式与要点齐全。",
+       "analysis": "评分：格式正确、要点完整、时态准确、语句通顺。"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+};
+  var s = D.meta.subjects.map(function (x) { return x + ":" + (D.mockPapers[x] || []).length + "套"; }).join("  ");
+  console.log("[augment-quiz-mock] 整套试卷数据完成 → " + s);
 })();
