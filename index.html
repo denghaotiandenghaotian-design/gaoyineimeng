@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WorkBuddy 高中学习辅助系统 · 内蒙古 · 人教版高一</title>
+<meta name="description" content="内蒙古地区人教版高一（语文/数学/英语/物理/化学）全科学习辅助系统：考点库、复习计划、思维导图、模拟训练、真题解析、名师讲堂。" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<div id="app">
+  <!-- 顶栏：系统总调度 -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">WB</div>
+      <div class="brand-text">
+        <div class="brand-title">高中学习辅助系统</div>
+        <div class="brand-sub">内蒙古 · 人教版 · 高一必修 | 语文·数学·英语·物理·化学</div>
+      </div>
+    </div>
+    <div class="dispatch">
+      <span class="dispatch-label">总调度</span>
+      <select id="dispatch-subject" class="ds-input" aria-label="学科">
+        <option value="">选择学科…</option>
+        <option value="语文">语文</option>
+        <option value="数学">数学</option>
+        <option value="英语">英语</option>
+        <option value="物理">物理</option>
+        <option value="化学">化学</option>
+      </select>
+      <select id="dispatch-module" class="ds-input" aria-label="模块">
+        <option value="">选择模块…</option>
+        <option value="points">考点库</option>
+        <option value="plan">复习计划</option>
+        <option value="mindmap">思维导图</option>
+        <option value="quiz">模拟训练</option>
+        <option value="past">真题解析</option>
+        <option value="lecture">名师讲堂</option>
+      </select>
+      <input id="dispatch-scope" class="ds-input ds-scope" placeholder="范围/参数（如：第一章、每日2h、函数）" />
+      <button id="dispatch-go" class="btn btn-gold">调度执行</button>
+    </div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="菜单">☰</button>
+  </header>
+
+  <div class="layout">
+    <!-- 侧边导航 -->
+    <nav class="sidebar" id="sidebar">
+      <button class="nav-item" data-module="home"><span class="ico">🏠</span>系统首页</button>
+      <button class="nav-item" data-module="points"><span class="ico">📚</span>① 考点库管理</button>
+      <button class="nav-item" data-module="plan"><span class="ico">🗓️</span>② 复习计划生成</button>
+      <button class="nav-item" data-module="mindmap"><span class="ico">🧠</span>③ 知识点思维导图</button>
+      <button class="nav-item" data-module="quiz"><span class="ico">✍️</span>④ 模拟训练（每科50套）</button>
+      <button class="nav-item" data-module="past"><span class="ico">📜</span>⑤ 5年真题解析</button>
+      <button class="nav-item" data-module="lecture"><span class="ico">🎓</span>⑥ 名师讲堂</button>
+      <div class="sidebar-foot">
+        <div class="ver">v1.0 · 开箱即用</div>
+        <div class="hint">无需登录 · 可离线 · 可分享</div>
+      </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="content" id="content"><!-- 动态渲染 --></main>
+  </div>
+
+  <footer class="footbar">
+    <span>数据来源：人教版高一必修教材 + 内蒙古地区考纲适配</span>
+    <span class="foot-sep">·</span>
+    <span>仅限高一必修上册/第一册范围，不超纲</span>
+  </footer>
+</div>
+
+<!-- 通用弹层 -->
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modal-close" aria-label="关闭">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
